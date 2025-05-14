@@ -1,4 +1,4 @@
-package com.github.nmsilos.backendtcc.models;
+package com.github.nmsilos.backendtcc.model;
 
 import jakarta.persistence.*;
 
