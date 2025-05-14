@@ -27,6 +27,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Leitura> leituras;
+
     public Usuario() {}
 
     public Usuario(Long id, String nome, String apelido, String email, String senha) {

@@ -38,6 +38,9 @@ public class Livro {
     @OneToMany(mappedBy = "livro")
     private List<Comentario> comentarios;
 
+    @OneToMany(mappedBy = "livro")
+    private List<Leitura> leituras;
+
     public Livro() {}
 
     public Livro(Long id, String titulo, String autor, String isbn, String editora, Year ano_publicacao, int paginas, String descricao, double avaliacao) {
