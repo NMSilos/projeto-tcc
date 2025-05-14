@@ -3,6 +3,7 @@ package com.github.nmsilos.backendtcc.models;
 import jakarta.persistence.*;
 
 import java.time.Year;
+import java.util.List;
 
 @Entity
 @Table(name = "livros")
@@ -33,6 +34,9 @@ public class Livro {
     private String descricao;
 
     private double avaliacao;
+
+    @OneToMany(mappedBy = "livro")
+    private List<Comentario> comentarios;
 
     public Livro() {}
 
