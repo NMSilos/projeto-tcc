@@ -3,9 +3,9 @@ package com.github.nmsilos.backendtcc.dto.usuarios;
 public class CadastroUsuarioDTO {
 
     private String nome;
-    private String apelido;
+    private String username;
     private String email;
-    private String senha;
+    private String password;
 
     public String getNome() {
         return nome;
@@ -15,12 +15,12 @@ public class CadastroUsuarioDTO {
         this.nome = nome;
     }
 
-    public String getApelido() {
-        return apelido;
+    public String getUsername() {
+        return username;
     }
 
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -31,11 +31,11 @@ public class CadastroUsuarioDTO {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

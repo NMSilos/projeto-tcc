@@ -1,12 +1,15 @@
 package com.github.nmsilos.backendtcc.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,13 +19,13 @@ public class Usuario {
     private String nome;
 
     @Column(nullable = false)
-    private String apelido;
+    private String username;
 
     @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
     @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios;
@@ -34,9 +37,9 @@ public class Usuario {
 
     public Usuario(String nome, String apelido, String email, String senha) {
         this.nome = nome;
-        this.apelido = apelido;
+        this.username = apelido;
         this.email = email;
-        this.senha = senha;
+        this.password = senha;
     }
 
     public Long getId() {
@@ -55,12 +58,8 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getApelido() {
-        return apelido;
-    }
-
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setUsername(String apelido) {
+        this.username = apelido;
     }
 
     public String getEmail() {
@@ -71,12 +70,42 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public void setPassword(String senha) {
+        this.password = senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
 }

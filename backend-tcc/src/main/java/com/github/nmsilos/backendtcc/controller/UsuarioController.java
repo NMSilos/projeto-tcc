@@ -1,5 +1,7 @@
 package com.github.nmsilos.backendtcc.controller;
 
+import com.github.nmsilos.backendtcc.dto.usuarios.CadastroUsuarioDTO;
+import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,8 @@ public class UsuarioController {
     private UsuarioRepository repository;
 
     @PostMapping("cadastrar")
-    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody CadastroUsuarioDTO dados) {
+        Usuario usuario = CadastroUsuarioMapper.toModel(dados);
         repository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
