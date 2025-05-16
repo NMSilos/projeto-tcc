@@ -35,6 +35,7 @@ public class ConfigSecurity {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST,"api/usuarios/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.POST,"api/usuarios/login").permitAll()
+                            .requestMatchers(HttpMethod.POST,"api/usuarios/google").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
