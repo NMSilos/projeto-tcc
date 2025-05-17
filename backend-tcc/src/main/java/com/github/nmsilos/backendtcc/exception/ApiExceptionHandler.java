@@ -3,6 +3,7 @@ package com.github.nmsilos.backendtcc.exception;
 import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
 import com.github.nmsilos.backendtcc.exception.custom.LoginInvalidoException;
 import com.github.nmsilos.backendtcc.exception.custom.TokenInvalidoException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,11 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(TokenInvalidoException.class)
     public ResponseEntity<MensagemErroPadrao> tokenInvalidoException(TokenInvalidoException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MensagemErroPadrao(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<MensagemErroPadrao> entityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MensagemErroPadrao(request, HttpStatus.NOT_FOUND, ex.getMessage()));
     }
 

@@ -8,17 +8,11 @@ import com.github.nmsilos.backendtcc.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
-
-    @Autowired
-    private UsuarioRepository repository;
 
     @Autowired
     private UsuarioService service;
@@ -40,6 +34,12 @@ public class UsuarioController {
     public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest request) {
         TokenDTO token = service.loginComGoogle(request);
         return ResponseEntity.ok().body(token);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RespostaUsuarioDTO> buscarInfo(@PathVariable Long id) {
+        RespostaUsuarioDTO dto = service.buscarInfo(id);
+        return ResponseEntity.ok().body(dto);
     }
 
 }

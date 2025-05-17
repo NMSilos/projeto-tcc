@@ -36,6 +36,7 @@ public class ConfigSecurity {
                     auth.requestMatchers(HttpMethod.POST,"api/usuarios/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.POST,"api/usuarios/login").permitAll()
                             .requestMatchers(HttpMethod.POST,"api/usuarios/google").permitAll()
+                            .requestMatchers(HttpMethod.GET,"api/usuarios/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)

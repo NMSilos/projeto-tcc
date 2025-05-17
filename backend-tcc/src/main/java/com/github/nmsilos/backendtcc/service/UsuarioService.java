@@ -15,6 +15,7 @@ import com.github.nmsilos.backendtcc.security.TokenManager;
 import com.github.nmsilos.backendtcc.utils.GeradorSenhaAleatoria;
 import com.github.nmsilos.backendtcc.utils.GoogleTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -74,5 +75,15 @@ public class UsuarioService {
         } catch (Exception e) {
             throw new ErroServidorException("Erro ao verificar token: " + e.getMessage());
         }
+    }
+
+    @Transactional(readOnly = true)
+    public RespostaUsuarioDTO buscarInfo(Long idUsuario) {
+        RespostaUsuarioDTO dto = RespostaUsuarioMapper.toDto(
+                repository.findById(idUsuario).orElseThrow(
+                        () -> new EntityNotFoundException("Usuário não encontrado")
+                )
+        );
+        return dto;
     }
 }
