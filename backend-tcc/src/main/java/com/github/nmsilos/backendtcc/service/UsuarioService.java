@@ -1,10 +1,12 @@
 package com.github.nmsilos.backendtcc.service;
 
-import com.github.nmsilos.backendtcc.dto.ErroDTO;
 import com.github.nmsilos.backendtcc.dto.usuarios.GoogleLoginRequest;
 import com.github.nmsilos.backendtcc.dto.usuarios.LoginDTO;
 import com.github.nmsilos.backendtcc.dto.usuarios.RespostaUsuarioDTO;
 import com.github.nmsilos.backendtcc.dto.usuarios.TokenDTO;
+import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
+import com.github.nmsilos.backendtcc.exception.custom.LoginInvalidoException;
+import com.github.nmsilos.backendtcc.exception.custom.TokenInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.repository.UsuarioRepository;
@@ -14,14 +16,9 @@ import com.github.nmsilos.backendtcc.utils.GeradorSenhaAleatoria;
 import com.github.nmsilos.backendtcc.utils.GoogleTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,14 +47,11 @@ public class UsuarioService {
             TokenDTO dto = new TokenDTO(token);
             return dto;
         } catch (AuthenticationException e) {
-            ErroDTO erro = new ErroDTO("Usuário/Senha incorreta");
-            //return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    //.body(erro);
-            System.out.println(erro);
+            throw new LoginInvalidoException("Erro ao efetuar login: Usuário ou senha incorretos");
         }
-        return null;
     }
 
+    @Transactional
     public TokenDTO loginComGoogle(GoogleLoginRequest request) {
         try {
             String idToken = request.getCredential();
@@ -69,17 +63,16 @@ public class UsuarioService {
                     String nameAndUsername = payload.get("name").toString();
                     String senha = Cripter.criptografar(GeradorSenhaAleatoria.generate(16));
                     repository.save(new Usuario(nameAndUsername, nameAndUsername, email, senha));
-                    usuario = repository.findByEmail(nameAndUsername);
+                    usuario = repository.findByEmail(email);
                 }
                 String token = new TokenManager().generateToken(usuario);
                 TokenDTO dto = new TokenDTO(token);
                 return dto;
             } else {
-                //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Token inválido");
+                throw new TokenInvalidoException("Erro ao efetuar login: Token inválido");
             }
         } catch (Exception e) {
-            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao verificar token: " + e.getMessage());
+            throw new ErroServidorException("Erro ao verificar token: " + e.getMessage());
         }
-        return null;
     }
 }
