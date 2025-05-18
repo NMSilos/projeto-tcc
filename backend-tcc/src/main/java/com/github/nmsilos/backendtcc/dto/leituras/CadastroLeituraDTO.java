@@ -1,53 +1,19 @@
-package com.github.nmsilos.backendtcc.model;
+package com.github.nmsilos.backendtcc.dto.leituras;
 
-import jakarta.persistence.*;
+import com.github.nmsilos.backendtcc.model.Livro;
+import com.github.nmsilos.backendtcc.model.Usuario;
 
 import java.util.Date;
 
-@Entity
-public class Leitura {
+public class CadastroLeituraDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private Date data_inicio;
-
     private Date data_termino;
-
-    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 1")
     private int pagina_atual;
-
-    @Column(nullable = false)
     private boolean abandonado;
-
-    @ManyToOne
-    @JoinColumn(name = "livro_id")
     private Livro livro;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-
-    public Leitura() {}
-
-    public Leitura(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, Livro livro, Usuario usuario) {
-        this.id = id;
-        this.data_inicio = data_inicio;
-        this.data_termino = data_termino;
-        this.pagina_atual = pagina_atual;
-        this.abandonado = abandonado;
-        this.livro = livro;
-        this.usuario = usuario;
-    }
-
-    public Leitura(Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado) {
-        this.data_inicio = data_inicio;
-        this.data_termino = data_termino;
-        this.pagina_atual = pagina_atual;
-        this.abandonado = abandonado;
-    }
 
     public Long getId() {
         return id;
