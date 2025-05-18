@@ -34,16 +34,10 @@ public class LivroService {
     }
 
     @Transactional(readOnly = true)
-    public Livro buscarInfo(Usuario usuario,Long id) {
-        Usuario usuarioLogado = usuarioService.buscarInfo(usuario.getId());
-        if (usuarioLogado != null && usuarioLogado.equals(usuario)) {
-            Livro livroSalvo = repository.findById(id).orElseThrow(
-                    () -> new LivroNaoEncontradoException("Erro ao buscar: Livro não encontrado")
-            );
-            return livroSalvo;
-        } else {
-            throw new UsuarioInvalidoException("Erro ao buscar: nenhum usuário logado");
-        }
+    public Livro buscarInfo(Long idLivro) {
+        Livro livroSalvo = repository.findById(idLivro).orElseThrow(
+                () -> new LivroNaoEncontradoException("Erro ao buscar: Livro não encontrado")
+        );
+        return livroSalvo;
     }
-
 }

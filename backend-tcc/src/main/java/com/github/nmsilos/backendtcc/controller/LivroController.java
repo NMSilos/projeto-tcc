@@ -26,7 +26,7 @@ public class LivroController {
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Livro> buscar(@AuthenticationPrincipal Usuario usuario, @PathVariable Long id) {
-        Livro livro = service.buscarInfo(usuario, id);
+        Livro livro = service.buscarInfo(id);
         return ResponseEntity.ok().body(livro);
     }
 
