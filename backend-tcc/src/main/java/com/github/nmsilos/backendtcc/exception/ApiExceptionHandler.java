@@ -1,6 +1,7 @@
 package com.github.nmsilos.backendtcc.exception;
 
 import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
+import com.github.nmsilos.backendtcc.exception.custom.LivroJaCadastradoException;
 import com.github.nmsilos.backendtcc.exception.custom.LoginInvalidoException;
 import com.github.nmsilos.backendtcc.exception.custom.TokenInvalidoException;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +27,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(TokenInvalidoException.class)
     public ResponseEntity<MensagemErroPadrao> tokenInvalidoException(TokenInvalidoException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErroPadrao(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
+
+    @ExceptionHandler(LivroJaCadastradoException.class)
+    public ResponseEntity<MensagemErroPadrao> livroJaCadastradoException(LivroJaCadastradoException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new MensagemErroPadrao(request, HttpStatus.CONFLICT, ex.getMessage()));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

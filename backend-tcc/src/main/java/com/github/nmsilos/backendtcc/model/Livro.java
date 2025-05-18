@@ -43,7 +43,8 @@ public class Livro {
 
     public Livro() {}
 
-    public Livro(Long id, String titulo, String autor, String isbn, String editora, Year ano_publicacao, int paginas, String descricao, double avaliacao) {
+    public Livro(Long id, String titulo, String autor, String isbn, String editora,
+                 Year ano_publicacao, int paginas, String descricao, double avaliacao) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
@@ -53,6 +54,17 @@ public class Livro {
         this.paginas = paginas;
         this.descricao = descricao;
         this.avaliacao = avaliacao;
+    }
+
+    public Livro(String titulo, String autor, String isbn, String editora,
+                 Year ano_publicacao, int paginas, String descricao) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+        this.editora = editora;
+        this.ano_publicacao = ano_publicacao;
+        this.paginas = paginas;
+        this.descricao = descricao;
     }
 
     public Long getId() {
@@ -127,4 +139,19 @@ public class Livro {
         this.avaliacao = avaliacao;
     }
 
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Leitura> getLeituras() {
+        return leituras;
+    }
+
+    public void setLeituras(List<Leitura> leituras) {
+        this.leituras = leituras;
+    }
 }
