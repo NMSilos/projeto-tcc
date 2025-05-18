@@ -25,12 +25,17 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(TokenInvalidoException.class)
     public ResponseEntity<MensagemErroPadrao> tokenInvalidoException(TokenInvalidoException ex, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MensagemErroPadrao(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErroPadrao(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<MensagemErroPadrao> entityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MensagemErroPadrao(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<MensagemErroPadrao> illegalArgumentException(IllegalArgumentException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErroPadrao(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 
 }
