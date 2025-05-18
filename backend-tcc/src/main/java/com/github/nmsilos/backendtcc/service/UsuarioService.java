@@ -5,7 +5,7 @@ import com.github.nmsilos.backendtcc.dto.usuarios.LoginDTO;
 import com.github.nmsilos.backendtcc.dto.usuarios.RespostaUsuarioDTO;
 import com.github.nmsilos.backendtcc.dto.usuarios.TokenDTO;
 import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
-import com.github.nmsilos.backendtcc.exception.custom.LoginInvalidoException;
+import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.exception.custom.TokenInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
 import com.github.nmsilos.backendtcc.model.Usuario;
@@ -49,7 +49,7 @@ public class UsuarioService {
             return dto;
         }
         catch (AuthenticationException e) {
-            throw new LoginInvalidoException("Erro ao efetuar login: Usuário ou senha incorretos");
+            throw new UsuarioInvalidoException("Erro ao efetuar login: Usuário ou senha incorretos");
         }
     }
 
