@@ -89,6 +89,22 @@ public class Usuario implements UserDetails {
         return username;
     }
 
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Leitura> getLeituras() {
+        return leituras;
+    }
+
+    public void setLeituras(List<Leitura> leituras) {
+        this.leituras = leituras;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
