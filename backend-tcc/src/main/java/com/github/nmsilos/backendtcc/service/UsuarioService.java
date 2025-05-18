@@ -47,7 +47,8 @@ public class UsuarioService {
             String token = new TokenManager().generateToken(usuario);
             TokenDTO dto = new TokenDTO(token);
             return dto;
-        } catch (AuthenticationException e) {
+        }
+        catch (AuthenticationException e) {
             throw new LoginInvalidoException("Erro ao efetuar login: Usuário ou senha incorretos");
         }
     }
@@ -72,18 +73,47 @@ public class UsuarioService {
             } else {
                 throw new TokenInvalidoException("Erro ao efetuar login: Token inválido");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new ErroServidorException("Erro ao verificar token: " + e.getMessage());
         }
     }
 
     @Transactional(readOnly = true)
-    public RespostaUsuarioDTO buscarInfo(Long idUsuario) {
-        RespostaUsuarioDTO dto = RespostaUsuarioMapper.toDto(
-                repository.findById(idUsuario).orElseThrow(
+    public Usuario buscarInfo(Long idUsuario) {
+        Usuario usuario = repository.findById(idUsuario).orElseThrow(
                         () -> new EntityNotFoundException("Usuário não encontrado")
-                )
         );
-        return dto;
+        return usuario;
+    }
+
+    @Transactional
+    public Usuario modificar(Usuario usuario, Usuario novoUsuario) {
+        Usuario usuarioAtual = buscarInfo(usuario.getId());
+        try {
+            if (usuarioAtual != null && usuarioAtual.equals(novoUsuario)) {
+                usuarioAtual.setNome(novoUsuario.getNome());
+                usuarioAtual.setUsername(novoUsuario.getUsername());
+                usuarioAtual.setPassword(Cripter.criptografar(novoUsuario.getPassword()));
+            }
+            return usuarioAtual;
+        }
+        catch (NullPointerException e) {
+            throw new NullPointerException("Erro ao atualizar usuário");
+        }
+    }
+
+    @Transactional
+    public void deletar(Usuario usuario, Usuario contaEncerrada) {
+        try {
+            if (usuario.equals(contaEncerrada)) {
+                repository.deleteById(usuario.getId());
+            } else {
+                throw new SecurityException("Usuário não autorizado a deletar esta conta.");
+            }
+        }
+        catch (NullPointerException e) {
+            throw new IllegalArgumentException("Erro ao encerrar conta");
+        }
     }
 }
