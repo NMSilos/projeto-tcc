@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,10 +29,10 @@ public class Usuario implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "usuario")
-    private List<Comentario> comentarios;
+    private List<Comentario> comentarios = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-    private List<Leitura> leituras;
+    private List<Leitura> leituras = new ArrayList<>();
 
     public Usuario() {}
 
