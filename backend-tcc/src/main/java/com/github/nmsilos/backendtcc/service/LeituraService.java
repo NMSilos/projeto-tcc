@@ -3,6 +3,7 @@ package com.github.nmsilos.backendtcc.service;
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
+import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
 import com.github.nmsilos.backendtcc.model.Leitura;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Usuario;
@@ -22,7 +23,7 @@ public class LeituraService {
     @Autowired
     private LivroService livroService;
 
-    public Leitura criarLeitura(Usuario usuarioLogado, CadastroLeituraDTO leitura) {
+    public com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO criarLeitura(Usuario usuarioLogado, CadastroLeituraDTO leitura) {
         Usuario usuario = usuarioService.buscarInfo(leitura.getUsuario().getId());
         Livro livro = livroService.buscarInfo(leitura.getLivro().getId());
 
@@ -31,7 +32,8 @@ public class LeituraService {
             novaLeitura.setUsuario(usuarioLogado);
             novaLeitura.setLivro(livro);
             usuario.getLeituras().add(novaLeitura);
-            return repository.save(novaLeitura);
+            repository.save(novaLeitura);
+            return RespostaLeituraMapper.toDto(novaLeitura);
         } else {
             throw new UsuarioInvalidoException("Erro ao salvar: Usuário não autorizado");
         }

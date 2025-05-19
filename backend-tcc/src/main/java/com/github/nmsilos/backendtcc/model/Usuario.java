@@ -30,7 +30,7 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Leitura> leituras;
 
     public Usuario() {}

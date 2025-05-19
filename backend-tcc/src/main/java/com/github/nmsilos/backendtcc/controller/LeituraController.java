@@ -1,7 +1,7 @@
 package com.github.nmsilos.backendtcc.controller;
 
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
-import com.github.nmsilos.backendtcc.model.Leitura;
+import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.service.LeituraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ public class LeituraController {
     private LeituraService service;
 
     @PostMapping("/criar-leitura")
-    public ResponseEntity<Leitura> criarLeitura(
+    public ResponseEntity<RespostaLeituraDTO> criarLeitura(
             @AuthenticationPrincipal Usuario usuario, @RequestBody CadastroLeituraDTO leitura) {
-        Leitura leituraSalva = service.criarLeitura(usuario, leitura);
-        return ResponseEntity.status(HttpStatus.CREATED).body(leituraSalva);
+        RespostaLeituraDTO resposta = service.criarLeitura(usuario, leitura);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
 
 }

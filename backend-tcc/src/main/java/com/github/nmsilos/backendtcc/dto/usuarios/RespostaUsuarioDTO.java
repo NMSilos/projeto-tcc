@@ -1,7 +1,7 @@
 package com.github.nmsilos.backendtcc.dto.usuarios;
 
+import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.model.Comentario;
-import com.github.nmsilos.backendtcc.model.Leitura;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class RespostaUsuarioDTO {
     private String username;
     private String email;
     private List<Comentario> comentarios;
-    private List<Leitura> leituras;
+    private List<RespostaLeituraDTO> leituras;
 
     public RespostaUsuarioDTO(String nome, String username, String email) {
         this.nome = nome;
@@ -19,7 +19,7 @@ public class RespostaUsuarioDTO {
         this.email = email;
     }
 
-    public RespostaUsuarioDTO(String nome, String username, String email, List<Comentario> comentarios, List<Leitura> leituras) {
+    public RespostaUsuarioDTO(String nome, String username, String email, List<Comentario> comentarios, List<RespostaLeituraDTO> leituras) {
         this.nome = nome;
         this.username = username;
         this.email = email;
@@ -59,11 +59,11 @@ public class RespostaUsuarioDTO {
         this.comentarios = comentarios;
     }
 
-    public List<Leitura> getLeituras() {
+    public List<RespostaLeituraDTO> getLeituras() {
         return leituras;
     }
 
-    public void setLeituras(List<Leitura> leituras) {
+    public void setLeituras(List<RespostaLeituraDTO> leituras) {
         this.leituras = leituras;
     }
 
