@@ -14,6 +14,19 @@ public class RespostaLivroNoListDTO {
     private String descricao;
     private double avaliacao;
 
+    public RespostaLivroNoListDTO(Long id, String titulo, String autor, String isbn, String editora,
+                                  Year ano_publicacao, int paginas, String descricao, double avaliacao) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+        this.editora = editora;
+        this.ano_publicacao = ano_publicacao;
+        this.paginas = paginas;
+        this.descricao = descricao;
+        this.avaliacao = avaliacao;
+    }
+
     public Long getId() {
         return id;
     }
