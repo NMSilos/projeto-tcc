@@ -1,0 +1,88 @@
+package com.github.nmsilos.backendtcc.dto.livros;
+
+import java.time.Year;
+
+public class RespostaLivroNoListDTO {
+
+    private Long id;
+    private String titulo;
+    private String autor;
+    private String isbn;
+    private String editora;
+    private Year ano_publicacao;
+    private int paginas;
+    private String descricao;
+    private double avaliacao;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getEditora() {
+        return editora;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
+    }
+
+    public Year getAno_publicacao() {
+        return ano_publicacao;
+    }
+
+    public void setAno_publicacao(Year ano_publicacao) {
+        this.ano_publicacao = ano_publicacao;
+    }
+
+    public int getPaginas() {
+        return paginas;
+    }
+
+    public void setPaginas(int paginas) {
+        this.paginas = paginas;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public double getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(double avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+}
