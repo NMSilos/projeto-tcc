@@ -2,8 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router'
-import Login from './pages/Login'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import Login from './pages/Login'
+import CadastroUsuario from './pages/CadastroUsuario'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -11,6 +12,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route index element={<Login />} />
+            <Route path="/cadastro" element={<CadastroUsuario />} />
         </Routes>
       </BrowserRouter>
     </GoogleOAuthProvider>

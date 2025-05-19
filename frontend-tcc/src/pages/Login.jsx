@@ -59,10 +59,10 @@ export default function Login() {
       footerLinkText="Cadastre-se"
     >*/
     <main>
-        <div class="form-container">
+        <div className="form-container">
             <h2>Login</h2>
             <form onSubmit={onSubmit}>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="username">Usuário</label>
                   <input 
                     type="text" 
@@ -71,7 +71,7 @@ export default function Login() {
                     required onChange={changeUsername}
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="senha">Senha</label>
                   <input 
                     type="password" 
@@ -80,13 +80,18 @@ export default function Login() {
                     required onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <button type="submit" class="submit-btn" >Entrar</button>
+                <p>Não possui conta?{' '}    
+                <Link to="/cadastro" className="text-blue-600 hover:underline">
+                  Cadastre-se
+                </Link>
+                </p>
+                <button type="submit" className="submit-btn" >Entrar</button>
                 <GoogleLogin shape="circle" text="continue_with" locale="pt-BR"
                     onSuccess={credentialResponse => {
                         logarComGoogle(credentialResponse);
                     }}
                     onError={() => {
-                        console.log('Login Failed');
+                        console.log('Login Failed'); 
                     }}
                 />
             </form>
