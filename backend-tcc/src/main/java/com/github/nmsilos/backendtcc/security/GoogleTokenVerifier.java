@@ -1,4 +1,4 @@
-package com.github.nmsilos.backendtcc.utils;
+package com.github.nmsilos.backendtcc.security;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;

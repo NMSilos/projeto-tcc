@@ -13,7 +13,7 @@ import com.github.nmsilos.backendtcc.repository.UsuarioRepository;
 import com.github.nmsilos.backendtcc.security.Cripter;
 import com.github.nmsilos.backendtcc.security.TokenManager;
 import com.github.nmsilos.backendtcc.utils.GeradorSenhaAleatoria;
-import com.github.nmsilos.backendtcc.utils.GoogleTokenVerifier;
+import com.github.nmsilos.backendtcc.security.GoogleTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
