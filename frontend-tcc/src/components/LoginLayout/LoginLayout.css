@@ -1,0 +1,23 @@
+.login-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: Arial, sans-serif;
+}
+
+.login-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.login-footer {
+  background: #e0e0e0;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+  color: #555;
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { request } from '../utils/requests';
+import LoginLayout from '../components/LoginLayout/LoginLayout';
 
 export default function CadastroUsuario() {
   const [nome, setNome] = useState('');
@@ -27,7 +28,7 @@ export default function CadastroUsuario() {
   };
 
   return (
-    <main>
+    <LoginLayout>
       <div className="form-container">
         <h2>Cadastro</h2>
         <form onSubmit={cadastrarUsuario}>
@@ -79,11 +80,11 @@ export default function CadastroUsuario() {
         </form>
         <p>
           Já tem conta?{' '}
-          <a href="/" className="text-blue-600 hover:underline">
+          <a href="/" className="link-inline">
             Faça login
           </a>
         </p>
       </div>
-    </main>
+    </LoginLayout>
   );
 }

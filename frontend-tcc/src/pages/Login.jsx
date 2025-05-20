@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { request } from "../utils/requests";
-import Footer from "../components/Footer";
 import { GoogleLogin } from "@react-oauth/google";
+import LoginLayout from "../components/LoginLayout/LoginLayout";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -29,7 +29,7 @@ export default function Login() {
     try {
       const dados = await request("api/usuarios/login", credenciais, "POST");
       localStorage.setItem("token", dados.token);
-      //navigate("/tarefas");
+      navigate("/perfil");
       alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);
@@ -43,7 +43,7 @@ export default function Login() {
     try {
       const dados = await request("api/usuarios/google", jsonData, "POST");
       localStorage.setItem("token", dados.token);
-      //navigate("/tarefas");
+      navigate("/perfil");
       alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);
@@ -58,45 +58,45 @@ export default function Login() {
       footerLink="/cadastroUsuario"
       footerLinkText="Cadastre-se"
     >*/
-    <main>
+    <LoginLayout>
         <div className="form-container">
-            <h2>Login</h2>
-            <form onSubmit={onSubmit}>
-                <div className="form-group">
-                  <label for="username">Usuário</label>
-                  <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    required onChange={changeUsername}
-                  />
-                </div>
-                <div className="form-group">
-                  <label for="senha">Senha</label>
-                  <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    required onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <p>Não possui conta?{' '}    
-                <Link to="/cadastro" className="text-blue-600 hover:underline">
-                  Cadastre-se
-                </Link>
-                </p>
-                <button type="submit" className="submit-btn" >Entrar</button>
-                <GoogleLogin shape="circle" text="continue_with" locale="pt-BR"
-                    onSuccess={credentialResponse => {
-                        logarComGoogle(credentialResponse);
-                    }}
-                    onError={() => {
-                        console.log('Login Failed'); 
-                    }}
+          <h2>Login</h2>
+          <form onSubmit={onSubmit}>
+              <div className="form-group">
+                <input 
+                  type="text" 
+                  id="username" 
+                  name="username" 
+                  placeholder="Usuário"
+                  required onChange={changeUsername}
                 />
-            </form>
-        </div>
-    </main>
-    //</AuthLayout>
+              </div>
+              <div className="form-group">
+                <input 
+                  type="password" 
+                  id="password" 
+                  name="password"
+                  placeholder="Senha" 
+                  required onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <p>Não possui conta?{' '}    
+              <Link to="/cadastro" className="link-inline">
+                Cadastre-se
+              </Link>
+              </p>
+              <button type="submit" className="submit-btn" >Entrar</button>
+              <GoogleLogin shape="circle" text="continue_with" locale="pt-BR"
+                  onSuccess={credentialResponse => {
+                      logarComGoogle(credentialResponse);
+                      //console.log(credentialResponse);
+                  }}
+                  onError={() => {
+                      console.log('Login Failed'); 
+                  }}
+              />
+          </form>
+      </div>
+    </LoginLayout>
   );
 }

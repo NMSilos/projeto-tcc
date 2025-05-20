@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import Login from './pages/Login'
 import CadastroUsuario from './pages/CadastroUsuario'
+import PerfilUsuario from './pages/PerfilUsuario'
+import AreaLogada from './components/AreaLogada/AreaLogada'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -12,7 +14,11 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route index element={<Login />} />
-            <Route path="/cadastro" element={<CadastroUsuario />} />
+          <Route path="/cadastro" element={<CadastroUsuario />} />
+          
+          <Route path="/" element={<AreaLogada />}>  
+            <Route path="/perfil" element={<PerfilUsuario />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </GoogleOAuthProvider>
