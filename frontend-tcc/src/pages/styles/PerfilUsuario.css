@@ -104,14 +104,18 @@
   color: inherit;
 }
 
-.ultima-leitura {
+.ultimas-leituras {
   border-top: 3px solid #a144f4;
   padding-top: 20px;
 }
 
-.ultima-leitura h2 {
+.ultimas-leituras h2 {
   color: #5727a3;
   margin-bottom: 15px;
+}
+
+.leitura {
+  padding-top: 15px;
 }
 
 .leitura-conteudo {

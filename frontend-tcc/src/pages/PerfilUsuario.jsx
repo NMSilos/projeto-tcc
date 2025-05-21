@@ -8,17 +8,19 @@ import abandonadosIcon from "../assets/icons/abandonados.svg"
 import "./styles/PerfilUsuario.css";
 import { requestLogado } from '../utils/requests';
 import { Link, useParams } from 'react-router';
+import UltimasLeituras from '../components/UltimasLeituras';
 
 export default function PerfilUsuario() {
   const [nome, setNome] = useState();
   const [username, setUsername] = useState();
   const [leituras, setLeituras] = useState([]);
+  const [ultimasLeituras, setUltimasLeituras] = useState([]);
   const { user } = useParams();
 
   async function carregarDados() {
     const usuario = await requestLogado(`api/usuarios/buscar/username/${user}`, {}, "GET");
     setLeituras(usuario.leituras)
-    //console.log(usuario.leituras);
+    setUltimasLeituras(usuario.leituras.slice().reverse().slice(0, 3))
   }
 
   useEffect(() => {
@@ -30,7 +32,11 @@ export default function PerfilUsuario() {
       setUsername(dados?.sub);
     }
     carregarDados();
-  }, [username]);
+  }, [user]);
+
+  useEffect(() => {
+    console.log(ultimasLeituras)
+  }, [ultimasLeituras])
 
   return (
       <div className="perfil-container">
@@ -55,8 +61,20 @@ export default function PerfilUsuario() {
         <div className="status-item"><Link to={`/perfil/${username}/pretendo-ler`}><img src={pretendoLerIcon} /><span>Pretendo Ler</span></Link></div>
         <div className="status-item"><Link to={`/perfil/${username}/abandonados`}><img src={abandonadosIcon} /><span>Abandonados</span></Link></div>
       </div>
+      
+      <div className='ultimas-leituras'>
+        <h2>Últimas Leituras:</h2>
+        {ultimasLeituras.map((leitura, index) => (
+          <UltimasLeituras key={index} leitura={leitura} />
+        ))}
+      </div>
 
-      <div className="ultima-leitura">
+    </div>
+  );
+}
+
+/*
+<div className="ultima-leitura">
         <h2>Última Leitura:</h2>
         <div className="leitura-conteudo">
           <div className="leitura-img">
@@ -70,7 +88,4 @@ export default function PerfilUsuario() {
           </div>
         </div>
       </div>
-      
-    </div>
-  );
-}
+      */
