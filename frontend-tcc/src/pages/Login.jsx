@@ -29,7 +29,7 @@ export default function Login() {
     try {
       const dados = await request("api/usuarios/login", credenciais, "POST");
       localStorage.setItem("token", dados.token);
-      navigate("/perfil");
+      navigate(`/perfil/${dados.id}`);
       alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);
@@ -43,7 +43,7 @@ export default function Login() {
     try {
       const dados = await request("api/usuarios/google", jsonData, "POST");
       localStorage.setItem("token", dados.token);
-      navigate("/perfil");
+      navigate(`/perfil/${dados.id}`);
       alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);
@@ -51,13 +51,6 @@ export default function Login() {
   }
 
   return (
-    /*<AuthLayout
-      title="Acesse sua conta"
-      subtitle="Entre com seus dados para continuar"
-      footerText="Não tem uma conta?"
-      footerLink="/cadastroUsuario"
-      footerLinkText="Cadastre-se"
-    >*/
     <LoginLayout>
         <div className="form-container">
           <h2>Login</h2>

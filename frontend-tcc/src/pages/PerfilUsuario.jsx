@@ -6,22 +6,31 @@ import lendoIcon from "../assets/icons/lendo.svg"
 import pretendoLerIcon from "../assets/icons/pretendo_ler.svg"
 import abandonadosIcon from "../assets/icons/abandonados.svg"
 import "./styles/PerfilUsuario.css";
+import { requestLogado } from '../utils/requests';
+import { useParams } from 'react-router';
 
 export default function PerfilUsuario() {
-  const [userData, setUserData] = useState(null);
   const [nome, setNome] = useState();
   const [username, setUsername] = useState();
+  const [usuarioLogado, setUsuarioLogado] = useState();
+  const { id } = useParams();
+
+  async function carregarDados() {
+    const usuario = await requestLogado(`api/usuarios/buscar/${id}`, {}, "GET");
+    setUsuarioLogado(usuario);
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const dados = jwtDecode(token);
-      //setUserData(decoded);
 
       setNome(dados?.nome);
       setUsername(dados?.sub);
     }
-  }, []);
+    carregarDados();
+    
+  }, [id]);
 
   return (
       <div className="perfil-container">

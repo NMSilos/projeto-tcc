@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/cadastro" element={<CadastroUsuario />} />
           
           <Route path="/" element={<AreaLogada />}>  
-            <Route path="/perfil" element={<PerfilUsuario />} />
+            <Route path="/perfil/:id" element={<PerfilUsuario />} />
           </Route>
         </Routes>
       </BrowserRouter>
