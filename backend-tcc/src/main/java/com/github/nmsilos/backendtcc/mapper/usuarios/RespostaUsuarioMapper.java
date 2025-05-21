@@ -3,7 +3,6 @@ package com.github.nmsilos.backendtcc.mapper.usuarios;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.usuarios.RespostaUsuarioDTO;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
-import com.github.nmsilos.backendtcc.model.Leitura;
 import com.github.nmsilos.backendtcc.model.Usuario;
 
 import java.util.List;
@@ -18,7 +17,6 @@ public class RespostaUsuarioMapper {
                 usuario.getNome(),
                 usuario.getUsername(),
                 usuario.getEmail(),
-                usuario.getComentarios(),
                 leituras
         );
     }

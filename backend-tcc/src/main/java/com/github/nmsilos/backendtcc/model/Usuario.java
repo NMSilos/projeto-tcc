@@ -28,9 +28,6 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Comentario> comentarios = new ArrayList<>();
-
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Leitura> leituras = new ArrayList<>();
 
@@ -88,14 +85,6 @@ public class Usuario implements UserDetails {
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public List<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(List<Comentario> comentarios) {
-        this.comentarios = comentarios;
     }
 
     public List<Leitura> getLeituras() {

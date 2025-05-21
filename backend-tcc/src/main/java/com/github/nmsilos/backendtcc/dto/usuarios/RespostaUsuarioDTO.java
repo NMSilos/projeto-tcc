@@ -10,7 +10,6 @@ public class RespostaUsuarioDTO {
     private String nome;
     private String username;
     private String email;
-    private List<Comentario> comentarios;
     private List<RespostaLeituraDTO> leituras;
 
     public RespostaUsuarioDTO(String nome, String username, String email) {
@@ -19,11 +18,10 @@ public class RespostaUsuarioDTO {
         this.email = email;
     }
 
-    public RespostaUsuarioDTO(String nome, String username, String email, List<Comentario> comentarios, List<RespostaLeituraDTO> leituras) {
+    public RespostaUsuarioDTO(String nome, String username, String email, List<RespostaLeituraDTO> leituras) {
         this.nome = nome;
         this.username = username;
         this.email = email;
-        this.comentarios = comentarios;
         this.leituras = leituras;
     }
 
@@ -49,14 +47,6 @@ public class RespostaUsuarioDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(List<Comentario> comentarios) {
-        this.comentarios = comentarios;
     }
 
     public List<RespostaLeituraDTO> getLeituras() {
