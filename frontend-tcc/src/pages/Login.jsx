@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { request } from "../utils/requests";
 import { GoogleLogin } from "@react-oauth/google";
 import LoginLayout from "../components/LoginLayout/LoginLayout";
+import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -26,10 +27,11 @@ export default function Login() {
       username: username,
       password: password,
     };
+
     try {
       const dados = await request("api/usuarios/login", credenciais, "POST");
       localStorage.setItem("token", dados.token);
-      navigate(`/perfil/${dados.id}`);
+      navigate(`/perfil/${username}`);
       alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);
@@ -43,7 +45,9 @@ export default function Login() {
     try {
       const dados = await request("api/usuarios/google", jsonData, "POST");
       localStorage.setItem("token", dados.token);
-      navigate(`/perfil/${dados.id}`);
+
+      var user = jwtDecode(dados.token);
+      navigate(`/perfil/${user.sub.replace(/"/g, '')}`);
       alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);

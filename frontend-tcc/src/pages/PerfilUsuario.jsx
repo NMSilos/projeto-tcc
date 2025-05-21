@@ -13,10 +13,11 @@ export default function PerfilUsuario() {
   const [nome, setNome] = useState();
   const [username, setUsername] = useState();
   const [usuarioLogado, setUsuarioLogado] = useState();
-  const { id } = useParams();
+  const { user } = useParams();
 
   async function carregarDados() {
-    const usuario = await requestLogado(`api/usuarios/buscar/id/${id}`, {}, "GET");
+    const usuario = await requestLogado(`api/usuarios/buscar/username/${user}`, {}, "GET");
+    console.log(usuario)
     setUsuarioLogado(usuario);
   }
 
@@ -30,7 +31,7 @@ export default function PerfilUsuario() {
     }
     carregarDados();
     
-  }, [id]);
+  }, [username]);
 
   return (
       <div className="perfil-container">
