@@ -7,18 +7,18 @@ import pretendoLerIcon from "../assets/icons/pretendo_ler.svg"
 import abandonadosIcon from "../assets/icons/abandonados.svg"
 import "./styles/PerfilUsuario.css";
 import { requestLogado } from '../utils/requests';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 
 export default function PerfilUsuario() {
   const [nome, setNome] = useState();
   const [username, setUsername] = useState();
-  const [usuarioLogado, setUsuarioLogado] = useState();
+  const [leituras, setLeituras] = useState([]);
   const { user } = useParams();
 
   async function carregarDados() {
     const usuario = await requestLogado(`api/usuarios/buscar/username/${user}`, {}, "GET");
-    console.log(usuario)
-    setUsuarioLogado(usuario);
+    setLeituras(usuario.leituras)
+    //console.log(usuario.leituras);
   }
 
   useEffect(() => {
@@ -30,7 +30,6 @@ export default function PerfilUsuario() {
       setUsername(dados?.sub);
     }
     carregarDados();
-    
   }, [username]);
 
   return (
@@ -42,7 +41,7 @@ export default function PerfilUsuario() {
               <p><strong>{nome}</strong></p>
               <p>{username}</p>
               <p>Criado em: 05/09/2024</p>
-              <p>Total Leituras: 1</p>
+              <p>Total Leituras: {leituras.length}</p>
             </div>
             <div className="perfil-editar">
               <button>Editar Perfil</button>
@@ -51,11 +50,10 @@ export default function PerfilUsuario() {
       </div>
 
       <div className="status-leitura">
-        
-        <div className="status-item"><a href="/lidos"><img src={lidosIcon} /></a>Lidos</div>
-        <div className="status-item"><a href="/lendo"><img src={lendoIcon} /></a>Lendo</div>
-        <div className="status-item"><a href="/pretendo-ler"><img src={pretendoLerIcon} /></a>Pretendo Ler</div>
-        <div className="status-item"><a href="/abandonados"><img src={abandonadosIcon} /></a>Abandonados</div>
+        <div className="status-item"><Link to={`/perfil/${username}/lidos`}><img src={lidosIcon} /><span>Lidos</span></Link></div>
+        <div className="status-item"><Link to={`/perfil/${username}/lendo`}><img src={lendoIcon} /><span>Lendo</span></Link></div>
+        <div className="status-item"><Link to={`/perfil/${username}/pretendo-ler`}><img src={pretendoLerIcon} /><span>Pretendo Ler</span></Link></div>
+        <div className="status-item"><Link to={`/perfil/${username}/abandonados`}><img src={abandonadosIcon} /><span>Abandonados</span></Link></div>
       </div>
 
       <div className="ultima-leitura">
@@ -72,6 +70,7 @@ export default function PerfilUsuario() {
           </div>
         </div>
       </div>
+      
     </div>
   );
 }

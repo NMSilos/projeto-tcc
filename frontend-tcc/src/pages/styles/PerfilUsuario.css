@@ -96,6 +96,14 @@
   margin-bottom: 5px;
 }
 
+.status-item a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
 .ultima-leitura {
   border-top: 3px solid #a144f4;
   padding-top: 20px;
