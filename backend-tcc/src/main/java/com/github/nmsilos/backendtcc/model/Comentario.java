@@ -18,18 +18,18 @@ public class Comentario {
     @JoinColumn(name = "livro_id")
     private Livro livro;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @OneToOne
+    @JoinColumn(name = "leitura_id")
+    private Leitura leitura;
 
     public Comentario() {}
 
-    public Comentario(Long id, String texto, int nota, Livro livro, Usuario usuario) {
+    public Comentario(Long id, String texto, int nota, Livro livro, Leitura leitura) {
         this.id = id;
         this.texto = texto;
         this.nota = nota;
         this.livro = livro;
-        this.usuario = usuario;
+        this.leitura = leitura;
     }
 
     public Long getId() {
@@ -64,11 +64,11 @@ public class Comentario {
         this.livro = livro;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Leitura getLeitura() {
+        return leitura;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setLeitura(Leitura leitura) {
+        this.leitura = leitura;
     }
 }

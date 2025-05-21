@@ -30,9 +30,13 @@ public class Leitura {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @OneToOne
+    @JoinColumn(name = "comentario_id")
+    private Comentario comentario;
+
     public Leitura() {}
 
-    public Leitura(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, Livro livro, Usuario usuario) {
+    public Leitura(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, Livro livro, Usuario usuario, Comentario comentario) {
         this.id = id;
         this.data_inicio = data_inicio;
         this.data_termino = data_termino;
@@ -40,6 +44,7 @@ public class Leitura {
         this.abandonado = abandonado;
         this.livro = livro;
         this.usuario = usuario;
+        this.comentario = comentario;
     }
 
     public Leitura(Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado) {
