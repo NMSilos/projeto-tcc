@@ -3,13 +3,14 @@ package com.github.nmsilos.backendtcc.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "comentarios")
 public class Comentario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String texto;
 
     private int nota;
@@ -18,8 +19,7 @@ public class Comentario {
     @JoinColumn(name = "livro_id")
     private Livro livro;
 
-    @OneToOne
-    @JoinColumn(name = "leitura_id")
+    @OneToOne(mappedBy = "comentario")
     private Leitura leitura;
 
     public Comentario() {}

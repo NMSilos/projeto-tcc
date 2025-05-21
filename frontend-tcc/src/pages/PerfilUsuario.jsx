@@ -50,7 +50,8 @@ export default function PerfilUsuario() {
       </div>
 
       <div className="status-leitura">
-        <div className="status-item"><img src={lidosIcon} />Lidos</div>
+        
+        <div className="status-item"><a href="/"><img src={lidosIcon} />Lidos</a></div>
         <div className="status-item"><img src={lendoIcon} />Lendo</div>
         <div className="status-item"><img src={pretendoLerIcon} />Pretendo Ler</div>
         <div className="status-item"><img src={abandonadosIcon} />Abandonados</div>

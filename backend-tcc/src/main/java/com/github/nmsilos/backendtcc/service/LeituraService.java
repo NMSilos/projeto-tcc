@@ -1,15 +1,18 @@
 package com.github.nmsilos.backendtcc.service;
 
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
+import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
+import com.github.nmsilos.backendtcc.model.Comentario;
 import com.github.nmsilos.backendtcc.model.Leitura;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.repository.LeituraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LeituraService {
@@ -23,7 +26,8 @@ public class LeituraService {
     @Autowired
     private LivroService livroService;
 
-    public com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO criarLeitura(Usuario usuarioLogado, CadastroLeituraDTO leitura) {
+    @Transactional
+    public RespostaLeituraDTO criarLeitura(Usuario usuarioLogado, CadastroLeituraDTO leitura) {
         Usuario usuario = usuarioService.buscarInfo(leitura.getUsuario().getId());
         Livro livro = livroService.buscarInfo(leitura.getLivro().getId());
 
@@ -33,10 +37,10 @@ public class LeituraService {
             novaLeitura.setLivro(livro);
             usuario.getLeituras().add(novaLeitura);
             repository.save(novaLeitura);
+            repository.flush();
             return RespostaLeituraMapper.toDto(novaLeitura);
         } else {
             throw new UsuarioInvalidoException("Erro ao salvar: Usuário não autorizado");
         }
-
     }
 }

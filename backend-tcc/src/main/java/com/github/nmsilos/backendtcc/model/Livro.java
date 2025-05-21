@@ -3,6 +3,7 @@ package com.github.nmsilos.backendtcc.model;
 import jakarta.persistence.*;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,10 +37,10 @@ public class Livro {
     private double avaliacao;
 
     @OneToMany(mappedBy = "livro")
-    private List<Comentario> comentarios;
+    private List<Comentario> comentarios = new ArrayList<>();
 
     @OneToMany(mappedBy = "livro")
-    private List<Leitura> leituras;
+    private List<Leitura> leituras = new ArrayList<>();
 
     public Livro() {}
 

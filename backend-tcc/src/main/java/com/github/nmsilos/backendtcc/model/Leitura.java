@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "leituras")
 public class Leitura {
 
     @Id
@@ -30,7 +31,7 @@ public class Leitura {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "comentario_id")
     private Comentario comentario;
 
@@ -92,6 +93,14 @@ public class Leitura {
 
     public void setAbandonado(boolean abandonado) {
         this.abandonado = abandonado;
+    }
+
+    public Comentario getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = comentario;
     }
 
     public Livro getLivro() {
