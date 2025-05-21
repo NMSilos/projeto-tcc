@@ -45,7 +45,7 @@ public class UsuarioService {
             var authentication = manager.authenticate(authenticationToken);
             Usuario usuario = (Usuario) authentication.getPrincipal();
             String token = new TokenManager().generateToken(usuario);
-            TokenDTO dto = new TokenDTO(token);
+            TokenDTO dto = new TokenDTO(usuario.getId(), token);
             return dto;
         }
         catch (AuthenticationException e) {
@@ -62,13 +62,14 @@ public class UsuarioService {
                 Usuario usuario = repository.findByEmail(payload.getEmail());
                 if (usuario == null) {
                     String email = payload.getEmail();
-                    String nameAndUsername = payload.get("name").toString();
+                    String nome = payload.get("name").toString();
+                    String username = "@user" + payload.get("sub").toString();
                     String senha = Cripter.criptografar(GeradorSenhaAleatoria.generate(16));
-                    repository.save(new Usuario(nameAndUsername, nameAndUsername, email, senha));
+                    repository.save(new Usuario(nome, username, email, senha));
                     usuario = repository.findByEmail(email);
                 }
                 String token = new TokenManager().generateToken(usuario);
-                TokenDTO dto = new TokenDTO(token);
+                TokenDTO dto = new TokenDTO(usuario.getId(), token);
                 return dto;
             } else {
                 throw new TokenInvalidoException("Erro ao efetuar login: Token inválido");
