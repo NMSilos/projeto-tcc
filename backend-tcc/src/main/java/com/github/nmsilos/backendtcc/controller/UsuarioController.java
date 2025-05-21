@@ -37,9 +37,15 @@ public class UsuarioController {
         return ResponseEntity.ok().body(token);
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<RespostaUsuarioDTO> buscarInfo(@PathVariable Long id) {
-        RespostaUsuarioDTO dto = RespostaUsuarioMapper.toDto(service.buscarInfo(id));
+    @GetMapping("/buscar/id/{id}")
+    public ResponseEntity<RespostaUsuarioDTO> buscarPorId(@PathVariable Long id) {
+        RespostaUsuarioDTO dto = RespostaUsuarioMapper.toDto(service.buscarPorId(id));
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping("/buscar/username/{username}")
+    public ResponseEntity<RespostaUsuarioDTO> buscarPorUsername(@PathVariable String username) {
+        RespostaUsuarioDTO dto = RespostaUsuarioMapper.toDto(service.buscarPorUsername(username));
         return ResponseEntity.ok().body(dto);
     }
 

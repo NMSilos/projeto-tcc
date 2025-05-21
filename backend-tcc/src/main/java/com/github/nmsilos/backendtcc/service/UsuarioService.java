@@ -81,16 +81,25 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Usuario buscarInfo(Long idUsuario) {
+    public Usuario buscarPorId(Long idUsuario) {
         Usuario usuario = repository.findById(idUsuario).orElseThrow(
                         () -> new EntityNotFoundException("Usuário não encontrado")
         );
         return usuario;
     }
 
+    public Usuario buscarPorUsername(String username) {
+        Usuario usuario = repository.findByUsername(username);
+        if (usuario == null) {
+            throw new EntityNotFoundException(String.format("Usuário '%s' não encontrado", username));
+        } else {
+            return usuario;
+        }
+    }
+
     @Transactional
     public Usuario modificar(Usuario usuario, Usuario novoUsuario) {
-        Usuario usuarioAtual = buscarInfo(usuario.getId());
+        Usuario usuarioAtual = buscarPorId(usuario.getId());
         try {
             if (usuarioAtual != null && usuarioAtual.equals(novoUsuario)) {
                 usuarioAtual.setNome(novoUsuario.getNome());

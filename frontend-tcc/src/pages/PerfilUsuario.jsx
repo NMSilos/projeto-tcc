@@ -16,7 +16,7 @@ export default function PerfilUsuario() {
   const { id } = useParams();
 
   async function carregarDados() {
-    const usuario = await requestLogado(`api/usuarios/buscar/${id}`, {}, "GET");
+    const usuario = await requestLogado(`api/usuarios/buscar/id/${id}`, {}, "GET");
     setUsuarioLogado(usuario);
   }
 
@@ -51,10 +51,10 @@ export default function PerfilUsuario() {
 
       <div className="status-leitura">
         
-        <div className="status-item"><a href="/"><img src={lidosIcon} />Lidos</a></div>
-        <div className="status-item"><img src={lendoIcon} />Lendo</div>
-        <div className="status-item"><img src={pretendoLerIcon} />Pretendo Ler</div>
-        <div className="status-item"><img src={abandonadosIcon} />Abandonados</div>
+        <div className="status-item"><a href="/lidos"><img src={lidosIcon} /></a>Lidos</div>
+        <div className="status-item"><a href="/lendo"><img src={lendoIcon} /></a>Lendo</div>
+        <div className="status-item"><a href="/pretendo-ler"><img src={pretendoLerIcon} /></a>Pretendo Ler</div>
+        <div className="status-item"><a href="/abandonados"><img src={abandonadosIcon} /></a>Abandonados</div>
       </div>
 
       <div className="ultima-leitura">

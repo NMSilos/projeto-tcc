@@ -5,7 +5,6 @@ import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
-import com.github.nmsilos.backendtcc.model.Comentario;
 import com.github.nmsilos.backendtcc.model.Leitura;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Usuario;
@@ -28,7 +27,7 @@ public class LeituraService {
 
     @Transactional
     public RespostaLeituraDTO criarLeitura(Usuario usuarioLogado, CadastroLeituraDTO leitura) {
-        Usuario usuario = usuarioService.buscarInfo(leitura.getUsuario().getId());
+        Usuario usuario = usuarioService.buscarPorId(leitura.getUsuario().getId());
         Livro livro = livroService.buscarInfo(leitura.getLivro().getId());
 
         if (usuario != null && usuario.equals(usuarioLogado)) {
