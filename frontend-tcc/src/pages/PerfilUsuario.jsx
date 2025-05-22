@@ -34,10 +34,6 @@ export default function PerfilUsuario() {
     carregarDados();
   }, [user]);
 
-  useEffect(() => {
-    console.log(ultimasLeituras)
-  }, [ultimasLeituras])
-
   return (
       <div className="perfil-container">
         <div className="perfil-topo">
@@ -72,20 +68,3 @@ export default function PerfilUsuario() {
     </div>
   );
 }
-
-/*
-<div className="ultima-leitura">
-        <h2>Última Leitura:</h2>
-        <div className="leitura-conteudo">
-          <div className="leitura-img">
-            <img src="/livros/hobbit.jpg" alt="O Hobbit" />
-            <p>O Hobbit</p>
-            <div className="stars">★ ★ ★ ★ ☆</div>
-          </div>
-          <div className="leitura-review">
-            <h3>Review:</h3>
-            <p>O Hobbit é um livro fluido, divertido...</p>
-          </div>
-        </div>
-      </div>
-      */

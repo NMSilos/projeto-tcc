@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 
 export default function UltimasLeituras({ leitura }) {
     const livro = leitura.livro;
-    console.log(leitura);
-    console.log(livro);
     
     if(!livro) return null;
 
