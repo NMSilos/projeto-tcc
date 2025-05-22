@@ -13,6 +13,39 @@
   align-items: center;
 }
 
+.esquerda {
+  flex: 1;
+}
+
+.centro {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.barra-pesquisa {
+  width: 100%;
+  max-width: 600px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  background-color: white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.barra-pesquisa::placeholder {
+  color: #aaa;
+}
+
+.direita {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .logo {
   font-size: 20px;
   font-weight: bold;
@@ -31,7 +64,7 @@
 }
 
 .nav-links a:hover {
-  text-decoration: underline;
+  color: #f0e6fc;
 }
 
 .sair-btn {
@@ -42,6 +75,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 .sair-btn:hover {
