@@ -60,9 +60,16 @@ export default function PerfilUsuario() {
       
       <div className='ultimas-leituras'>
         <h2>Últimas Leituras:</h2>
-        {ultimasLeituras.map((leitura, index) => (
+        {ultimasLeituras && ultimasLeituras.length > 0 ? (
+          ultimasLeituras.map((leitura, index) => (
           <UltimasLeituras key={index} leitura={leitura} />
-        ))}
+        ))
+      ) : (
+        <div className='sem-leituras'>
+          <p>Nenhuma leitura encontrada. </p>
+          <p>Comece uma nova!</p>
+        </div>
+      )}
       </div>
 
     </div>
