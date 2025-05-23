@@ -1,5 +1,6 @@
 package com.github.nmsilos.backendtcc.dto.leituras;
 
+import com.github.nmsilos.backendtcc.dto.comentarios.RespostaComentarioDTO;
 import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroNoListDTO;
 
 import java.util.Date;
@@ -12,14 +13,16 @@ public class RespostaLeituraDTO {
     private int pagina_atual;
     private boolean abandonado;
     private RespostaLivroNoListDTO livro;
+    private RespostaComentarioDTO comentario;
 
-    public RespostaLeituraDTO(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, RespostaLivroNoListDTO livro) {
+    public RespostaLeituraDTO(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, RespostaLivroNoListDTO livro, RespostaComentarioDTO comentario) {
         this.id = id;
         this.data_inicio = data_inicio;
         this.data_termino = data_termino;
         this.pagina_atual = pagina_atual;
         this.abandonado = abandonado;
         this.livro = livro;
+        this.comentario = comentario;
     }
 
     public Long getId() {
@@ -70,4 +73,11 @@ public class RespostaLeituraDTO {
         this.livro = livro;
     }
 
+    public RespostaComentarioDTO getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(RespostaComentarioDTO comentario) {
+        this.comentario = comentario;
+    }
 }

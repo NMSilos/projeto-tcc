@@ -31,12 +31,15 @@ public class Leitura {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "comentario_id")
+    @OneToOne(mappedBy = "leitura",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
     private Comentario comentario;
 
     public Leitura() {}
 
+    /*
     public Leitura(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, Livro livro, Usuario usuario, Comentario comentario) {
         this.id = id;
         this.data_inicio = data_inicio;
@@ -47,6 +50,7 @@ public class Leitura {
         this.usuario = usuario;
         this.comentario = comentario;
     }
+     */
 
     public Leitura(Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado) {
         this.data_inicio = data_inicio;

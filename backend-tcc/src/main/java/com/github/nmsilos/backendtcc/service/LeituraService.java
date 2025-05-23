@@ -9,6 +9,7 @@ import com.github.nmsilos.backendtcc.model.Leitura;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.repository.LeituraRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,14 +33,27 @@ public class LeituraService {
 
         if (usuario != null && usuario.equals(usuarioLogado)) {
             Leitura novaLeitura = CadastroLeituraMapper.toModel(leitura);
+
             novaLeitura.setUsuario(usuarioLogado);
             novaLeitura.setLivro(livro);
             usuario.getLeituras().add(novaLeitura);
+
             repository.save(novaLeitura);
             repository.flush();
+            
             return RespostaLeituraMapper.toDto(novaLeitura);
         } else {
             throw new UsuarioInvalidoException("Erro ao salvar: Usuário não autorizado");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Leitura buscarInfo(Long id) {
+        Leitura leitura = repository.getReferenceById(id);
+        if (leitura == null) {
+            throw new EntityNotFoundException("Leitura não encontrada");
+        } else {
+            return leitura;
         }
     }
 }
