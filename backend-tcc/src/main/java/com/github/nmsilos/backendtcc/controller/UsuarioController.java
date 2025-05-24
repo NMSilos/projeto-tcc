@@ -50,8 +50,8 @@ public class UsuarioController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<TokenDTO> modificarUsuario(@AuthenticationPrincipal Usuario usuario, @RequestBody Usuario novoUsuario) {
-        TokenDTO dto = service.modificar(usuario, novoUsuario);
+    public ResponseEntity<TokenDTO> modificarUsuario(@AuthenticationPrincipal Usuario usuario, @RequestBody ModificarUsuarioDTO novoUsuario) {
+        TokenDTO dto = service.modificar(usuario, CadastroUsuarioMapper.toModel(novoUsuario));
         return ResponseEntity.ok().body(dto);
     }
 

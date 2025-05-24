@@ -40,6 +40,13 @@ public class Usuario implements UserDetails {
         this.password = senha;
     }
 
+    public Usuario(Long id, String nome, String apelido, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.username = apelido;
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,12 +1,10 @@
 package com.github.nmsilos.backendtcc.service;
 
-import com.github.nmsilos.backendtcc.dto.usuarios.GoogleLoginRequest;
-import com.github.nmsilos.backendtcc.dto.usuarios.LoginDTO;
-import com.github.nmsilos.backendtcc.dto.usuarios.RespostaUsuarioDTO;
-import com.github.nmsilos.backendtcc.dto.usuarios.TokenDTO;
+import com.github.nmsilos.backendtcc.dto.usuarios.*;
 import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.exception.custom.TokenInvalidoException;
+import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.repository.UsuarioRepository;
@@ -108,13 +106,16 @@ public class UsuarioService {
                 if (novoUsuario.getUsername() != null) {
                     usuarioAtual.setUsername(novoUsuario.getUsername());
                 }
+
                 if (novoUsuario.getPassword() != null) {
                     usuarioAtual.setPassword(Cripter.criptografar(novoUsuario.getPassword()));
+                } else {
+                    novoUsuario.setPassword(usuarioAtual.getPassword());
                 }
+                String token = new TokenManager().generateToken(novoUsuario);
+                return new TokenDTO(novoUsuario.getId(), token);
             }
-            String token = new TokenManager().generateToken(novoUsuario);
-            TokenDTO dto = new TokenDTO(novoUsuario.getId(), token);
-            return dto;
+            return null;
         }
         catch (NullPointerException e) {
             throw new NullPointerException("Erro ao atualizar usuário");
