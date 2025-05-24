@@ -98,15 +98,23 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario modificar(Usuario usuario, Usuario novoUsuario) {
+    public TokenDTO modificar(Usuario usuario, Usuario novoUsuario) {
         Usuario usuarioAtual = buscarPorId(usuario.getId());
         try {
             if (usuarioAtual != null && usuarioAtual.equals(novoUsuario)) {
-                usuarioAtual.setNome(novoUsuario.getNome());
-                usuarioAtual.setUsername(novoUsuario.getUsername());
-                usuarioAtual.setPassword(Cripter.criptografar(novoUsuario.getPassword()));
+                if (novoUsuario.getNome() != null) {
+                    usuarioAtual.setNome(novoUsuario.getNome());
+                }
+                if (novoUsuario.getUsername() != null) {
+                    usuarioAtual.setUsername(novoUsuario.getUsername());
+                }
+                if (novoUsuario.getPassword() != null) {
+                    usuarioAtual.setPassword(Cripter.criptografar(novoUsuario.getPassword()));
+                }
             }
-            return usuarioAtual;
+            String token = new TokenManager().generateToken(novoUsuario);
+            TokenDTO dto = new TokenDTO(novoUsuario.getId(), token);
+            return dto;
         }
         catch (NullPointerException e) {
             throw new NullPointerException("Erro ao atualizar usuário");
