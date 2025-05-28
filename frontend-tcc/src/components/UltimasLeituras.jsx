@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
-
 export default function UltimasLeituras({ leitura }) {
-    const livro = leitura.livro;
-    const comentario = leitura.comentario;
-    const estrelas = [1,2,3,4,5];
-    
-    if(!livro) return null;
+  const livro = leitura.livro;
+  const comentario = leitura.comentario;
+  const estrelas = [1,2,3,4,5];
+  
+  if(!livro) return null;
 
   return (
     <div className="leitura">
@@ -15,7 +13,9 @@ export default function UltimasLeituras({ leitura }) {
           <div className="stars">
             {
               estrelas.map(item => {
-                if(item <= comentario.nota){
+                if(comentario == null) {
+                  return "☆";
+                } else if(item <= comentario.nota) {
                   return "★";
                 }
                 return "☆"; 
@@ -25,7 +25,7 @@ export default function UltimasLeituras({ leitura }) {
         </div>
         <div className="leitura-review">
           <h3>Review:</h3>
-          <p>{comentario.texto}</p>
+          <p>{comentario ? comentario.texto : "Nenhum comentário atribuído"}</p>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import CadastroUsuario from './pages/CadastroUsuario'
 import PerfilUsuario from './pages/PerfilUsuario'
 import AreaLogada from './components/AreaLogada/AreaLogada'
+import EditarUsuario from './pages/EditarUsuario'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<AreaLogada />}>  
             <Route path="/perfil/:user" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/:status" element={<PerfilUsuario />} />
+            <Route path="/perfil/:user/editar" element={<EditarUsuario />} />
           </Route>
         </Routes>
       </BrowserRouter>

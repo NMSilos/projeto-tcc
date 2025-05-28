@@ -46,7 +46,7 @@ export default function PerfilUsuario() {
               <p>Total Leituras: {leituras.length}</p>
             </div>
             <div className="perfil-editar">
-              <button>Editar Perfil</button>
+              <Link to={`/perfil/${username}/editar`}><button>Editar Perfil</button></Link>
             </div>
           </div>
       </div>

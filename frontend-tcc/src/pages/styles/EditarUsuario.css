@@ -1,0 +1,15 @@
+.editar-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    height: 50vh;           
+    background: #f9f9f9;   
+    padding: 20px;           
+  }
+  
+  .campo-senha {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  

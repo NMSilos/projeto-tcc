@@ -118,6 +118,7 @@ public class UsuarioService {
             return null;
         }
         catch (NullPointerException e) {
+            //trocar por entitynotfound
             throw new NullPointerException("Erro ao atualizar usuário");
         }
     }
