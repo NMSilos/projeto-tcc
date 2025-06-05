@@ -2,7 +2,7 @@ package com.github.nmsilos.backendtcc.controller;
 
 import com.github.nmsilos.backendtcc.dto.comentarios.CadastroComentarioDTO;
 import com.github.nmsilos.backendtcc.dto.comentarios.RespostaComentarioDTO;
-import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.service.ComentarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class ComentarioController {
 
 
     @PostMapping("/comentar")
-    public ResponseEntity<RespostaComentarioDTO> comentar(@AuthenticationPrincipal Usuario usuario, @RequestBody CadastroComentarioDTO comentario) {
+    public ResponseEntity<RespostaComentarioDTO> comentar(@AuthenticationPrincipal Admin usuario, @RequestBody CadastroComentarioDTO comentario) {
         RespostaComentarioDTO resposta = service.comentar(comentario);
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }

@@ -29,7 +29,7 @@ public class Leitura {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private Admin usuario;
 
     @OneToOne(mappedBy = "leitura",
             cascade = CascadeType.ALL,
@@ -115,11 +115,11 @@ public class Leitura {
         this.livro = livro;
     }
 
-    public Usuario getUsuario() {
+    public Admin getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Admin usuario) {
         this.usuario = usuario;
     }
 }

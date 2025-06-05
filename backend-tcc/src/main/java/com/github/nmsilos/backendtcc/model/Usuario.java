@@ -1,32 +1,14 @@
 package com.github.nmsilos.backendtcc.model;
 
-import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private String nome;
-
-    @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String password;
+public class Usuario extends Admin {
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Leitura> leituras = new ArrayList<>();
@@ -34,64 +16,11 @@ public class Usuario implements UserDetails {
     public Usuario() {}
 
     public Usuario(String nome, String apelido, String email, String senha) {
-        this.nome = nome;
-        this.username = apelido;
-        this.email = email;
-        this.password = senha;
+        super(nome, apelido, email, senha);
     }
 
-    public Usuario(Long id, String nome, String apelido, String email) {
-        this.id = id;
-        this.nome = nome;
-        this.username = apelido;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setUsername(String apelido) {
-        this.username = apelido;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String senha) {
-        this.password = senha;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
+    public Usuario(Long id, String nome, String apelido, String email, String senha) {
+        super(id, nome, apelido, email, senha);
     }
 
     public List<Leitura> getLeituras() {
@@ -100,35 +29,6 @@ public class Usuario implements UserDetails {
 
     public void setLeituras(List<Leitura> leituras) {
         this.leituras = leituras;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Usuario usuario = (Usuario) obj;
-        if (this.getId() == usuario.getId()) return true;
-        return false;
     }
 
 }

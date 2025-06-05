@@ -3,7 +3,7 @@ package com.github.nmsilos.backendtcc.controller;
 import com.github.nmsilos.backendtcc.dto.livros.CadastroLivroDTO;
 import com.github.nmsilos.backendtcc.mapper.livros.CadastroLivroMapper;
 import com.github.nmsilos.backendtcc.model.Livro;
-import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class LivroController {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Livro> buscar(@AuthenticationPrincipal Usuario usuario, @PathVariable Long id) {
+    public ResponseEntity<Livro> buscar(@AuthenticationPrincipal Admin usuario, @PathVariable Long id) {
         Livro livro = service.buscarInfo(id);
         return ResponseEntity.ok().body(livro);
     }

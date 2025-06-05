@@ -1,10 +1,11 @@
 .editar-container {
     display: flex;
     justify-content: center; 
-    align-items: center;    
-    height: 50vh;           
-    background: #f9f9f9;   
-    padding: 20px;           
+    align-items: center;
+    height: 100%;        
+    padding: 20px;
+    box-sizing: border-box;
+    flex-direction: column;           
   }
   
   .campo-senha {
@@ -12,4 +13,6 @@
     display: flex;
     flex-direction: column;
   }
+  
+
   

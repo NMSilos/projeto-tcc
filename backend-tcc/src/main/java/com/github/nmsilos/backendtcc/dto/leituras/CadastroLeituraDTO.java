@@ -1,7 +1,7 @@
 package com.github.nmsilos.backendtcc.dto.leituras;
 
 import com.github.nmsilos.backendtcc.model.Livro;
-import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.model.Admin;
 
 import java.util.Date;
 
@@ -13,7 +13,7 @@ public class CadastroLeituraDTO {
     private int pagina_atual;
     private boolean abandonado;
     private Livro livro;
-    private Usuario usuario;
+    private Admin usuario;
 
     public Long getId() {
         return id;
@@ -63,11 +63,11 @@ public class CadastroLeituraDTO {
         this.livro = livro;
     }
 
-    public Usuario getUsuario() {
+    public Admin getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Admin usuario) {
         this.usuario = usuario;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class ConfigSecurity {
 
     @Autowired
@@ -38,6 +40,7 @@ public class ConfigSecurity {
                             .requestMatchers(HttpMethod.POST,"api/usuarios/google").permitAll()
                             .requestMatchers(HttpMethod.POST,"api/livros/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.GET,"api/usuarios/buscar/**").permitAll()
+                            .requestMatchers(HttpMethod.POST,"/admin/cadastrar").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)

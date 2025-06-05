@@ -3,6 +3,7 @@ package com.github.nmsilos.backendtcc.controller;
 import com.github.nmsilos.backendtcc.dto.usuarios.*;
 import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
+import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;

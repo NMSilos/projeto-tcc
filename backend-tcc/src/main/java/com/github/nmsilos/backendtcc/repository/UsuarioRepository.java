@@ -1,5 +1,6 @@
 package com.github.nmsilos.backendtcc.repository;
 
+import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

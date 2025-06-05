@@ -31,7 +31,13 @@ export default function Login() {
     try {
       const dados = await request("api/usuarios/login", credenciais, "POST");
       localStorage.setItem("token", dados.token);
-      navigate(`/perfil/${username}`);
+      
+      const usuario = jwtDecode(dados.token)
+      if(usuario.role == "ADMIN") {
+        navigate(`/admin`);
+      } else {
+        navigate(`/perfil/${username}`)
+      }
       alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);

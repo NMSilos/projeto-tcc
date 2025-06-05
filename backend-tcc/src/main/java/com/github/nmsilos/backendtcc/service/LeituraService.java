@@ -7,6 +7,7 @@ import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
 import com.github.nmsilos.backendtcc.model.Leitura;
 import com.github.nmsilos.backendtcc.model.Livro;
+import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.repository.LeituraRepository;
 import jakarta.persistence.EntityNotFoundException;

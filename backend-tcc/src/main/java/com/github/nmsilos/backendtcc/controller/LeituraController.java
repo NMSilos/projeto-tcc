@@ -3,6 +3,7 @@ package com.github.nmsilos.backendtcc.controller;
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
+import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.service.LeituraService;
 import org.springframework.beans.factory.annotation.Autowired;

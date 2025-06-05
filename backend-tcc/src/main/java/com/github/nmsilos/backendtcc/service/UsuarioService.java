@@ -4,9 +4,10 @@ import com.github.nmsilos.backendtcc.dto.usuarios.*;
 import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.exception.custom.TokenInvalidoException;
-import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
+import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.repository.AdminRepository;
 import com.github.nmsilos.backendtcc.repository.UsuarioRepository;
 import com.github.nmsilos.backendtcc.security.Cripter;
 import com.github.nmsilos.backendtcc.security.TokenManager;
@@ -28,6 +29,9 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
     @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
     private AuthenticationManager manager;
 
     @Transactional
@@ -41,12 +45,13 @@ public class UsuarioService {
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.getUsername(), dados.getPassword());
         try{
             var authentication = manager.authenticate(authenticationToken);
-            Usuario usuario = (Usuario) authentication.getPrincipal();
+            Admin usuario = (Usuario) authentication.getPrincipal();
             String token = new TokenManager().generateToken(usuario);
             TokenDTO dto = new TokenDTO(usuario.getId(), token);
             return dto;
         }
         catch (AuthenticationException e) {
+            e.printStackTrace();
             throw new UsuarioInvalidoException("Erro ao efetuar login: Usuário ou senha incorretos");
         }
     }
@@ -99,23 +104,20 @@ public class UsuarioService {
     public TokenDTO modificar(Usuario usuario, Usuario novoUsuario) {
         Usuario usuarioAtual = buscarPorId(usuario.getId());
         try {
-            if (usuarioAtual != null && usuarioAtual.equals(novoUsuario)) {
-                if (novoUsuario.getNome() != null) {
-                    usuarioAtual.setNome(novoUsuario.getNome());
-                }
-                if (novoUsuario.getUsername() != null) {
-                    usuarioAtual.setUsername(novoUsuario.getUsername());
-                }
-
-                if (novoUsuario.getPassword() != null) {
-                    usuarioAtual.setPassword(Cripter.criptografar(novoUsuario.getPassword()));
-                } else {
-                    novoUsuario.setPassword(usuarioAtual.getPassword());
-                }
-                String token = new TokenManager().generateToken(novoUsuario);
-                return new TokenDTO(novoUsuario.getId(), token);
+            if (novoUsuario.getNome() != null) {
+                usuarioAtual.setNome(novoUsuario.getNome());
             }
-            return null;
+            if (novoUsuario.getUsername() != null) {
+                usuarioAtual.setUsername(novoUsuario.getUsername());
+            }
+
+            if (novoUsuario.getPassword() != null && !novoUsuario.getPassword().isEmpty()) {
+                usuarioAtual.setPassword(Cripter.criptografar(novoUsuario.getPassword()));
+            } else {
+                novoUsuario.setPassword(usuarioAtual.getPassword());
+            }
+            String token = new TokenManager().generateToken(usuarioAtual);
+            return new TokenDTO(usuarioAtual.getId(), token);
         }
         catch (NullPointerException e) {
             //trocar por entitynotfound

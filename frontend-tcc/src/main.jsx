@@ -8,6 +8,8 @@ import CadastroUsuario from './pages/CadastroUsuario'
 import PerfilUsuario from './pages/PerfilUsuario'
 import AreaLogada from './components/AreaLogada/AreaLogada'
 import EditarUsuario from './pages/EditarUsuario'
+import VerificarAdmin from './components/VerificarAdmin'
+import TesteAdmin from './pages/TesteAdmin'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -16,11 +18,13 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route index element={<Login />} />
           <Route path="/cadastro" element={<CadastroUsuario />} />
-          
           <Route path="/" element={<AreaLogada />}>  
             <Route path="/perfil/:user" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/:status" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/editar" element={<EditarUsuario />} />
+          </Route>
+          <Route path="/admin" element={<VerificarAdmin><AreaLogada /></VerificarAdmin>} >
+            <Route index element={<TesteAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>

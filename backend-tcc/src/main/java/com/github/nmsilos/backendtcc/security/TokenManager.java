@@ -2,8 +2,9 @@ package com.github.nmsilos.backendtcc.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.model.Admin;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,13 +14,14 @@ public class TokenManager {
     @Value("MinhaSecretKey")
     public String secretKey;
 
-    public String generateToken(Usuario usuario) {
+    public String generateToken(Admin usuario) {
         try{
             var algorithm = Algorithm.HMAC256("1231233123");
             return JWT.create()
                     .withIssuer("Minha API")
                     .withSubject(usuario.getUsername())
                     .withClaim("nome", usuario.getNome())
+                    .withClaim("role", usuario.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().get(0))
                     .withExpiresAt(dataExpiracao())
                     .sign(algorithm);
         }
