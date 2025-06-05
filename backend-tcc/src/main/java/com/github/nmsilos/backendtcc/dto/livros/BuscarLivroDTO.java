@@ -2,14 +2,24 @@ package com.github.nmsilos.backendtcc.dto.livros;
 
 public class BuscarLivroDTO {
 
+    private Long id;
     private String titulo;
     private String autor;
     private double avaliacao;
 
-    public BuscarLivroDTO(String titulo, String autor, double avaliacao) {
+    public BuscarLivroDTO(Long id, String titulo, String autor, double avaliacao) {
+        this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.avaliacao = avaliacao;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {

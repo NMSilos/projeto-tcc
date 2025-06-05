@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 export default function AreaLogada() {
   const token = localStorage.getItem("token");
   const dados = jwtDecode(localStorage.getItem("token"));
-  console.log(dados);
+
   if (!token) {
     return <Navigate to="/" />;
   }

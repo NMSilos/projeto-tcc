@@ -30,7 +30,7 @@ export default function BuscarLivros() {
     }, [query]);
 
     return(
-        <div className="buscar-container">
+    <div className="buscar-container">
       <h2 className="buscar-titulo">Pesquisa: <span className="buscar-query">"{query}"</span></h2>
 
       {livros.length > 0 ? (
@@ -41,15 +41,11 @@ export default function BuscarLivros() {
               <p className="livro-autor">{livro.autor}</p>
               <p className="livro-avaliacao">
                 {
-                estrelas.map(item => {
-                    if(livro.avaliacao == null) {
-                        return "☆";
-                    } else if(item <= livro.avaliacao) {
-                        return "★";
-                    }
-                        return "☆"; 
-                    })
+                estrelas.map((item, index) => {
+                    const estrela = livro.avaliacao == null ? "☆" : item <= livro.avaliacao ? "★" : "☆";
+                    return <span key={`star-${livro.id}-${index}`}>{estrela}</span>;
                 }
+              )}
               </p>
             </div>
           ))}

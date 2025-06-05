@@ -5,6 +5,6 @@ import com.github.nmsilos.backendtcc.model.Livro;
 
 public class BuscarLivroMapper {
     public static BuscarLivroDTO toDto(Livro livro) {
-        return new BuscarLivroDTO(livro.getTitulo(), livro.getAutor(), livro.getAvaliacao());
+        return new BuscarLivroDTO(livro.getId(), livro.getTitulo(), livro.getAutor(), livro.getAvaliacao());
     }
 }
