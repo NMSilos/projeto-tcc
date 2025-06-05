@@ -32,7 +32,10 @@ public class ComentarioService {
         Leitura leitura = leituraService.buscarInfo(comentario.getLeitura().getId());
 
         leitura.setComentario(com);
+
         livro.getComentarios().add(com);
+        livroService.atualizarAvaliacao(livro.getId());
+
         com.setLivro(livro);
         com.setLeitura(leitura);
 

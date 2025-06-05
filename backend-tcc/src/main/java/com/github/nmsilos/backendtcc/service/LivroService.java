@@ -4,6 +4,7 @@ import com.github.nmsilos.backendtcc.dto.livros.BuscarLivroDTO;
 import com.github.nmsilos.backendtcc.exception.custom.LivroJaCadastradoException;
 import com.github.nmsilos.backendtcc.exception.custom.LivroNaoEncontradoException;
 import com.github.nmsilos.backendtcc.mapper.livros.BuscarLivroMapper;
+import com.github.nmsilos.backendtcc.model.Comentario;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,13 @@ public class LivroService {
         List<Livro> livros = repository.findByTituloContainingIgnoreCase(query);
         List<BuscarLivroDTO> buscados = livros.stream().map(BuscarLivroMapper::toDto).toList();
         return buscados;
+    }
+
+    @Transactional
+    protected void atualizarAvaliacao(Long id) {
+        Livro livro = buscarInfo(id);
+        double somaNotas = livro.getComentarios().stream().mapToDouble(Comentario::getNota).sum();
+        double avaliacao = somaNotas / livro.getComentarios().size();
+        livro.setAvaliacao(avaliacao);
     }
 }
