@@ -10,6 +10,7 @@ import AreaLogada from './components/AreaLogada/AreaLogada'
 import EditarUsuario from './pages/EditarUsuario'
 import VerificarAdmin from './components/VerificarAdmin'
 import TesteAdmin from './pages/TesteAdmin'
+import BuscarLivros from './pages/BuscarLivros'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/perfil/:user" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/:status" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/editar" element={<EditarUsuario />} />
+            <Route path="/buscar" element={<BuscarLivros />}/>
           </Route>
           <Route path="/admin" element={<VerificarAdmin><AreaLogada /></VerificarAdmin>} >
             <Route index element={<TesteAdmin />} />

@@ -1,12 +1,16 @@
 package com.github.nmsilos.backendtcc.service;
 
+import com.github.nmsilos.backendtcc.dto.livros.BuscarLivroDTO;
 import com.github.nmsilos.backendtcc.exception.custom.LivroJaCadastradoException;
 import com.github.nmsilos.backendtcc.exception.custom.LivroNaoEncontradoException;
+import com.github.nmsilos.backendtcc.mapper.livros.BuscarLivroMapper;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class LivroService {
@@ -30,5 +34,12 @@ public class LivroService {
                 () -> new LivroNaoEncontradoException("Erro ao buscar: Livro não encontrado")
         );
         return livroSalvo;
+    }
+
+    @Transactional(readOnly = true)
+    public List<BuscarLivroDTO> buscarPorTitulo(String query) {
+        List<Livro> livros = repository.findByTituloContainingIgnoreCase(query);
+        List<BuscarLivroDTO> buscados = livros.stream().map(BuscarLivroMapper::toDto).toList();
+        return buscados;
     }
 }

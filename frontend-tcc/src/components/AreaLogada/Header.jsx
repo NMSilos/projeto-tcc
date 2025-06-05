@@ -1,9 +1,25 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./AreaLogada.css";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export default function Header() {
 
-  const { user } = useParams();
+  const [user, setUser] = useState();
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const pesquisarLivros = (e) => {
+    e.preventDefault();
+    if(query.trim() != "") {
+      navigate(`/buscar?query=${encodeURIComponent(query)}`)
+    }
+  }
+
+  useEffect(() => {
+    const data = jwtDecode(localStorage.getItem("token"))
+    setUser(data.sub);
+  }, []);
 
   return (
     <header className="header">
@@ -12,7 +28,15 @@ export default function Header() {
           <h1 className="logo">AppTCC</h1>
         </div>
         <div className="centro">
-          <input type="text" className="barra-pesquisa" placeholder="🔍︎ Pesquisar" />
+          <form className="form-pesquisa" onSubmit={pesquisarLivros}>
+            <input
+              type="text" 
+              className="barra-pesquisa" 
+              placeholder="🔍︎ Pesquisar" 
+              value={query} 
+              onChange={(e) => setQuery(e.target.value)} 
+            />
+          </form>
         </div>
         <div className="direita">
           <nav className="nav-links">

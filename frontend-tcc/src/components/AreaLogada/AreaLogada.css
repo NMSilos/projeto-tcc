@@ -18,14 +18,28 @@
 }
 
 .centro {
-  flex: 2;
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
+  min-width: 0;
+}
+
+.centro form {
+  width: 100%;
+  max-width: 600px;
+}
+
+.form-pesquisa {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 0;
 }
 
 .barra-pesquisa {
+  flex-grow: 1;
   width: 100%;
-  max-width: 600px;
   padding: 8px 16px;
   border: none;
   border-radius: 20px;
@@ -33,7 +47,13 @@
   font-size: 14px;
   color: #333;
   background-color: white;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
+}
+
+.barra-pesquisa:focus {
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
 }
 
 .barra-pesquisa::placeholder {
