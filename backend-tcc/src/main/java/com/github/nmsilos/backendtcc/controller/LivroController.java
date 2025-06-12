@@ -2,7 +2,9 @@ package com.github.nmsilos.backendtcc.controller;
 
 import com.github.nmsilos.backendtcc.dto.livros.BuscarLivroDTO;
 import com.github.nmsilos.backendtcc.dto.livros.CadastroLivroDTO;
+import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroNoListDTO;
 import com.github.nmsilos.backendtcc.mapper.livros.CadastroLivroMapper;
+import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroNoListMapper;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.service.LivroService;
@@ -28,8 +30,8 @@ public class LivroController {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Livro> buscar(@AuthenticationPrincipal Admin usuario, @PathVariable Long id) {
-        Livro livro = service.buscarInfo(id);
+    public ResponseEntity<RespostaLivroNoListDTO> buscar(@AuthenticationPrincipal Admin usuario, @PathVariable Long id) {
+        RespostaLivroNoListDTO livro = RespostaLivroNoListMapper.toNoListDTO(service.buscarInfo(id));
         return ResponseEntity.ok().body(livro);
     }
 

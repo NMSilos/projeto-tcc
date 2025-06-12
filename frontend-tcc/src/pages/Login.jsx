@@ -38,7 +38,6 @@ export default function Login() {
       } else {
         navigate(`/perfil/${username}`)
       }
-      alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);
     }

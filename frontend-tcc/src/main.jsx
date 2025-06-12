@@ -11,6 +11,7 @@ import EditarUsuario from './pages/EditarUsuario'
 import VerificarAdmin from './components/VerificarAdmin'
 import TesteAdmin from './pages/TesteAdmin'
 import BuscarLivros from './pages/BuscarLivros'
+import TelaLivro from './pages/TelaLivro'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/perfil/:user/:status" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/editar" element={<EditarUsuario />} />
             <Route path="/buscar" element={<BuscarLivros />}/>
+            <Route path="/livros/:id" element={<TelaLivro />}/>
           </Route>
           <Route path="/admin" element={<VerificarAdmin><AreaLogada /></VerificarAdmin>} >
             <Route index element={<TesteAdmin />} />
