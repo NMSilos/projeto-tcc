@@ -87,7 +87,6 @@ export default function PerfilUsuario() {
         </div>
       )}
       </div>
-
     </div>
   );
 }

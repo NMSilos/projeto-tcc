@@ -1,0 +1,147 @@
+.tela-livro-container {
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.livro-topo {
+  display: flex;
+  gap: 40px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(100, 0, 200, 0.1);
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.livro-capa img {
+  width: 220px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0, 0.90);
+}
+
+.livro-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.livro-info h1 {
+  color: #5727a3;
+  font-size: 26px;
+  margin: 0;
+}
+
+.livro-autor {
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  margin: 0;
+}
+
+.livro-estrelas {
+  font-size: 22px;
+  font-weight: bold;
+  color: #f1c40f;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.livro-acoes {
+  margin-top: 20px;
+  position: relative;
+}
+
+.dropdown-adicionar {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-adicionar {
+  background-color: #a144f4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
+}
+
+.btn-adicionar:hover {
+  background-color: #7c2fd0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+  width: max-content;
+  min-width: 180px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.30);
+
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu.aberto {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-menu div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-menu div:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu img {
+  width: 24px;
+  height: 24px;
+}
+
+.livro-descricao {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.livro-descricao h2 {
+  color: #5727a3;
+  margin-bottom: 15px;
+}
+
+.livro-descricao p {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+}
