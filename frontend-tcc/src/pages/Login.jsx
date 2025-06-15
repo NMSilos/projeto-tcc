@@ -53,7 +53,6 @@ export default function Login() {
 
       var user = jwtDecode(dados.token);
       navigate(`/perfil/${user.sub.replace(/"/g, '')}`);
-      alert("LOGADO COM SUCESSO!")
     } catch (error) {
       alert(error.mensagem);
     }
@@ -88,10 +87,9 @@ export default function Login() {
               </Link>
               </p>
               <button type="submit" className="submit-btn" >Entrar</button>
-              <GoogleLogin shape="circle" text="continue_with" locale="pt-BR"
+              <GoogleLogin shape="circle" text="continue_with"
                   onSuccess={credentialResponse => {
                       logarComGoogle(credentialResponse);
-                      //console.log(credentialResponse);
                   }}
                   onError={() => {
                       console.log('Login Failed'); 

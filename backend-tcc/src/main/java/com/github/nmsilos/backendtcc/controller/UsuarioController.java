@@ -5,12 +5,21 @@ import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
 import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.security.Cripter;
 import com.github.nmsilos.backendtcc.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -19,11 +28,59 @@ public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
+    private final Path folderPath = Paths.get("uploads");
+
     @PostMapping("/cadastrar")
-    public ResponseEntity<RespostaUsuarioDTO> cadastrarUsuario(@RequestBody CadastroUsuarioDTO dados) {
-        Usuario usuario = CadastroUsuarioMapper.toModel(dados);
-        RespostaUsuarioDTO resposta = service.cadastrar(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
+    public ResponseEntity<RespostaUsuarioDTO> cadastrarUsuario(
+            @RequestParam ("nome") String nome,
+            @RequestParam ("username") String username,
+            @RequestParam ("password") String password,
+            @RequestParam ("email") String email,
+            @RequestParam (value = "imagem", required = false) MultipartFile image) {
+
+        try {
+            /*
+            String uuid = UUID.randomUUID().toString();
+            String extensao = "";
+            if (image.getOriginalFilename().contains(".")) {
+                int aux = image.getOriginalFilename().lastIndexOf(".");
+                extensao = image.getOriginalFilename().substring(aux);
+            }
+
+            String nomeImage = uuid.concat(extensao);
+             */
+
+            String nomeImage = null;
+            String typeImage = null;
+            if (image != null) {
+                nomeImage = service.salvarImagem(image);
+                typeImage = image.getContentType();
+            }
+            Usuario usuario = new Usuario(nome, username, email, Cripter.criptografar(password), nomeImage, typeImage);
+
+            /*
+            if (!Files.exists(folderPath)) {
+                Files.createDirectories(folderPath);
+            }
+
+            Files.copy(image.getInputStream(), folderPath.resolve(nomeImage));
+             */
+
+            RespostaUsuarioDTO resposta = service.cadastrar(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
+        }
+        catch (Exception e) {
+            System.out.println("ERRO: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @GetMapping("/userImage/{imagem}")
+    public ResponseEntity<byte[]> buscarImagem(@PathVariable String imagem) throws IOException {
+        Usuario user = service.buscarPorImagem(imagem);
+        Path imagemPath = Paths.get(folderPath.toString(), imagem);
+        byte[] imagemBytes = Files.readAllBytes(imagemPath);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(user.getContentType())).body(imagemBytes);
     }
 
     @PostMapping("/login")

@@ -30,6 +30,10 @@ public class Admin implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    protected String imagem;
+
+    protected String contentType;
+
     public Admin() {}
 
     public Admin(String nome, String apelido, String email, String senha) {
@@ -99,6 +103,22 @@ public class Admin implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     @Override

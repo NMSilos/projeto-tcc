@@ -21,6 +21,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -33,6 +40,8 @@ public class UsuarioService {
 
     @Autowired
     private AuthenticationManager manager;
+
+    private final Path folderPath = Paths.get("uploads");
 
     @Transactional
     public RespostaUsuarioDTO cadastrar(Usuario usuario) {
@@ -68,7 +77,8 @@ public class UsuarioService {
                     String nome = payload.get("name").toString();
                     String username = "@user" + payload.get("sub").toString();
                     String senha = Cripter.criptografar(GeradorSenhaAleatoria.generate(16));
-                    repository.save(new Usuario(nome, username, email, senha));
+                    String imagem = payload.get("picture").toString();
+                    repository.save(new Usuario(nome, username, email, senha, imagem, null));
                     usuario = repository.findByEmail(email);
                 }
                 String token = new TokenManager().generateToken(usuario);
@@ -138,4 +148,27 @@ public class UsuarioService {
             throw new IllegalArgumentException("Erro ao encerrar conta");
         }
     }
+
+    public Usuario buscarPorImagem(String imagem) {
+        return repository.findByImagem(imagem);
+    }
+
+    public String salvarImagem(MultipartFile image) throws IOException {
+        String uuid = UUID.randomUUID().toString();
+        String extensao = "";
+        if (image.getOriginalFilename().contains(".")) {
+            int aux = image.getOriginalFilename().lastIndexOf(".");
+            extensao = image.getOriginalFilename().substring(aux);
+        }
+
+        String nomeImage = uuid.concat(extensao);
+
+        if (!Files.exists(folderPath)) {
+            Files.createDirectories(folderPath);
+        }
+
+        Files.copy(image.getInputStream(), folderPath.resolve(nomeImage));
+        return nomeImage;
+    }
+
 }

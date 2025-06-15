@@ -15,8 +15,10 @@ public class Usuario extends Admin {
 
     public Usuario() {}
 
-    public Usuario(String nome, String apelido, String email, String senha) {
+    public Usuario(String nome, String apelido, String email, String senha, String imagem, String contentType) {
         super(nome, apelido, email, senha);
+        this.imagem = imagem;
+        this.contentType = contentType;
     }
 
     public Usuario(Long id, String nome, String apelido, String email, String senha) {

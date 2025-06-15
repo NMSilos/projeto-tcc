@@ -21,6 +21,7 @@ public class TokenManager {
                     .withIssuer("Minha API")
                     .withSubject(usuario.getUsername())
                     .withClaim("nome", usuario.getNome())
+                    .withClaim("imagem", usuario.getImagem())
                     .withClaim("role", usuario.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().get(0))
                     .withExpiresAt(dataExpiracao())
                     .sign(algorithm);

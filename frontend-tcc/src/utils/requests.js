@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8080/";
+export const baseUrl = "http://localhost:8080/";
 
 export async function requestLogado(url, dados, method) {
   const finalUrl = baseUrl + url;
@@ -39,6 +39,31 @@ export async function request(url, dados, method) {
     headers: {
       "Content-Type": "application/json",
     },
+  });
+  if (response.ok) {
+    const dados = await response.json();
+    return dados;
+  } else {
+    const dados = await response.json();
+    throw new Error(dados.mensage);
+  }
+}
+
+export async function requestFormData(url, dados, method) {
+  const finalUrl = baseUrl + url;
+  if(!dados.imagem) {
+    dados.imagem = null;
+  }
+
+  const formData = new FormData();
+  for(const index in dados) {
+    formData.append(index, dados[index]);
+  }
+  
+
+  const response = await fetch(finalUrl, {
+    method: method,
+    body: formData,
   });
   if (response.ok) {
     const dados = await response.json();

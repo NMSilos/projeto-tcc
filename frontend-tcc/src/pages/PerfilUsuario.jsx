@@ -6,13 +6,15 @@ import lendoIcon from "../assets/icons/lendo.svg"
 import pretendoLerIcon from "../assets/icons/pretendo_ler.svg"
 import abandonadosIcon from "../assets/icons/abandonados.svg"
 import "./styles/PerfilUsuario.css";
-import { requestLogado } from '../utils/requests';
+import { baseUrl, requestLogado } from '../utils/requests';
 import { Link, useParams } from 'react-router';
 import UltimasLeituras from '../components/UltimasLeituras';
+import defaultUser from '../assets/default-user.jpg';
 
 export default function PerfilUsuario() {
   const [nome, setNome] = useState();
   const [username, setUsername] = useState();
+  const [imagem, setImagem] = useState();
   const [leituras, setLeituras] = useState([]);
   const [ultimasLeituras, setUltimasLeituras] = useState([]);
   const { user } = useParams();
@@ -23,13 +25,27 @@ export default function PerfilUsuario() {
     setUltimasLeituras(usuario.leituras.slice().reverse().slice(0, 3))
   }
 
+  
+  function carregarImagem(data) {
+    if(!data.imagem) {
+      setImagem(defaultUser);
+    } else {
+      if(data.imagem.slice(0, 5) == "https") {
+        setImagem(data.imagem);
+      } else {
+        setImagem(`${baseUrl}api/usuarios/userImage/${data.imagem}`);
+      }
+    }
+  }
+  
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const dados = jwtDecode(token);
-
-      setNome(dados?.nome);
-      setUsername(dados?.sub);
+      setNome(dados.nome);
+      setUsername(dados.sub);
+      carregarImagem(dados);
     }
     carregarDados();
   }, [user]);
@@ -38,7 +54,7 @@ export default function PerfilUsuario() {
       <div className="perfil-container">
         <div className="perfil-topo">
           <div className="perfil-info">
-            <img src="/caminho/avatar.svg" alt="Avatar" />
+            <img src={imagem} alt="Avatar" />
             <div className="perfil-detalhes">
               <p><strong>{nome}</strong></p>
               <p>{username}</p>

@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { request } from '../utils/requests';
+import { request, requestFormData } from '../utils/requests';
 import LoginLayout from '../components/LoginLayout/LoginLayout';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CadastroUsuario() {
   const [nome, setNome] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [imagem, setImagem] = useState('');
   const navigate = useNavigate();
 
   const cadastrarUsuario = (e) => {
     e.preventDefault();
-    e.preventDefault();
+    //e.preventDefault();
     if (!nome || !username || !email || !password) {
       alert("Todos os campos são obrigatórios");
       return;
@@ -21,10 +24,14 @@ export default function CadastroUsuario() {
       nome,
       username,
       email,
-      password
+      password,
+      imagem
     };
-    request("api/usuarios/cadastrar", dados, "POST");
-    navigate('/');
+    requestFormData("api/usuarios/cadastrar", dados, "POST");
+    toast.success("Cadastrado com sucesso!");
+    setTimeout(() => {
+      navigate('/');
+    }, 1500)
   };
 
   return (
@@ -76,6 +83,16 @@ export default function CadastroUsuario() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div className='form-group'>
+            <label htmlFor="image">Imagem</label>
+            <input 
+              type="file" 
+              name="image"
+              id="image" 
+              onChange={(e) => setImagem(e.target.files[0])}
+              accept='image/png, image/jpeg'
+            />
+          </div>
           <button type="submit" className="submit-btn">Cadastrar</button>
         </form>
         <p>
@@ -84,6 +101,7 @@ export default function CadastroUsuario() {
             Faça login
           </a>
         </p>
+        <ToastContainer />
       </div>
     </LoginLayout>
   );
