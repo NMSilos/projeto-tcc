@@ -218,3 +218,10 @@
   line-height: 1.4;
   word-wrap: break-word;
 }
+
+.review-text span {
+  line-height: 1.4;
+  word-wrap: break-word;
+  font-style: italic;
+  color: #949494;
+}

@@ -19,6 +19,11 @@ export default function TelaLivro() {
 
     const [dropdownAberto, setDropdownAberto] = useState(false);
 
+    const leiturasFiltradas = (leituras || []).filter(leitura =>
+        (leitura.data_termino != null && leitura.pagina_atual === livroAtual.paginas) ||
+        leitura.abandonado
+    );
+
     function toggleDropdown() {
         setDropdownAberto(!dropdownAberto);
     }
@@ -40,7 +45,6 @@ export default function TelaLivro() {
         const livro = await requestLogado(`api/livros/buscar-isbn/${isbn}`, {}, "GET");
         setLivroAtual(livro);
         setLeituras(livro.leituras);
-        console.log(JSON.stringify(livro))
     }
 
     useEffect(() => {
@@ -106,24 +110,23 @@ export default function TelaLivro() {
                 <p>{livroAtual.descricao}</p>
             </div>
             <div className="livro-reviews">
-                <h2>{`Reviews (${livroAtual.leituras.length})`}</h2>
+                <h2>{`Reviews (${leiturasFiltradas.length})`}</h2>
                 <div className="reviews">
-                    {leituras && (
-                        leituras.map((leitura) => (
+                    {leiturasFiltradas.map((leitura) => (
                             <div key={leitura.id} className="review-item">
                                 <div className="review-user">
                                     <img src={leitura.usuario.imagem ? leitura.usuario.imagem : defaultUser} alt="" />
                                     <span>
-                                        {estrelas.map(item => item <= leitura.comentario.nota ? "★" : "☆")}
+                                        {leitura.comentario ? (estrelas.map(item => item <= leitura.comentario.nota ? "★" : "☆")) : "☆☆☆☆☆"}
                                     </span>
                                 </div>
                                 <div className="review-body">
                                     <p className="username">{leitura.usuario.username}</p>
-                                    <p className="review-text">{leitura.comentario.texto}</p>
+                                    <p className="review-text">{leitura.comentario ? leitura.comentario.texto : <span>Nenhum comentário atribuído</span>}</p>
                                 </div>
                             </div>
                         ))
-                    )}
+                    }
                 </div>
             </div>
             <ToastContainer />
