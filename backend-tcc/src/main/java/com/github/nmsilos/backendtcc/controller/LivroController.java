@@ -2,8 +2,10 @@ package com.github.nmsilos.backendtcc.controller;
 
 import com.github.nmsilos.backendtcc.dto.livros.BuscarLivroDTO;
 import com.github.nmsilos.backendtcc.dto.livros.CadastroLivroDTO;
+import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroDTO;
 import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroNoListDTO;
 import com.github.nmsilos.backendtcc.mapper.livros.CadastroLivroMapper;
+import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroMapper;
 import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroNoListMapper;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Admin;
@@ -30,8 +32,8 @@ public class LivroController {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<RespostaLivroNoListDTO> buscar(@AuthenticationPrincipal Admin usuario, @PathVariable Long id) {
-        RespostaLivroNoListDTO livro = RespostaLivroNoListMapper.toNoListDTO(service.buscarInfo(id));
+    public ResponseEntity<RespostaLivroDTO> buscar(@AuthenticationPrincipal Admin usuario, @PathVariable Long id) {
+        RespostaLivroDTO livro = RespostaLivroMapper.toDTO(service.buscarInfo(id));
         return ResponseEntity.ok().body(livro);
     }
 

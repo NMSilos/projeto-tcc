@@ -1,10 +1,12 @@
 package com.github.nmsilos.backendtcc.service;
 
 import com.github.nmsilos.backendtcc.dto.livros.BuscarLivroDTO;
+import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroDTO;
 import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroNoListDTO;
 import com.github.nmsilos.backendtcc.exception.custom.LivroJaCadastradoException;
 import com.github.nmsilos.backendtcc.exception.custom.LivroNaoEncontradoException;
 import com.github.nmsilos.backendtcc.mapper.livros.BuscarLivroMapper;
+import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroMapper;
 import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroNoListMapper;
 import com.github.nmsilos.backendtcc.model.Comentario;
 import com.github.nmsilos.backendtcc.model.Livro;

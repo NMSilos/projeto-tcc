@@ -1,6 +1,7 @@
 package com.github.nmsilos.backendtcc.controller;
 
 import com.github.nmsilos.backendtcc.dto.usuarios.*;
+import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
 import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
 import com.github.nmsilos.backendtcc.model.Admin;
@@ -39,17 +40,6 @@ public class UsuarioController {
             @RequestParam (value = "imagem", required = false) MultipartFile image) {
 
         try {
-            /*
-            String uuid = UUID.randomUUID().toString();
-            String extensao = "";
-            if (image.getOriginalFilename().contains(".")) {
-                int aux = image.getOriginalFilename().lastIndexOf(".");
-                extensao = image.getOriginalFilename().substring(aux);
-            }
-
-            String nomeImage = uuid.concat(extensao);
-             */
-
             String nomeImage = null;
             String typeImage = null;
             if (image != null) {
@@ -57,22 +47,12 @@ public class UsuarioController {
                 typeImage = image.getContentType();
             }
             Usuario usuario = new Usuario(nome, username, email, Cripter.criptografar(password), nomeImage, typeImage);
-
-            /*
-            if (!Files.exists(folderPath)) {
-                Files.createDirectories(folderPath);
-            }
-
-            Files.copy(image.getInputStream(), folderPath.resolve(nomeImage));
-             */
-
             RespostaUsuarioDTO resposta = service.cadastrar(usuario);
             return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
         }
         catch (Exception e) {
-            System.out.println("ERRO: " + e.getMessage());
+            throw new ErroServidorException("Erro ao salvar usuário. Tente mais tarde");
         }
-        return null;
     }
 
     @GetMapping("/userImage/{imagem}")
