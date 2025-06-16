@@ -2,7 +2,9 @@ package com.github.nmsilos.backendtcc.mapper.leituras;
 
 import com.github.nmsilos.backendtcc.dto.leituras.LeituraNoLivroDTO;
 import com.github.nmsilos.backendtcc.mapper.comentarios.RespostaComentarioMapper;
+import com.github.nmsilos.backendtcc.mapper.usuarios.UsuarioPrincipalMapper;
 import com.github.nmsilos.backendtcc.model.Leitura;
+import com.github.nmsilos.backendtcc.model.Usuario;
 
 public class LeituraNoLivroMapper {
     public static LeituraNoLivroDTO toDto(Leitura leitura) {
@@ -12,6 +14,7 @@ public class LeituraNoLivroMapper {
                 leitura.getData_termino(),
                 leitura.getPagina_atual(),
                 leitura.isAbandonado(),
+                UsuarioPrincipalMapper.toDto((Usuario) leitura.getUsuario()),
                 RespostaComentarioMapper.toDto(leitura.getComentario())
         );
     }

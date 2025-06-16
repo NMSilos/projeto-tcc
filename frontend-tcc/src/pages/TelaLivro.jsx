@@ -93,6 +93,10 @@ export default function TelaLivro() {
                 <h2>Descrição</h2>
                 <p>{livroAtual.descricao}</p>
             </div>
+            <div className="livro-reviews">
+                <h2>{`Reviews (${livroAtual.leituras.length})`}</h2>
+                <p>{livroAtual.descricao}</p>
+            </div>
         </div>
     );
 }

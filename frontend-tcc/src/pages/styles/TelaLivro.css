@@ -145,3 +145,22 @@
   color: #333;
   line-height: 1.6;
 }
+
+.livro-reviews {
+  background: #fff;
+  padding: 25px 30px;
+  margin-top: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.livro-reviews h2 {
+  color: #5727a3;
+  margin-bottom: 15px;
+}
+
+.livro-reviews p {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+}
