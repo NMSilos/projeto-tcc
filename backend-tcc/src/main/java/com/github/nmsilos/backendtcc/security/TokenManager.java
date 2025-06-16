@@ -20,6 +20,7 @@ public class TokenManager {
             return JWT.create()
                     .withIssuer("Minha API")
                     .withSubject(usuario.getUsername())
+                    .withClaim("id", usuario.getId())
                     .withClaim("nome", usuario.getNome())
                     .withClaim("imagem", usuario.getImagem())
                     .withClaim("role", usuario.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().get(0))

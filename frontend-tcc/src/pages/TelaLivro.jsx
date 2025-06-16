@@ -7,6 +7,8 @@ import pretendoLerIcon from "../assets/icons/pretendo_ler.svg"
 import abandonadosIcon from "../assets/icons/abandonados.svg"
 import defaultUser from '../assets/default-user.jpg';
 import "./styles/TelaLivro.css";
+import { toast, ToastContainer } from "react-toastify";
+import { criarLeitura } from "../utils/functions";
 
 export default function TelaLivro() {
 
@@ -21,9 +23,16 @@ export default function TelaLivro() {
         setDropdownAberto(!dropdownAberto);
     }
 
-    function selecionarStatus(status) {
-        console.log("Selecionado:", status);
-        // aqui você pode chamar a função que salva o status
+    async function selecionarStatus(status) {
+        const dados = criarLeitura(status, livroAtual);
+        const response = await requestLogado("api/leituras/criar-leitura", dados, "POST");
+
+        if(response) {
+            toast.success(`Livro adicionado à sua lista!`);
+        } else {
+            toast.error("Erro ao criar leitura, tente mais tarde");
+        }
+
         setDropdownAberto(false);
     }
 
@@ -117,6 +126,7 @@ export default function TelaLivro() {
                     )}
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

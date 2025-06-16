@@ -12,7 +12,6 @@ public class Leitura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private Date data_inicio;
 
     private Date data_termino;
