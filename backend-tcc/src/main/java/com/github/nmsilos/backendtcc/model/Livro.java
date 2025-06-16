@@ -20,7 +20,7 @@ public class Livro {
     @Column(nullable = false)
     private String autor;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String isbn;
 
     @Column(nullable = false)
