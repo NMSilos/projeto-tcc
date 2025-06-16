@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/perfil/:user/:status" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/editar" element={<EditarUsuario />} />
             <Route path="/buscar" element={<BuscarLivros />}/>
-            <Route path="/livros/:id" element={<TelaLivro />}/>
+            <Route path="/livros/:isbn" element={<TelaLivro />}/>
           </Route>
           <Route path="/admin" element={<VerificarAdmin><AreaLogada /></VerificarAdmin>} >
             <Route index element={<TesteAdmin />} />

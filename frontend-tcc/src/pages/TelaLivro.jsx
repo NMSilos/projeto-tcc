@@ -5,12 +5,14 @@ import lidosIcon from "../assets/icons/lidos.svg"
 import lendoIcon from "../assets/icons/lendo.svg"
 import pretendoLerIcon from "../assets/icons/pretendo_ler.svg"
 import abandonadosIcon from "../assets/icons/abandonados.svg"
+import defaultUser from '../assets/default-user.jpg';
 import "./styles/TelaLivro.css";
 
 export default function TelaLivro() {
 
     const [livroAtual, setLivroAtual] = useState();
-    const { id } = useParams();
+    const [leituras, setLeituras] = useState();
+    const { isbn } = useParams();
     const estrelas = [1, 2, 3, 4, 5];
 
     const [dropdownAberto, setDropdownAberto] = useState(false);
@@ -26,14 +28,15 @@ export default function TelaLivro() {
     }
 
     async function carregarLivro() {
-        const livro = await requestLogado(`api/livros/buscar/${id}`, {}, "GET");
+        const livro = await requestLogado(`api/livros/buscar-isbn/${isbn}`, {}, "GET");
         setLivroAtual(livro);
+        setLeituras(livro.leituras);
         console.log(JSON.stringify(livro))
     }
 
     useEffect(() => {
         carregarLivro();
-    }, [id]);
+    }, [isbn]);
 
     if (!livroAtual) {
         return <p>Carregando livro...</p>
@@ -48,9 +51,9 @@ export default function TelaLivro() {
                         {
                             estrelas.map(item => {
                                 if (item <= livroAtual.avaliacao) {
-                                    return <span>★</span>;
+                                    return "★";
                                 }
-                                return <span>☆</span>;
+                                return "☆";
                             })
                         }
                     </div>
@@ -95,7 +98,24 @@ export default function TelaLivro() {
             </div>
             <div className="livro-reviews">
                 <h2>{`Reviews (${livroAtual.leituras.length})`}</h2>
-                <p>{livroAtual.descricao}</p>
+                <div className="reviews">
+                    {leituras && (
+                        leituras.map((leitura) => (
+                            <div key={leitura.id} className="review-item">
+                                <div className="review-user">
+                                    <img src={leitura.usuario.imagem ? leitura.usuario.imagem : defaultUser} alt="" />
+                                    <span>
+                                        {estrelas.map(item => item <= leitura.comentario.nota ? "★" : "☆")}
+                                    </span>
+                                </div>
+                                <div className="review-body">
+                                    <p className="username">{leitura.usuario.username}</p>
+                                    <p className="review-text">{leitura.comentario.texto}</p>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
             </div>
         </div>
     );

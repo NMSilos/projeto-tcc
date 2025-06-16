@@ -31,9 +31,15 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(novo));
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<RespostaLivroDTO> buscar(@AuthenticationPrincipal Admin usuario, @PathVariable Long id) {
-        RespostaLivroDTO livro = RespostaLivroMapper.toDTO(service.buscarInfo(id));
+    @GetMapping("/buscar-id/{id}")
+    public ResponseEntity<RespostaLivroNoListDTO> buscarPorId(@AuthenticationPrincipal Admin usuario, @PathVariable Long id) {
+        RespostaLivroNoListDTO livro = RespostaLivroNoListMapper.toNoListDTO(service.buscarInfo(id));
+        return ResponseEntity.ok().body(livro);
+    }
+
+    @GetMapping("/buscar-isbn/{isbn}")
+    public ResponseEntity<RespostaLivroDTO> buscarPorIsbn(@AuthenticationPrincipal Admin usuario, @PathVariable String isbn) {
+        RespostaLivroDTO livro = RespostaLivroMapper.toDTO(service.buscarIsbn(isbn));
         return ResponseEntity.ok().body(livro);
     }
 

@@ -42,6 +42,15 @@ public class LivroService {
     }
 
     @Transactional(readOnly = true)
+    public Livro buscarIsbn(String isbn) {
+        Livro livroSalvo = repository.findByIsbn(isbn);
+        if (livroSalvo == null) {
+            throw new LivroNaoEncontradoException("Livro não encontrado.");
+        }
+        return livroSalvo;
+    }
+
+    @Transactional(readOnly = true)
     public List<BuscarLivroDTO> buscarPorTitulo(String query) {
         List<Livro> livros = repository.findByTituloContainingIgnoreCase(query);
         List<BuscarLivroDTO> buscados = livros.stream().map(BuscarLivroMapper::toDto).toList();
@@ -55,4 +64,5 @@ public class LivroService {
         double avaliacao = somaNotas / livro.getComentarios().size();
         livro.setAvaliacao(avaliacao);
     }
+
 }

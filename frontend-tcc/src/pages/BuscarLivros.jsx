@@ -32,8 +32,8 @@ export default function BuscarLivros() {
 
     
     async function abrirLivro(id) {
-      const livro = await requestLogado(`api/livros/buscar/${id}`, {}, "GET");
-      navigate(`/livros/${livro.id}`);
+      const livro = await requestLogado(`api/livros/buscar-id/${id}`, {}, "GET");
+      navigate(`/livros/${livro.isbn}`);
     }
     
     return(
