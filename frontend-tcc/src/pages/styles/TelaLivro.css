@@ -80,6 +80,33 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
 }
 
+.btn-inativo {
+  background-color: white;
+  color: #7c2fd0;
+  border: none;
+  align-items: center;
+  display: flex;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+  gap: 6px;
+}
+
+.btn-texto {
+  flex-grow: 1;
+}
+
+.btn-divisor {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  margin-left: 12px;
+  cursor: pointer;
+  border-left: 1px solid #e0e0e0;
+}
+
 .dropdown-menu {
   position: absolute;
   top: 110%;

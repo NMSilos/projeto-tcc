@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 public class LeituraService {
 
@@ -55,6 +57,18 @@ public class LeituraService {
             throw new EntityNotFoundException("Leitura não encontrada");
         } else {
             return leitura;
+        }
+    }
+
+    @Transactional
+    public void excluir(Usuario usuarioLogado, Long userId, Livro livro) {
+        Usuario usuario = usuarioService.buscarPorId(userId);
+        if (usuario != null && usuario.equals(usuarioLogado)) {
+            usuario.getLeituras().forEach(leitura -> {
+                if (leitura.getLivro().getId().equals(livro.getId())) {
+                    repository.deleteById(leitura.getId());
+                }
+            });
         }
     }
 }

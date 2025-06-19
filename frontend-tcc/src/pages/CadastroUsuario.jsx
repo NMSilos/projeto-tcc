@@ -106,15 +106,3 @@ export default function CadastroUsuario() {
     </LoginLayout>
   );
 }
-
- /*
-<div className="form-group">
-            <label htmlFor="imagem">Foto de Perfil</label>
-            <input
-              type="file"
-              id="imagem"
-              name="imagem"
-              accept=".jpg, .jpeg, .png"
-            />
-          </div>
-          */

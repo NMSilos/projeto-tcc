@@ -4,6 +4,8 @@ import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
 import com.github.nmsilos.backendtcc.model.Admin;
+import com.github.nmsilos.backendtcc.model.Leitura;
+import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.service.LeituraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,12 @@ public class LeituraController {
     public ResponseEntity<RespostaLeituraDTO> buscarLeitura(@AuthenticationPrincipal Usuario usuario, @PathVariable Long id){
         RespostaLeituraDTO leitura = RespostaLeituraMapper.toDto(service.buscarInfo(id));
         return ResponseEntity.status(HttpStatus.OK).body(leitura);
+    }
+
+    @DeleteMapping("/excluir-por-livro/{userId}")
+    public ResponseEntity<Void> excluirPorLivro(@AuthenticationPrincipal Usuario usuario, @PathVariable Long userId, @RequestBody Livro livro){
+        service.excluir(usuario, userId, livro);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

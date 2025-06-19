@@ -8,12 +8,15 @@ import abandonadosIcon from "../assets/icons/abandonados.svg"
 import defaultUser from '../assets/default-user.jpg';
 import "./styles/TelaLivro.css";
 import { toast, ToastContainer } from "react-toastify";
-import { criarLeitura } from "../utils/functions";
+import excluirLeitura, { criarLeitura } from "../utils/functions";
+import { jwtDecode } from "jwt-decode";
+import { Cross, Star, StarHalf, Trash2, X } from "lucide-react";
 
 export default function TelaLivro() {
 
     const [livroAtual, setLivroAtual] = useState();
     const [leituras, setLeituras] = useState();
+    const [leituraExistente, setLeituraExistente] = useState();
     const { isbn } = useParams();
     const estrelas = [1, 2, 3, 4, 5];
 
@@ -24,7 +27,7 @@ export default function TelaLivro() {
         leitura.abandonado
     );
 
-    function toggleDropdown() {
+    function mostrarDropdown() {
         setDropdownAberto(!dropdownAberto);
     }
 
@@ -32,13 +35,13 @@ export default function TelaLivro() {
         const dados = criarLeitura(status, livroAtual);
         const response = await requestLogado("api/leituras/criar-leitura", dados, "POST");
 
-        if(response) {
+        if (response) {
             toast.success(`Livro adicionado à sua lista!`);
         } else {
             toast.error("Erro ao criar leitura, tente mais tarde");
         }
-
         setDropdownAberto(false);
+        verificarLeitura();
     }
 
     async function carregarLivro() {
@@ -47,9 +50,27 @@ export default function TelaLivro() {
         setLeituras(livro.leituras);
     }
 
+    async function verificarLeitura() {
+        if (!livroAtual || !livroAtual.id) return;
+        const token = jwtDecode(localStorage.getItem("token"));
+        const usuario = await requestLogado(`api/usuarios/buscar/id/${token.id}`, {}, "GET");
+        setLeituraExistente(usuario.leituras.some(userLeitura => userLeitura.livro.id === livroAtual.id));
+    }
+
+    async function removeAndRefresh() {
+        await excluirLeitura(livroAtual.id);
+        verificarLeitura();
+    }
+
     useEffect(() => {
         carregarLivro();
     }, [isbn]);
+
+    useEffect(() => {
+        if (livroAtual && livroAtual.id) {
+            verificarLeitura();
+        }
+    }, [livroAtual])
 
     if (!livroAtual) {
         return <p>Carregando livro...</p>
@@ -64,9 +85,9 @@ export default function TelaLivro() {
                         {
                             estrelas.map(item => {
                                 if (item <= livroAtual.avaliacao) {
-                                    return "★";
+                                    return <Star key={item} fill="gold"/>;
                                 }
-                                return "☆";
+                                return <Star color="#dadada" key={item}/>;
                             })
                         }
                     </div>
@@ -78,29 +99,41 @@ export default function TelaLivro() {
                     <p className="livro-dados">Editora {livroAtual.editora}, {livroAtual.ano_publicacao}</p>
                     <p className="livro-dados">Páginas: {livroAtual.paginas}</p>
                     <div className="livro-acoes">
-                        <div className="dropdown-adicionar">
-                            <button className="btn-adicionar" onClick={toggleDropdown}>
-                                Adicionar
-                            </button>
-                            <div className={`dropdown-menu ${dropdownAberto ? "aberto" : ""}`}>
-                                <div onClick={() => selecionarStatus("lidos")}>
-                                    <img src={lidosIcon} alt="Lidos" />
-                                    <span>Lidos</span>
-                                </div>
-                                <div onClick={() => selecionarStatus("lendo")}>
-                                    <img src={lendoIcon} alt="Lendo" />
-                                    <span>Lendo</span>
-                                </div>
-                                <div onClick={() => selecionarStatus("pretendo")}>
-                                    <img src={pretendoLerIcon} alt="Pretendo Ler" />
-                                    <span>Pretendo Ler</span>
-                                </div>
-                                <div onClick={() => selecionarStatus("abandonado")}>
-                                    <img src={abandonadosIcon} alt="Abandonado" />
-                                    <span>Abandonado</span>
+                        {!leituraExistente && (
+                            <div className="dropdown-adicionar">
+                                <button className="btn-adicionar" onClick={mostrarDropdown}>
+                                    Adicionar
+                                </button>
+                                <div className={`dropdown-menu ${dropdownAberto ? "aberto" : ""}`}>
+                                    <div onClick={() => selecionarStatus("lidos")}>
+                                        <img src={lidosIcon} alt="Lidos" />
+                                        <span>Lidos</span>
+                                    </div>
+                                    <div onClick={() => selecionarStatus("lendo")}>
+                                        <img src={lendoIcon} alt="Lendo" />
+                                        <span>Lendo</span>
+                                    </div>
+                                    <div onClick={() => selecionarStatus("pretendo")}>
+                                        <img src={pretendoLerIcon} alt="Pretendo Ler" />
+                                        <span>Pretendo Ler</span>
+                                    </div>
+                                    <div onClick={() => selecionarStatus("abandonado")}>
+                                        <img src={abandonadosIcon} alt="Abandonado" />
+                                        <span>Abandonado</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
+                        {leituraExistente && (
+                            <div className="dropdown-adicionar">
+                                <button className="btn-inativo">
+                                    <span className="btn-texto">Adicionado à sua biblioteca</span>
+                                    <span className="btn-divisor">
+                                        <X color="#7c2fd0" size={20} onClick={removeAndRefresh} />
+                                    </span>
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -113,23 +146,25 @@ export default function TelaLivro() {
                 <h2>{`Reviews (${leiturasFiltradas.length})`}</h2>
                 <div className="reviews">
                     {leiturasFiltradas.map((leitura) => (
-                            <div key={leitura.id} className="review-item">
-                                <div className="review-user">
-                                    <img src={leitura.usuario.imagem ? leitura.usuario.imagem : defaultUser} alt="" />
-                                    <span>
-                                        {leitura.comentario ? (estrelas.map(item => item <= leitura.comentario.nota ? "★" : "☆")) : "☆☆☆☆☆"}
-                                    </span>
-                                </div>
-                                <div className="review-body">
-                                    <p className="username">{leitura.usuario.username}</p>
-                                    <p className="review-text">{leitura.comentario ? leitura.comentario.texto : <span>Nenhum comentário atribuído</span>}</p>
-                                </div>
+                        <div key={leitura.id} className="review-item">
+                            <div className="review-user">
+                                <img src={leitura.usuario.imagem ? leitura.usuario.imagem : defaultUser} alt="" />
+                                <span>
+                                    {leitura.comentario ? (
+                                        estrelas.map(item => item <= leitura.comentario.nota ? <Star size={12} fill="gold" /> : <Star size={12} color="#b3b3b3"/>)
+                                        ): ""}
+                                </span>
                             </div>
-                        ))
+                            <div className="review-body">
+                                <p className="username">{leitura.usuario.username}</p>
+                                <p className="review-text">{leitura.comentario ? leitura.comentario.texto : <span>Nenhum comentário atribuído</span>}</p>
+                            </div>
+                        </div>
+                    ))
                     }
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer pauseOnHover={false}/>
         </div>
     );
 }

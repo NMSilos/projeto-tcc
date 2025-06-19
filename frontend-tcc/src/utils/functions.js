@@ -1,4 +1,6 @@
 import { jwtDecode } from "jwt-decode";
+import { requestLogado } from "./requests";
+import { toast } from "react-toastify";
 
 export function criarLeitura(status, livro) {
     const usuario = jwtDecode(localStorage.getItem("token"));
@@ -64,4 +66,13 @@ export function criarLeitura(status, livro) {
             break;
     }
     return dados;
+}
+
+export default async function excluirLeitura(id) {
+    const user = jwtDecode(localStorage.getItem("token"));
+    const data = {
+        id: id 
+    }
+    toast.success("Leitura removida");
+    const response = await requestLogado(`api/leituras/excluir-por-livro/${user.id}`, data, "DELETE");
 }

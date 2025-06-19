@@ -16,18 +16,18 @@ export async function requestLogado(url, dados, method) {
   }
 
   const response = await fetch(finalUrl, config);
-  if (response.ok) {
+  
+  if (!response.ok) {
+    const dados = await response.json();
+    throw new Error(dados.mensagem);
+  } 
+
+  const contentType = response.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
     const dados = await response.json();
     return dados;
-  } else {
-    if (response.status == 403) {
-      //localStorage.removeItem("token");
-      //window.location.href = "/";
-    } else {
-      const dados = await response.json();
-      throw new Error(dados.mensagem);
-    }
   }
+  
 }
 
 export async function request(url, dados, method) {
