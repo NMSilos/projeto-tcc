@@ -49,32 +49,32 @@
     }
 
     .form-group input:focus {
-      border-color: #007bff;
+      border-color: #7c2fd0;
       outline: none;
     }
 
     .link-inline {
       font-weight: bold;
-      color: #007bff;
+      color: #7c2fd0;
       text-decoration: none;
     }
 
     .link-inline:visited {
-      color: #007bff;
+      color: #7c2fd0;
     }
 
     .link-inline:hover,
     .link-inline:focus {
-      color: #0056b3;
+      color: #7c2fd0;
     }
 
     .submit-btn {
       width: 100%;
       padding: 10px;
-      background: #007bff;
+      background: #7c2fd0;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 20px;
       font-size: 16px;
       cursor: pointer;
       margin-top: 10px;
@@ -82,7 +82,7 @@
     }
 
     .submit-btn:hover {
-      background: #0056b3;
+      background: #8933e6;
     }
 
     .area-logada {

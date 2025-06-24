@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
 import { requestLogado } from "../utils/requests";
 import { useParams } from "react-router";
-import lidosIcon from "../assets/icons/lidos.svg"
-import lendoIcon from "../assets/icons/lendo.svg"
-import pretendoLerIcon from "../assets/icons/pretendo_ler.svg"
-import abandonadosIcon from "../assets/icons/abandonados.svg"
 import defaultUser from '../assets/default-user.jpg';
 import "./styles/TelaLivro.css";
 import { toast, ToastContainer } from "react-toastify";
 import excluirLeitura, { criarLeitura } from "../utils/functions";
 import { jwtDecode } from "jwt-decode";
-import { Cross, Star, StarHalf, Trash2, X } from "lucide-react";
+import { Bookmark, BookOpen, BookText, Star, Trash2, X } from "lucide-react";
 
 export default function TelaLivro() {
 
@@ -106,19 +102,19 @@ export default function TelaLivro() {
                                 </button>
                                 <div className={`dropdown-menu ${dropdownAberto ? "aberto" : ""}`}>
                                     <div onClick={() => selecionarStatus("lidos")}>
-                                        <img src={lidosIcon} alt="Lidos" />
+                                        <BookText />
                                         <span>Lidos</span>
                                     </div>
                                     <div onClick={() => selecionarStatus("lendo")}>
-                                        <img src={lendoIcon} alt="Lendo" />
+                                        <BookOpen />
                                         <span>Lendo</span>
                                     </div>
                                     <div onClick={() => selecionarStatus("pretendo")}>
-                                        <img src={pretendoLerIcon} alt="Pretendo Ler" />
+                                        <Bookmark />
                                         <span>Pretendo Ler</span>
                                     </div>
                                     <div onClick={() => selecionarStatus("abandonado")}>
-                                        <img src={abandonadosIcon} alt="Abandonado" />
+                                        <Trash2 />
                                         <span>Abandonado</span>
                                     </div>
                                 </div>

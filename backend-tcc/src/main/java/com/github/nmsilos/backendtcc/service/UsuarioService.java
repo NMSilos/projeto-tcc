@@ -54,10 +54,18 @@ public class UsuarioService {
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.getUsername(), dados.getPassword());
         try{
             var authentication = manager.authenticate(authenticationToken);
-            Admin usuario = (Usuario) authentication.getPrincipal();
-            String token = new TokenManager().generateToken(usuario);
-            TokenDTO dto = new TokenDTO(usuario.getId(), token);
-            return dto;
+            if (authentication.getPrincipal() instanceof Usuario) {
+                Admin usuario = (Usuario) authentication.getPrincipal();
+                String token = new TokenManager().generateToken(usuario);
+                TokenDTO dto = new TokenDTO(usuario.getId(), token);
+                return dto;
+            } else if (authentication.getPrincipal() instanceof Admin) {
+                Admin usuario = (Admin) authentication.getPrincipal();
+                String token = new TokenManager().generateToken(usuario);
+                TokenDTO dto = new TokenDTO(usuario.getId(), token);
+                return dto;
+            }
+            return null;
         }
         catch (AuthenticationException e) {
             e.printStackTrace();

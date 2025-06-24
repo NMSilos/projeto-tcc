@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { requestLogado } from "../utils/requests";
 import "./styles/BuscarLivros.css";
+import { Star } from "lucide-react";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -51,7 +52,10 @@ export default function BuscarLivros() {
                 <p className="livro-avaliacao">
                   {
                   estrelas.map((item, index) => {
-                      const estrela = livro.avaliacao == null ? "☆" : item <= livro.avaliacao ? "★" : "☆";
+                      const estrela = livro.avaliacao == null 
+                      ? <Star key={item} size={12} color="#b3b3b3" /> 
+                      : item <= livro.avaliacao ? <Star key={item} size={12} fill="gold" /> 
+                      : <Star key={item} size={12} color="#b3b3b3" />;
                       return <span key={`star-${livro.id}-${index}`}>{estrela}</span>;
                   }
                 )}

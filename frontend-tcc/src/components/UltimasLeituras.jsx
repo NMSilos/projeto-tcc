@@ -1,3 +1,5 @@
+import { Star } from "lucide-react";
+
 export default function UltimasLeituras({ leitura }) {
   const livro = leitura.livro;
   const comentario = leitura.comentario;
@@ -14,11 +16,11 @@ export default function UltimasLeituras({ leitura }) {
             {
               estrelas.map(item => {
                 if(comentario == null) {
-                  return "☆";
+                  return <Star key={item} size={12} color="#b3b3b3" />;
                 } else if(item <= comentario.nota) {
-                  return "★";
+                  return <Star key={item} size={12} fill="gold" />;
                 }
-                return "☆"; 
+                return <Star key={item} size={12} color="#b3b3b3" />;
               })
             }
           </div>
