@@ -9,9 +9,9 @@ import PerfilUsuario from './pages/PerfilUsuario'
 import AreaLogada from './components/AreaLogada/AreaLogada'
 import EditarUsuario from './pages/EditarUsuario'
 import VerificarAdmin from './components/VerificarAdmin'
-import TesteAdmin from './pages/TesteAdmin'
 import BuscarLivros from './pages/BuscarLivros'
 import TelaLivro from './pages/TelaLivro'
+import ViewAdmin from './pages/ViewAdmin'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/livros/:isbn" element={<TelaLivro />}/>
           </Route>
           <Route path="/admin" element={<VerificarAdmin><AreaLogada /></VerificarAdmin>} >
-            <Route index element={<TesteAdmin />} />
+            <Route index element={<ViewAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>

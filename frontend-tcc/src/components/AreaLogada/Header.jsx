@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 export default function Header() {
 
   const [user, setUser] = useState();
+  const [role, setRole] = useState();
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
@@ -19,7 +20,30 @@ export default function Header() {
   useEffect(() => {
     const data = jwtDecode(localStorage.getItem("token"))
     setUser(data.sub);
+    setRole(data.role);
   }, []);
+
+  if (role === "ADMIN") {
+    return (
+      <aside className="sidebar">
+        <h2 className="sidebar-logo">Painel Admin</h2>
+        <nav className="sidebar-links">
+          <Link to="/admin/dashboard">Dashboard</Link>
+          <Link to="/admin/usuarios">Gerenciar Usuários</Link>
+          <Link to="/admin/livros">Gerenciar Livros</Link>
+          <button
+            className="sair-btn"
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.location.href = "/";
+            }}
+          >
+            Sair
+          </button>
+        </nav>
+      </aside>
+    );
+  }
 
   return (
     <header className="header">
