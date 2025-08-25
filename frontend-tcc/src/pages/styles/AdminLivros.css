@@ -1,3 +1,34 @@
+.admin-tabela-container {
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+.admin-tabela-topo {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.btn-principal {
+  background-color: #a144f4;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-principal:hover {
+  background-color: #7c2fd0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
 .admin-tabela {
   max-width: 1000px;
   margin: 40px auto;
@@ -11,7 +42,7 @@
 .admin-tabela table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px; /* espaço entre linhas */
+  border-spacing: 0 10px; 
 }
 
 .admin-tabela th {
@@ -49,7 +80,7 @@
 }
 
 .admin-tabela-img {
-  width: 60px; /* um pouco maior */
+  width: 60px; 
   height: auto;
   border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
