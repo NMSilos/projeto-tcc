@@ -38,6 +38,7 @@ public class ConfigSecurity {
                     auth.requestMatchers(HttpMethod.POST,"/api/usuarios/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.POST,"/api/usuarios/login").permitAll()
                             .requestMatchers(HttpMethod.POST,"/api/usuarios/google").permitAll()
+                            .requestMatchers(HttpMethod.GET,"/api/livros/buscar/all").permitAll()
                             .requestMatchers(HttpMethod.POST,"/api/livros/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.GET,"/api/usuarios/buscar/**").permitAll()
                             .requestMatchers(HttpMethod.GET,"/api/usuarios/userImage/**").permitAll()

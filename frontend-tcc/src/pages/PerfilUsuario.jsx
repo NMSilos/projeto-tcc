@@ -6,7 +6,7 @@ import { baseUrl, requestLogado } from '../utils/requests';
 import { Link, useNavigate, useParams } from 'react-router';
 import UltimasLeituras from '../components/UltimasLeituras';
 import defaultUser from '../assets/default-user.jpg';
-import { Book, Bookmark, BookmarkCheck, BookOpen, BookText, Trash, Trash2, Trash2Icon } from 'lucide-react';
+import { Bookmark, BookOpen, BookText, Trash2 } from 'lucide-react';
 
 export default function PerfilUsuario() {
   const [nome, setNome] = useState();

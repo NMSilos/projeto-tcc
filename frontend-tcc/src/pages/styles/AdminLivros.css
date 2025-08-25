@@ -1,0 +1,87 @@
+.admin-tabela {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(100, 0, 200, 0.12);
+  overflow-x: auto;
+}
+
+.admin-tabela table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* espaço entre linhas */
+}
+
+.admin-tabela th {
+  background-color: #a144f4;
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+  padding: 16px 25px;
+  border-radius: 8px 8px 0 0;
+}
+
+.admin-tabela td {
+  padding: 16px 25px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.admin-tabela tr:nth-child(even) {
+  background-color: #faf7ff;
+}
+
+.admin-tabela tr:hover {
+  background-color: #f3eaff;
+  transition: background 0.2s ease;
+}
+
+.admin-tabela th,
+.admin-tabela td {
+  padding: 18px 30px;
+}
+
+.admin-tabela td + td,
+.admin-tabela th + th {
+  padding-left: 40px; /* mais espaço entre colunas */
+}
+
+.admin-tabela-img {
+  width: 60px; /* um pouco maior */
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.btn-acao {
+  margin-right: 16px; /* mais espaço entre os botões */
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* separação entre ícone e texto */
+  transition: 0.2s;
+}
+
+.btn-acao.editar {
+  background: #5727a3;
+  color: white;
+}
+
+.btn-acao.editar:hover {
+  background: #7a3fd6;
+}
+
+.btn-acao.deletar {
+  background: #e63946;
+  color: white;
+}
+
+.btn-acao.deletar:hover {
+  background: #c92d3c;
+}

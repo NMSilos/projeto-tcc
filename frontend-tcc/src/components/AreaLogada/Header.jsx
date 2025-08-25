@@ -29,8 +29,8 @@ export default function Header() {
         <h2 className="sidebar-logo">Painel Admin</h2>
         <nav className="sidebar-links">
           <Link to="/admin/dashboard">Dashboard</Link>
-          <Link to="/admin/usuarios">Gerenciar Usuários</Link>
           <Link to="/admin/livros">Gerenciar Livros</Link>
+          <Link to="/admin/sugestoes">Gerenciar Sugestões</Link>
           <button
             className="sair-btn"
             onClick={() => {

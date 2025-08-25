@@ -73,3 +73,21 @@ export async function requestFormData(url, dados, method) {
     throw new Error(dados.mensage);
   }
 }
+
+export async function buscaLivros(url, method) {
+  const finalUrl = baseUrl + url;
+
+  const response = await fetch(finalUrl, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    const dados = await response.json();
+    return dados;
+  } else {
+    const dados = await response.json();
+    throw new Error(dados.mensage);
+  }
+}

@@ -49,4 +49,10 @@ public class LivroController {
         return ResponseEntity.ok().body(livros);
     }
 
+    @GetMapping("/buscar/all")
+    public ResponseEntity<List<BuscarLivroDTO>> buscarTodos() {
+        List<BuscarLivroDTO> livros = service.buscarTodos();
+        return ResponseEntity.ok().body(livros);
+    }
+
 }

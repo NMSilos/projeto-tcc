@@ -65,4 +65,9 @@ public class LivroService {
         livro.setAvaliacao(avaliacao);
     }
 
+    @Transactional(readOnly = true)
+    public List<BuscarLivroDTO> buscarTodos() {
+        List<Livro> livros = repository.findAll();
+        return livros.stream().map(BuscarLivroMapper::toDto).toList();
+    }
 }
