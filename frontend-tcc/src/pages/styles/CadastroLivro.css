@@ -1,0 +1,52 @@
+.form-titulo {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #5727a3;
+}
+
+.form-livro {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-grupo label {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-grupo input, textarea {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border 0.2s ease;
+}
+
+.form-grupo input:focus {
+  border-color: #a144f4;
+  outline: none;
+  box-shadow: 0 0 6px rgba(161, 68, 244, 0.3);
+}
+
+.form-grupo textarea:focus {
+  border-color: #a144f4;
+  outline: none;
+  box-shadow: 0 0 6px rgba(161, 68, 244, 0.3);
+}
+
+.form-linha {
+  display: flex;
+  gap: 20px;
+}
+
+.form-linha .form-grupo {
+  flex: 1;
+}

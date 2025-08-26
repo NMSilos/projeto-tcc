@@ -13,6 +13,7 @@ import BuscarLivros from './pages/BuscarLivros'
 import TelaLivro from './pages/TelaLivro'
 import ViewAdmin from './pages/ViewAdmin'
 import AdminLivros from './pages/AdminLivros'
+import CadastroLivro from './pages/CadastroLivro'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -31,6 +32,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/admin" element={<VerificarAdmin><AreaLogada /></VerificarAdmin>} >
             <Route index element={<ViewAdmin />} />
             <Route path='/admin/livros' element={<AdminLivros />}/>
+            <Route path='/admin/livros/novo' element={<CadastroLivro />}/>
           </Route>
         </Routes>
       </BrowserRouter>
