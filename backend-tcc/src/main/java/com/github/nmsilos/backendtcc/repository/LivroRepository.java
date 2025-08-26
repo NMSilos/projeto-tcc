@@ -10,4 +10,5 @@ import java.util.List;
 public interface LivroRepository extends JpaRepository<Livro, Long> {
     public Livro findByIsbn(String isbn);
     public List<Livro> findByTituloContainingIgnoreCase(String titulo);
+    public Livro findByImagem(String imagem);
 }

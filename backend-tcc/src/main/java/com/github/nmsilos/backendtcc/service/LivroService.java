@@ -10,6 +10,7 @@ import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroMapper;
 import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroNoListMapper;
 import com.github.nmsilos.backendtcc.model.Comentario;
 import com.github.nmsilos.backendtcc.model.Livro;
+import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,5 +92,9 @@ public class LivroService {
 
         Files.copy(image.getInputStream(), folderPath.resolve(nomeImage));
         return nomeImage;
+    }
+
+    public Livro buscarPorImagem(String imagem) {
+        return repository.findByImagem(imagem);
     }
 }

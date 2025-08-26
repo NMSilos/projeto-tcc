@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { BookOpen, PlusCircle, Edit, Trash2 } from "lucide-react";
+import { PlusCircle, Edit, Trash2 } from "lucide-react";
 import './styles/AdminLivros.css'
 import { useEffect, useState } from "react";
-import { buscaLivros } from "../utils/requests";
+import { baseUrl, buscaLivros } from "../utils/requests";
 
 export default function AdminLivros() {
 
@@ -40,24 +40,50 @@ export default function AdminLivros() {
           </tr>
         </thead>
         <tbody>
-          {livros.map((livro) => (
-            <tr key={livro.id}>
-              <td><img src={livro.capa} alt={livro.titulo} className="admin-tabela-img" /></td>
-              <td>{livro.titulo}</td>
-              <td>{livro.autor}</td>
-              <td>{livro.ano}</td>
-              <td>
-                <Link to={`/admin/livros/editar/${livro.id}`}>
-                  <button className="btn-acao editar">
-                    <Edit size={18}/> Editar
-                  </button>
-                </Link>
-                <button className="btn-acao deletar" onClick={() => handleDelete(livro.id)}>
-                  <Trash2 size={18}/> Remover
-                </button>
-              </td>
-            </tr>
-          ))}
+          {livros.map((livro) => {
+                let imgSrc = null;
+
+                if (livro.imagem) {
+                  if (livro.imagem.startsWith("https")) {
+                    imgSrc = livro.imagem;
+                  } else {
+                    imgSrc = `${baseUrl}api/livros/livroImage/${livro.imagem}`;
+                  }
+                }
+                console.log(imgSrc)
+
+                return (
+                  <tr key={livro.id}>
+                    <td>
+                      {imgSrc ? (
+                        <img
+                          src={imgSrc}
+                          alt={livro.titulo}
+                          className="admin-tabela-img"
+                        />
+                      ) : (
+                        <span>Sem capa</span>
+                      )}
+                    </td>
+                    <td>{livro.titulo}</td>
+                    <td>{livro.autor}</td>
+                    <td>{livro.ano}</td>
+                    <td>
+                      <Link to={`/admin/livros/editar/${livro.id}`}>
+                        <button className="btn-acao editar">
+                          <Edit size={18}/> Editar
+                        </button>
+                      </Link>
+                      <button
+                        className="btn-acao deletar"
+                        onClick={() => handleDelete(livro.id)}
+                      >
+                        <Trash2 size={18}/> Remover
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
         </tbody>
       </table>
     ) : (

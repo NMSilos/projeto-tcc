@@ -16,6 +16,7 @@ public class RespostaLivroDTO {
     private int paginas;
     private String descricao;
     private double avaliacao;
+    private String imagem;
     private List<LeituraNoLivroDTO> leituras;
 
     public RespostaLivroDTO(
@@ -28,6 +29,7 @@ public class RespostaLivroDTO {
             int paginas,
             String descricao,
             double avaliacao,
+            String imagem,
             List<LeituraNoLivroDTO> leituras
     ) {
         this.id = id;
@@ -39,6 +41,7 @@ public class RespostaLivroDTO {
         this.paginas = paginas;
         this.descricao = descricao;
         this.avaliacao = avaliacao;
+        this.imagem = imagem;
         this.leituras = leituras;
     }
 
@@ -112,6 +115,14 @@ public class RespostaLivroDTO {
 
     public void setAvaliacao(double avaliacao) {
         this.avaliacao = avaliacao;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     public List<LeituraNoLivroDTO> getLeituras() {

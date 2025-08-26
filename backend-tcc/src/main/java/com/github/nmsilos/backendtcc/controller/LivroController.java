@@ -16,11 +16,16 @@ import com.github.nmsilos.backendtcc.security.Cripter;
 import com.github.nmsilos.backendtcc.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Year;
 import java.util.List;
 
@@ -30,6 +35,8 @@ public class LivroController {
 
     @Autowired
     private LivroService service;
+
+    private final Path folderPath = Paths.get("bookcovers");
 
     /*
     @PostMapping("/cadastrar")
@@ -91,5 +98,14 @@ public class LivroController {
         List<BuscarLivroDTO> livros = service.buscarTodos();
         return ResponseEntity.ok().body(livros);
     }
+
+    @GetMapping("/livroImage/{imagem}")
+    public ResponseEntity<byte[]> buscarImagem(@PathVariable String imagem) throws IOException {
+        Livro livro = service.buscarPorImagem(imagem);
+        Path imagemPath = Paths.get(folderPath.toString(), imagem);
+        byte[] imagemBytes = Files.readAllBytes(imagemPath);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(livro.getContentType())).body(imagemBytes);
+    }
+
 
 }
