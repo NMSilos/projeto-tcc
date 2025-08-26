@@ -4,18 +4,24 @@ import com.github.nmsilos.backendtcc.dto.livros.BuscarLivroDTO;
 import com.github.nmsilos.backendtcc.dto.livros.CadastroLivroDTO;
 import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroDTO;
 import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroNoListDTO;
+import com.github.nmsilos.backendtcc.dto.usuarios.RespostaUsuarioDTO;
+import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
 import com.github.nmsilos.backendtcc.mapper.livros.CadastroLivroMapper;
 import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroMapper;
 import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroNoListMapper;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Admin;
+import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.security.Cripter;
 import com.github.nmsilos.backendtcc.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Year;
 import java.util.List;
 
 @RestController
@@ -25,10 +31,41 @@ public class LivroController {
     @Autowired
     private LivroService service;
 
+    /*
     @PostMapping("/cadastrar")
     public ResponseEntity<Livro> cadastrar(@RequestBody CadastroLivroDTO livro) {
         Livro novo = CadastroLivroMapper.toModel(livro);
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(novo));
+    }
+     */
+
+    @PostMapping("/cadastrar")
+    public ResponseEntity<Livro> cadastrar(
+            @RequestParam ("titulo") String titulo,
+            @RequestParam ("autor") String autor,
+            @RequestParam ("editora") String editora,
+            @RequestParam ("ano_publicacao") int ano_publicacao,
+            @RequestParam ("paginas") int paginas,
+            @RequestParam ("isbn") String isbn,
+            @RequestParam ("descricao") String descricao,
+            @RequestParam (value = "imagem", required = false) MultipartFile image)
+    {
+        try {
+            String nomeImage = null;
+            String typeImage = null;
+            if (image != null) {
+                nomeImage = service.salvarImagem(image);
+                typeImage = image.getContentType();
+            }
+            Year ano = Year.of(ano_publicacao);
+            Livro livro = new Livro(titulo, autor, isbn, editora, ano, paginas, descricao, 0, nomeImage, typeImage);
+            //RespostaLivroDTO resposta = service.cadastrar(livro);
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(livro));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new ErroServidorException("Erro ao salvar usuário. Tente mais tarde");
+        }
     }
 
     @GetMapping("/buscar-id/{id}")

@@ -32,6 +32,7 @@ public class Livro {
     @Column(nullable = false)
     private int paginas;
 
+    @Column(length = 1000)
     private String descricao;
 
     private double avaliacao;
@@ -42,7 +43,25 @@ public class Livro {
     @OneToMany(mappedBy = "livro")
     private List<Leitura> leituras = new ArrayList<>();
 
+    protected String imagem;
+
+    protected String contentType;
+
     public Livro() {}
+
+    public Livro(String titulo, String autor, String isbn, String editora,
+                 Year ano_publicacao, int paginas, String descricao, double avaliacao, String imagem, String contentType) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+        this.editora = editora;
+        this.ano_publicacao = ano_publicacao;
+        this.paginas = paginas;
+        this.descricao = descricao;
+        this.avaliacao = avaliacao;
+        this.imagem = imagem;
+        this.contentType = contentType;
+    }
 
     public Livro(Long id, String titulo, String autor, String isbn, String editora,
                  Year ano_publicacao, int paginas, String descricao, double avaliacao) {
@@ -155,4 +174,21 @@ public class Livro {
     public void setLeituras(List<Leitura> leituras) {
         this.leituras = leituras;
     }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
 }

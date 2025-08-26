@@ -14,8 +14,14 @@ import com.github.nmsilos.backendtcc.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LivroService {
@@ -23,14 +29,11 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
+    private final Path folderPath = Paths.get("bookcovers");
+
     @Transactional
     public Livro cadastrar(Livro livro) {
-        Livro livroSalvo = repository.findByIsbn(livro.getIsbn());
-        if (livroSalvo != null) {
-            throw new LivroJaCadastradoException("Erro ao salvar: Livro já cadastrado");
-        } else {
-            return repository.save(livro);
-        }
+        return repository.save(livro);
     }
 
     @Transactional(readOnly = true)
@@ -69,5 +72,24 @@ public class LivroService {
     public List<BuscarLivroDTO> buscarTodos() {
         List<Livro> livros = repository.findAll();
         return livros.stream().map(BuscarLivroMapper::toDto).toList();
+    }
+
+    @Transactional
+    public String salvarImagem(MultipartFile image) throws IOException {
+        String uuid = UUID.randomUUID().toString();
+        String extensao = "";
+        if (image.getOriginalFilename().contains(".")) {
+            int aux = image.getOriginalFilename().lastIndexOf(".");
+            extensao = image.getOriginalFilename().substring(aux);
+        }
+
+        String nomeImage = uuid.concat(extensao);
+
+        if (!Files.exists(folderPath)) {
+            Files.createDirectories(folderPath);
+        }
+
+        Files.copy(image.getInputStream(), folderPath.resolve(nomeImage));
+        return nomeImage;
     }
 }
