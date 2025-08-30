@@ -24,7 +24,7 @@ public class RespostaLivroMapper {
                 livro.getPaginas(),
                 livro.getDescricao(),
                 livro.getAvaliacao(),
-                livro.getImagem(), 
+                livro.getImagem(),
                 leituras
         );
     }

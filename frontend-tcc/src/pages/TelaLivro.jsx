@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { requestLogado } from "../utils/requests";
+import { baseUrl, requestLogado } from "../utils/requests";
 import { useParams } from "react-router";
 import defaultUser from '../assets/default-user.jpg';
 import "./styles/TelaLivro.css";
@@ -13,6 +13,7 @@ export default function TelaLivro() {
     const [livroAtual, setLivroAtual] = useState();
     const [leituras, setLeituras] = useState();
     const [leituraExistente, setLeituraExistente] = useState();
+    const [capaLivro, setCapaLivro] = useState();
     const { isbn } = useParams();
     const estrelas = [1, 2, 3, 4, 5];
 
@@ -44,6 +45,15 @@ export default function TelaLivro() {
         const livro = await requestLogado(`api/livros/buscar-isbn/${isbn}`, {}, "GET");
         setLivroAtual(livro);
         setLeituras(livro.leituras);
+        setCapaLivro(livro.imagem);
+        carregarImagem(livro);
+    }
+
+    function carregarImagem(livro) {
+        if(livro.imagem != null) {
+            const imagem = `${baseUrl}api/livros/livroImage/${livro.imagem}`;
+            setCapaLivro(imagem);
+        }
     }
 
     async function verificarLeitura() {
@@ -76,14 +86,18 @@ export default function TelaLivro() {
         <div className="tela-livro-container">
             <div className="livro-topo">
                 <div className="livro-capa">
-                    <img src={"https://m.media-amazon.com/images/I/511+-lOOtsL._SY445_SX342_ControlCacheEqualizer_.jpg"} alt={livroAtual.titulo} />
+                    {capaLivro ? (
+                        <img src={capaLivro} />
+                    ) : (
+                        <div className="livro-sem-capa">Sem capa</div>
+                    )}
                     <div className="livro-estrelas">
                         {
                             estrelas.map(item => {
                                 if (item <= livroAtual.avaliacao) {
-                                    return <Star key={item} fill="gold"/>;
+                                    return <Star key={item} fill="gold" />;
                                 }
-                                return <Star color="#dadada" key={item}/>;
+                                return <Star color="#dadada" key={item} />;
                             })
                         }
                     </div>
@@ -147,8 +161,8 @@ export default function TelaLivro() {
                                 <img src={leitura.usuario.imagem ? leitura.usuario.imagem : defaultUser} alt="" />
                                 <span>
                                     {leitura.comentario ? (
-                                        estrelas.map(item => item <= leitura.comentario.nota ? <Star size={12} fill="gold" /> : <Star size={12} color="#b3b3b3"/>)
-                                        ): ""}
+                                        estrelas.map(item => item <= leitura.comentario.nota ? <Star size={12} fill="gold" /> : <Star size={12} color="#b3b3b3" />)
+                                    ) : ""}
                                 </span>
                             </div>
                             <div className="review-body">
@@ -160,7 +174,7 @@ export default function TelaLivro() {
                     }
                 </div>
             </div>
-            <ToastContainer pauseOnHover={false}/>
+            <ToastContainer pauseOnHover={false} />
         </div>
     );
 }
