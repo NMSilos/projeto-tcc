@@ -9,7 +9,7 @@ public class CadastroLeituraMapper {
                 leitura.getData_inicio(),
                 leitura.getData_termino(),
                 leitura.getPagina_atual(),
-                leitura.isAbandonado()
+                leitura.getStatus()
         );
     }
 }

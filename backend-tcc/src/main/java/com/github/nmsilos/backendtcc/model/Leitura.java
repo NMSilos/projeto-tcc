@@ -1,5 +1,6 @@
 package com.github.nmsilos.backendtcc.model;
 
+import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -19,8 +20,9 @@ public class Leitura {
     @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 1")
     private int pagina_atual;
 
-    @Column(nullable = false)
-    private boolean abandonado;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private StatusLeitura status;
 
     @ManyToOne
     @JoinColumn(name = "livro_id")
@@ -38,24 +40,11 @@ public class Leitura {
 
     public Leitura() {}
 
-    /*
-    public Leitura(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, Livro livro, Usuario usuario, Comentario comentario) {
-        this.id = id;
+    public Leitura(Date data_inicio, Date data_termino, int pagina_atual, StatusLeitura status) {
         this.data_inicio = data_inicio;
         this.data_termino = data_termino;
         this.pagina_atual = pagina_atual;
-        this.abandonado = abandonado;
-        this.livro = livro;
-        this.usuario = usuario;
-        this.comentario = comentario;
-    }
-     */
-
-    public Leitura(Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado) {
-        this.data_inicio = data_inicio;
-        this.data_termino = data_termino;
-        this.pagina_atual = pagina_atual;
-        this.abandonado = abandonado;
+        this.status = status;
     }
 
     public Long getId() {
@@ -82,20 +71,20 @@ public class Leitura {
         this.data_termino = data_termino;
     }
 
+    public StatusLeitura getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusLeitura status) {
+        this.status = status;
+    }
+
     public int getPagina_atual() {
         return pagina_atual;
     }
 
     public void setPagina_atual(int pagina_atual) {
         this.pagina_atual = pagina_atual;
-    }
-
-    public boolean isAbandonado() {
-        return abandonado;
-    }
-
-    public void setAbandonado(boolean abandonado) {
-        this.abandonado = abandonado;
     }
 
     public Comentario getComentario() {

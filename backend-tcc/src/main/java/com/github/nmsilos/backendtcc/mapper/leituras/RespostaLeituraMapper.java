@@ -12,7 +12,7 @@ public class RespostaLeituraMapper {
                 leitura.getData_inicio(),
                 leitura.getData_termino(),
                 leitura.getPagina_atual(),
-                leitura.isAbandonado(),
+                leitura.getStatus(),
                 RespostaLivroNoListMapper.toNoListDTO(leitura.getLivro()),
                 leitura.getComentario() != null ? RespostaComentarioMapper.toDto(leitura.getComentario()) : null
         );

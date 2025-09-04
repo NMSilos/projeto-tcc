@@ -2,6 +2,7 @@ package com.github.nmsilos.backendtcc.dto.leituras;
 
 import com.github.nmsilos.backendtcc.dto.comentarios.RespostaComentarioDTO;
 import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroNoListDTO;
+import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 
 import java.util.Date;
 
@@ -11,16 +12,16 @@ public class RespostaLeituraDTO {
     private Date data_inicio;
     private Date data_termino;
     private int pagina_atual;
-    private boolean abandonado;
+    private StatusLeitura status;
     private RespostaLivroNoListDTO livro;
     private RespostaComentarioDTO comentario;
 
-    public RespostaLeituraDTO(Long id, Date data_inicio, Date data_termino, int pagina_atual, boolean abandonado, RespostaLivroNoListDTO livro, RespostaComentarioDTO comentario) {
+    public RespostaLeituraDTO(Long id, Date data_inicio, Date data_termino, int pagina_atual, StatusLeitura status, RespostaLivroNoListDTO livro, RespostaComentarioDTO comentario) {
         this.id = id;
         this.data_inicio = data_inicio;
         this.data_termino = data_termino;
         this.pagina_atual = pagina_atual;
-        this.abandonado = abandonado;
+        this.status = status;
         this.livro = livro;
         this.comentario = comentario;
     }
@@ -57,12 +58,12 @@ public class RespostaLeituraDTO {
         this.pagina_atual = pagina_atual;
     }
 
-    public boolean isAbandonado() {
-        return abandonado;
+    public StatusLeitura getStatus() {
+        return status;
     }
 
-    public void setAbandonado(boolean abandonado) {
-        this.abandonado = abandonado;
+    public void setStatus(StatusLeitura status) {
+        this.status = status;
     }
 
     public RespostaLivroNoListDTO getLivro() {

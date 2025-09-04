@@ -22,7 +22,7 @@ public class LeituraNoLivroMapper {
                 leitura.getData_inicio(),
                 leitura.getData_termino(),
                 leitura.getPagina_atual(),
-                leitura.isAbandonado(),
+                leitura.getStatus(),
                 UsuarioPrincipalMapper.toDto((Usuario) leitura.getUsuario()),
                 comentario
         );

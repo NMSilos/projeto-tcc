@@ -14,6 +14,7 @@ import TelaLivro from './pages/TelaLivro'
 import ViewAdmin from './pages/ViewAdmin'
 import AdminLivros from './pages/AdminLivros'
 import CadastroLivro from './pages/CadastroLivro'
+import LeiturasUsuario from './pages/LeiturasUsuario'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,8 +25,8 @@ createRoot(document.getElementById('root')).render(
           <Route path="/cadastro" element={<CadastroUsuario />} />
           <Route path="/" element={<AreaLogada />}>  
             <Route path="/perfil/:user" element={<PerfilUsuario />} />
-            <Route path="/perfil/:user/:status" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/editar" element={<EditarUsuario />} />
+            <Route path="/perfil/:user/:lista" element={<LeiturasUsuario />} />
             <Route path="/buscar" element={<BuscarLivros />}/>
             <Route path="/livros/:isbn" element={<TelaLivro />}/>
           </Route>

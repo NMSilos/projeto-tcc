@@ -1,5 +1,6 @@
 package com.github.nmsilos.backendtcc.dto.leituras;
 
+import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Admin;
 
@@ -11,7 +12,7 @@ public class CadastroLeituraDTO {
     private Date data_inicio;
     private Date data_termino;
     private int pagina_atual;
-    private boolean abandonado;
+    private StatusLeitura status;
     private Livro livro;
     private Admin usuario;
 
@@ -39,20 +40,20 @@ public class CadastroLeituraDTO {
         this.data_termino = data_termino;
     }
 
+    public StatusLeitura getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusLeitura status) {
+        this.status = status;
+    }
+
     public int getPagina_atual() {
         return pagina_atual;
     }
 
     public void setPagina_atual(int pagina_atual) {
         this.pagina_atual = pagina_atual;
-    }
-
-    public boolean isAbandonado() {
-        return abandonado;
-    }
-
-    public void setAbandonado(boolean abandonado) {
-        this.abandonado = abandonado;
     }
 
     public Livro getLivro() {
