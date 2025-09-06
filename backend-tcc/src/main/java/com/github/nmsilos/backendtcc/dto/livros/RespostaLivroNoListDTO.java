@@ -13,9 +13,10 @@ public class RespostaLivroNoListDTO {
     private int paginas;
     private String descricao;
     private double avaliacao;
+    private String imagem;
 
     public RespostaLivroNoListDTO(Long id, String titulo, String autor, String isbn, String editora,
-                                  Year ano_publicacao, int paginas, String descricao, double avaliacao) {
+                                  Year ano_publicacao, int paginas, String descricao, double avaliacao, String imagem) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
@@ -25,6 +26,7 @@ public class RespostaLivroNoListDTO {
         this.paginas = paginas;
         this.descricao = descricao;
         this.avaliacao = avaliacao;
+        this.imagem = imagem;
     }
 
     public Long getId() {
@@ -97,5 +99,13 @@ public class RespostaLivroNoListDTO {
 
     public void setAvaliacao(double avaliacao) {
         this.avaliacao = avaliacao;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 }

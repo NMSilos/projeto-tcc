@@ -11,7 +11,7 @@ export function criarLeitura(status, livro) {
                 data_inicio: new Date().toISOString().slice(0, 10),
                 data_termino: new Date().toISOString().slice(0, 10),
                 pagina_atual: livro.paginas,
-                abandonado: false,
+                status: "LIDO",
                 livro: {
                     id: livro.id
                 },
@@ -25,7 +25,7 @@ export function criarLeitura(status, livro) {
                 data_inicio: new Date().toISOString().slice(0, 10),
                 data_termino: null,
                 pagina_atual: 1,
-                abandonado: false,
+                status: "LENDO",
                 livro: {
                     id: livro.id
                 },
@@ -39,7 +39,7 @@ export function criarLeitura(status, livro) {
                 data_inicio: null,
                 data_termino: null,
                 pagina_atual: 0,
-                abandonado: false,
+                status: "PRETENDO_LER",
                 livro: {
                     id: livro.id
                 },
@@ -53,7 +53,7 @@ export function criarLeitura(status, livro) {
                 data_inicio: new Date().toISOString().slice(0, 10),
                 data_termino: new Date().toISOString().slice(0, 10),
                 pagina_atual: 0,
-                abandonado: true,
+                status: "ABANDONADO",
                 livro: {
                     id: livro.id
                 },

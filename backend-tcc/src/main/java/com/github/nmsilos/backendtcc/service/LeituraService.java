@@ -2,6 +2,7 @@ package com.github.nmsilos.backendtcc.service;
 
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
+import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -70,5 +72,15 @@ public class LeituraService {
                 }
             });
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Leitura> buscarPorStatus(StatusLeitura status, String username) {
+        Usuario usuario = usuarioService.buscarPorUsername(username);
+        List<Leitura> leituras = usuario.getLeituras()
+                .stream()
+                .filter(leitura -> leitura.getStatus().equals(status))
+                .toList();
+        return leituras;
     }
 }

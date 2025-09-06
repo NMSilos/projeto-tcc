@@ -14,7 +14,8 @@ public class RespostaLivroNoListMapper {
                 livro.getAno_publicacao(),
                 livro.getPaginas(),
                 livro.getDescricao(),
-                livro.getAvaliacao()
+                livro.getAvaliacao(),
+                livro.getImagem()
         );
     }
 }
