@@ -20,6 +20,7 @@ export default function EditarLeitura() {
           {},
           "GET"
         );
+        console.log(data);
         setLeitura(data);
         setPaginaAtual(data.pagina_atual || 0);
         setReview(data.review || "");
