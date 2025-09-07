@@ -20,7 +20,7 @@ export default function PerfilUsuario() {
   async function carregarDados() {
     const usuario = await requestLogado(`api/usuarios/buscar/username/${user}`, {}, "GET");
     setLeituras(usuario.leituras)
-    setUltimasLeituras(usuario.leituras.slice().reverse().slice(0, 3))
+    setUltimasLeituras(usuario.leituras.slice().reverse().slice(0, 1))
   }
 
 
@@ -93,7 +93,7 @@ export default function PerfilUsuario() {
       </div>
 
       <div className='ultimas-leituras'>
-        <h2>Últimas Leituras:</h2>
+        <h2>Última Leitura:</h2>
         {ultimasLeituras && ultimasLeituras.length > 0 ? (
           ultimasLeituras.map((leitura) => (
             <UltimasLeituras key={leitura.id} leitura={leitura} />

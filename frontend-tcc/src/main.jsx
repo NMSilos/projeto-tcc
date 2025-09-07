@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/perfil/:user" element={<PerfilUsuario />} />
             <Route path="/perfil/:user/editar" element={<EditarUsuario />} />
             <Route path="/perfil/:user/:lista" element={<LeiturasUsuario />} />
-            <Route path="/perfil/:user/leitura/:leituraid/editar" element={<EditarLeitura />} />
+            <Route path="/perfil/:user/leitura/:id/editar" element={<EditarLeitura />} />
             <Route path="/buscar" element={<BuscarLivros />}/>
             <Route path="/livros/:isbn" element={<TelaLivro />}/>
           </Route>

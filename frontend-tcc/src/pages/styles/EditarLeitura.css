@@ -1,0 +1,126 @@
+.tela-leitura-container {
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.leitura-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(100, 0, 200, 0.1);
+  flex-wrap: wrap; /* em telas pequenas quebra para baixo */
+  margin-bottom: 40px;
+}
+
+.leitura-capa {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza tudo dentro da capa */
+  gap: 10px;
+}
+
+.leitura-capa img {
+  width: 220px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.90);
+}
+
+.leitura-estrelas {
+  display: flex;
+  justify-content: center; /* garante centralização horizontal */
+  gap: 8px;
+  font-size: 22px;
+  color: #f1c40f;
+  cursor: pointer;
+}
+
+.leitura-form {
+  flex: 1; /* ocupa o espaço ao lado da capa */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.leitura-form h1 {
+  color: #5727a3;
+  font-size: 26px;
+  margin: 0;
+}
+
+.leitura-autor {
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  margin: 0;
+}
+
+.leitura-estrelas {
+  font-size: 22px;
+  color: #f1c40f;
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.form-leitura {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-leitura label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  gap: 6px;
+}
+
+.form-leitura input,
+.form-leitura textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-leitura input:focus,
+.form-leitura textarea:focus {
+  border-color: #a144f4;
+  box-shadow: 0 0 5px rgba(161, 68, 244, 0.3);
+  outline: none;
+}
+
+.form-leitura textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn-salvar {
+  align-self: flex-start;
+  background-color: #a144f4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-salvar:hover {
+  background-color: #7c2fd0;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+}

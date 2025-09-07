@@ -1,16 +1,30 @@
 import { Star } from "lucide-react";
+import { baseUrl } from "../utils/requests";
+import { useEffect, useState } from "react";
 
 export default function UltimasLeituras({ leitura }) {
   const livro = leitura.livro;
   const comentario = leitura.comentario;
   const estrelas = [1,2,3,4,5];
-  
+  const [capa, setCapa] = useState();
+
+  async function carregarCapa() {
+    const imagem = `${baseUrl}api/livros/livroImage/${livro.imagem}`;
+    setCapa(imagem);
+  }
+
+
+  useEffect(() => {
+    carregarCapa();
+  }, [livro]);
+
   if(!livro) return null;
 
   return (
     <div className="leitura">
       <div className="leitura-conteudo">
         <div className="leitura-img">
+          <img src={capa} alt="" />
           <p>{livro.titulo}</p>
           <div className="stars">
             {
@@ -33,5 +47,3 @@ export default function UltimasLeituras({ leitura }) {
     </div>
   );
 }
-
-//<img src={leitura.imagem} alt={leitura.titulo} />

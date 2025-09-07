@@ -41,6 +41,11 @@ public class LeituraService {
 
             novaLeitura.setUsuario(usuarioLogado);
             novaLeitura.setLivro(livro);
+            if(novaLeitura.getStatus().equals(StatusLeitura.LIDO)) {
+                novaLeitura.setPagina_atual(novaLeitura.getLivro().getPaginas());
+                System.out.println(novaLeitura.getPagina_atual());
+            }
+
             usuario.getLeituras().add(novaLeitura);
 
             repository.save(novaLeitura);

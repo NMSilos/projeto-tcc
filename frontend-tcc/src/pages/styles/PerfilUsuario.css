@@ -137,13 +137,14 @@
 }
 
 .leitura-img {
-  width: 140px;
+  width: 100px;
   text-align: center;
 }
 
 .leitura-img img {
-  width: 100%;
+  width: 100%;     
   border-radius: 6px;
+  object-fit: cover; 
 }
 
 .leitura-img p {
