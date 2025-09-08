@@ -4,7 +4,6 @@ import com.github.nmsilos.backendtcc.dto.usuarios.*;
 import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
 import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
-import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.security.Cripter;
 import com.github.nmsilos.backendtcc.service.UsuarioService;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/usuarios")

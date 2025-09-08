@@ -20,11 +20,6 @@ export default function CadastroLivro() {
   
     const cadastrarLivro = (e) => {
       e.preventDefault();
-      //e.preventDefault();
-      /*if (!nome || !username || !email || !password) {
-        alert("Todos os campos são obrigatórios");
-        return;
-      }*/
       const dados = {
         titulo,
         autor,
@@ -41,14 +36,6 @@ export default function CadastroLivro() {
         navigate('/admin/livros');
       }, 1500)
     };
-
-    /*
-  async function handleSubmit(e) {
-    e.preventDefault();
-    await requestFormData("api/livros/cadastrar", "POST", formData);
-    navigate("/admin/livros");
-  }
-  */
 
   return (
     <div className="admin-tabela">

@@ -50,7 +50,6 @@ export default function AdminLivros() {
                     imgSrc = `${baseUrl}api/livros/livroImage/${livro.imagem}`;
                   }
                 }
-                console.log(imgSrc)
 
                 return (
                   <tr key={livro.id}>
