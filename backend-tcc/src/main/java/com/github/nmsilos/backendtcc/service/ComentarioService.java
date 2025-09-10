@@ -21,26 +21,22 @@ public class ComentarioService {
     @Autowired
     private LivroService livroService;
 
-    @Autowired
-    private LeituraService leituraService;
-
     @Transactional
-    public RespostaComentarioDTO comentar(CadastroComentarioDTO comentario) {
-        Comentario com = CadastroComentarioMapper.toModel(comentario);
+    public RespostaComentarioDTO comentar(Comentario comentario) {
 
         Livro livro = livroService.buscarInfo(comentario.getLivro().getId());
-        Leitura leitura = leituraService.buscarInfo(comentario.getLeitura().getId());
+        Leitura leitura = comentario.getLeitura();
+        leitura.setComentario(comentario);
 
-        leitura.setComentario(com);
-
-        livro.getComentarios().add(com);
+        livro.getComentarios().add(comentario);
         livroService.atualizarAvaliacao(livro.getId());
 
-        com.setLivro(livro);
-        com.setLeitura(leitura);
+        comentario.setLivro(livro);
+        comentario.setLeitura(leitura);
 
-        repository.save(com);
+        repository.save(comentario);
 
-        return RespostaComentarioMapper.toDto(com);
+        return RespostaComentarioMapper.toDto(comentario);
     }
+
 }

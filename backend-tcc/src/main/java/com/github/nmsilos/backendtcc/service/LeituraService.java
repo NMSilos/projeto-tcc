@@ -1,5 +1,6 @@
 package com.github.nmsilos.backendtcc.service;
 
+import com.github.nmsilos.backendtcc.dto.comentarios.CadastroComentarioDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.EditarLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
@@ -29,6 +30,9 @@ public class LeituraService {
 
     @Autowired
     private LivroService livroService;
+
+    @Autowired
+    private ComentarioService comentarioService;
 
     @Transactional
     public RespostaLeituraDTO criarLeitura(Usuario usuarioLogado, CadastroLeituraDTO leitura) {
@@ -125,10 +129,12 @@ public class LeituraService {
             comentario.setLivro(novaLeitura.getLivro());
             comentario.setLeitura(novaLeitura);
 
-            novaLeitura.setComentario(comentario);
+            comentarioService.comentar(comentario);
         } else {
             novaLeitura.getComentario().setTexto(leitura.getComentario().getTexto());
             novaLeitura.getComentario().setNota(leitura.getComentario().getNota());
+
+            comentarioService.comentar(novaLeitura.getComentario());
         }
 
         repository.save(novaLeitura);

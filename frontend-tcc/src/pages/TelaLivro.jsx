@@ -43,6 +43,7 @@ export default function TelaLivro() {
 
     async function carregarLivro() {
         const livro = await requestLogado(`api/livros/buscar-isbn/${isbn}`, {}, "GET");
+        console.log(livro);
         setLivroAtual(livro);
         setLeituras(livro.leituras);
         setCapaLivro(livro.imagem);
