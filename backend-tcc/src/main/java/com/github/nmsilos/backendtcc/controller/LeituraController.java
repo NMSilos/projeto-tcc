@@ -1,10 +1,10 @@
 package com.github.nmsilos.backendtcc.controller;
 
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
+import com.github.nmsilos.backendtcc.dto.leituras.EditarLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
-import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Leitura;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Usuario;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,6 +51,12 @@ public class LeituraController {
 
         List<RespostaLeituraDTO> resposta = leituras.stream().map(RespostaLeituraMapper::toDto).toList();
         return ResponseEntity.status(HttpStatus.OK).body(resposta);
+    }
+
+    @PutMapping("/editar")
+    ResponseEntity<Void> editarLeitura(@RequestBody EditarLeituraDTO leitura){
+        service.editarLeitura(leitura);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

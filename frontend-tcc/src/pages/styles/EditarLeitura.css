@@ -13,14 +13,14 @@
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(100, 0, 200, 0.1);
-  flex-wrap: wrap; /* em telas pequenas quebra para baixo */
+  flex-wrap: wrap;
   margin-bottom: 40px;
 }
 
 .leitura-capa {
   display: flex;
   flex-direction: column;
-  align-items: center; /* centraliza tudo dentro da capa */
+  align-items: center;
   gap: 10px;
 }
 
@@ -33,7 +33,7 @@
 
 .leitura-estrelas {
   display: flex;
-  justify-content: center; /* garante centralização horizontal */
+  justify-content: center;
   gap: 8px;
   font-size: 22px;
   color: #f1c40f;
@@ -41,7 +41,7 @@
 }
 
 .leitura-form {
-  flex: 1; /* ocupa o espaço ao lado da capa */
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -60,19 +60,21 @@
   margin: 0;
 }
 
-.leitura-estrelas {
-  font-size: 22px;
-  color: #f1c40f;
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-  cursor: pointer;
-}
-
 .form-leitura {
   display: flex;
   flex-direction: column;
   gap: 18px;
+}
+
+.form-linha {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-linha label {
+  flex: 1;
+  min-width: 150px;
 }
 
 .form-leitura label {
@@ -85,17 +87,20 @@
 }
 
 .form-leitura input,
-.form-leitura textarea {
+.form-leitura textarea,
+.form-leitura select {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
 }
 
 .form-leitura input:focus,
-.form-leitura textarea:focus {
+.form-leitura textarea:focus,
+.form-leitura select:focus {
   border-color: #a144f4;
   box-shadow: 0 0 5px rgba(161, 68, 244, 0.3);
   outline: none;

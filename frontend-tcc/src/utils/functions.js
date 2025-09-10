@@ -76,3 +76,33 @@ export default async function excluirLeitura(id) {
     toast.success("Leitura removida");
     const response = await requestLogado(`api/leituras/excluir-por-livro/${user.id}`, data, "DELETE");
 }
+
+export function normalizarStatus(apiStatus) {
+  switch (apiStatus) {
+    case "LIDO":
+      return "lidos";
+    case "LENDO":
+      return "lendo";
+    case "PRETENDO_LER":
+      return "pretendo";
+    case "ABANDONADO":
+      return "abandonado";
+    default:
+      return "lendo";
+  }
+}
+
+export function formarEnumStatus(apiStatus) {
+  switch (apiStatus) {
+    case "lidos":
+      return "LIDO";
+    case "lendo":
+      return "LENDO";
+    case "pretendo":
+      return "PRETENDO_LER";
+    case "abandonado":
+      return "ABANDONADO";
+    default:
+      return "";
+  }
+}

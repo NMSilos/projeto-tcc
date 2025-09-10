@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 import { requestLogado, baseUrl } from "../utils/requests";
 import { Star } from "lucide-react";
 import "./styles/EditarLeitura.css";
+import { formarEnumStatus, normalizarStatus } from "../utils/functions";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function EditarLeitura() {
   const { id } = useParams();
   const [leitura, setLeitura] = useState(null);
   const [paginaAtual, setPaginaAtual] = useState(0);
-  const [review, setReview] = useState("");
   const [nota, setNota] = useState(0);
   const [texto, setTexto] = useState("");
+  const [status, setStatus] = useState("lendo");
 
   useEffect(() => {
     async function carregarLeitura() {
@@ -21,11 +23,15 @@ export default function EditarLeitura() {
           "GET"
         );
         console.log(data);
+
         setLeitura(data);
         setPaginaAtual(data.pagina_atual || 0);
-        setReview(data.review || "");
-        setNota(data.nota || 0);
-        setTexto(data.texto || "");
+        if (data.comentario != null) {
+          setNota(data.comentario.nota || 0);
+          setTexto(data.comentario.texto || "");
+        }
+        setStatus(normalizarStatus(data.status));
+
       } catch (err) {
         console.error("Erro ao carregar leitura:", err);
       }
@@ -35,21 +41,34 @@ export default function EditarLeitura() {
 
   if (!leitura) return <p>Carregando...</p>;
 
-  function handleSalvar(e) {
+  async function handleSalvar(e) {
     e.preventDefault();
-    console.log({
-      paginaAtual,
-      review,
-      nota,
-      texto,
-    });
-    // aqui você chama sua API para salvar
+    console.log(leitura.id);
+    const dados = {
+      id: leitura.id,
+      data_inicio: leitura.data_inicio,
+      data_termino: leitura.data_termino,
+      pagina_atual: paginaAtual,
+      status: formarEnumStatus(status),
+      comentario: {
+        texto,
+        nota,
+      }
+    }
+
+    try{
+      await requestLogado("api/leituras/editar", dados, "PUT");
+      toast.success("Leitura atualizada");
+    }
+    catch(e) {
+      toast.error("Erro ao salvar leitura, tente mais tarde");
+    }
+   
   }
 
   return (
     <div className="tela-leitura-container">
       <div className="leitura-topo">
-        {/* Capa do livro + estrelas embaixo */}
         <div className="leitura-capa">
           <img
             src={
@@ -60,7 +79,6 @@ export default function EditarLeitura() {
             alt={leitura.livro.titulo}
           />
 
-          {/* Estrelas abaixo da capa */}
           <div className="leitura-estrelas">
             {Array.from({ length: 5 }, (_, i) => (
               <Star
@@ -76,20 +94,34 @@ export default function EditarLeitura() {
           </div>
         </div>
 
-        {/* Formulário de edição ao lado da capa */}
         <div className="leitura-form">
           <h1>{leitura.livro.titulo}</h1>
           <p className="leitura-autor">{leitura.livro.autor}</p>
 
           <form className="form-leitura" onSubmit={handleSalvar}>
-            <label>
-              Página atual:
-              <input
-                type="number"
-                value={paginaAtual}
-                onChange={(e) => setPaginaAtual(e.target.value)}
-              />
-            </label>
+            <div className="form-linha">
+              <label>
+                Página atual:
+                <input
+                  type="number"
+                  value={paginaAtual}
+                  onChange={(e) => setPaginaAtual(e.target.value)}
+                />
+              </label>
+
+              <label>
+                Status:
+                <select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="lendo">Lendo</option>
+                  <option value="lidos">Lidos</option>
+                  <option value="pretendo">Pretendo Ler</option>
+                  <option value="abandonado">Abandonado</option>
+                </select>
+              </label>
+            </div>
 
             <label>
               Review:
@@ -105,6 +137,7 @@ export default function EditarLeitura() {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

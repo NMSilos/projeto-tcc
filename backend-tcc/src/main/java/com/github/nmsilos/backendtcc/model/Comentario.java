@@ -33,6 +33,13 @@ public class Comentario {
         this.leitura = leitura;
     }
 
+    public Comentario(String texto, int nota, Livro livro) {
+        this.texto = texto;
+        this.nota = nota;
+        this.livro = livro;
+        this.leitura = leitura;
+    }
+
     public Long getId() {
         return id;
     }

@@ -50,7 +50,7 @@ export default function TelaLivro() {
     }
 
     function carregarImagem(livro) {
-        if(livro.imagem != null) {
+        if (livro.imagem != null) {
             const imagem = `${baseUrl}api/livros/livroImage/${livro.imagem}`;
             setCapaLivro(imagem);
         }
@@ -158,7 +158,16 @@ export default function TelaLivro() {
                     {leiturasFiltradas.map((leitura) => (
                         <div key={leitura.id} className="review-item">
                             <div className="review-user">
-                                <img src={leitura.usuario.imagem ? leitura.usuario.imagem : defaultUser} alt="" />
+                                <img
+                                    src={
+                                        leitura.usuario.imagem
+                                            ? leitura.usuario.imagem.startsWith("https")
+                                                ? leitura.usuario.imagem
+                                                : `${baseUrl}api/usuarios/userImage/${leitura.usuario.imagem}`
+                                            : defaultUser
+                                    }
+                                    alt="Foto do usuário"
+                                />
                                 <span>
                                     {leitura.comentario ? (
                                         estrelas.map(item => item <= leitura.comentario.nota ? <Star size={12} fill="gold" /> : <Star size={12} color="#b3b3b3" />)

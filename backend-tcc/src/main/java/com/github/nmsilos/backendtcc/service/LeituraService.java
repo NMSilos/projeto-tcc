@@ -1,21 +1,20 @@
 package com.github.nmsilos.backendtcc.service;
 
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
+import com.github.nmsilos.backendtcc.dto.leituras.EditarLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
-import com.github.nmsilos.backendtcc.model.Leitura;
-import com.github.nmsilos.backendtcc.model.Livro;
-import com.github.nmsilos.backendtcc.model.Admin;
-import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.model.*;
 import com.github.nmsilos.backendtcc.repository.LeituraRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -87,5 +86,51 @@ public class LeituraService {
                 .filter(leitura -> leitura.getStatus().equals(status))
                 .toList();
         return leituras;
+    }
+
+    @Transactional
+    public void editarLeitura(EditarLeituraDTO leitura) {
+        Leitura novaLeitura = repository.getReferenceById(leitura.getId());
+        novaLeitura.setStatus(leitura.getStatus());
+        if (novaLeitura.getStatus().equals(StatusLeitura.LIDO)) {
+            if (novaLeitura.getData_termino() == null) {
+                novaLeitura.setData_termino(new Date());
+            } else {
+                novaLeitura.setData_termino(leitura.getData_termino());
+            }
+            novaLeitura.setPagina_atual(novaLeitura.getLivro().getPaginas());
+        }
+        else if (leitura.getStatus().equals(StatusLeitura.LENDO)) {
+            if(leitura.getData_inicio() == null) {
+                novaLeitura.setData_inicio(new Date());
+            } else {
+                novaLeitura.setData_inicio(leitura.getData_inicio());
+            }
+            novaLeitura.setPagina_atual(leitura.getPagina_atual());
+        }
+        else if (novaLeitura.getStatus().equals(StatusLeitura.PRETENDO_LER)) {
+            novaLeitura.setData_inicio(null);
+            novaLeitura.setData_termino(null);
+            novaLeitura.setPagina_atual(leitura.getPagina_atual());
+        }
+        else if (novaLeitura.getStatus().equals(StatusLeitura.ABANDONADO)) {
+            novaLeitura.setData_termino(null);
+            novaLeitura.setPagina_atual(leitura.getPagina_atual());
+        }
+
+        if(novaLeitura.getComentario() == null) {
+            Comentario comentario = new Comentario();
+            comentario.setTexto(leitura.getComentario().getTexto());
+            comentario.setNota(leitura.getComentario().getNota());
+            comentario.setLivro(novaLeitura.getLivro());
+            comentario.setLeitura(novaLeitura);
+
+            novaLeitura.setComentario(comentario);
+        } else {
+            novaLeitura.getComentario().setTexto(leitura.getComentario().getTexto());
+            novaLeitura.getComentario().setNota(leitura.getComentario().getNota());
+        }
+
+        repository.save(novaLeitura);
     }
 }
