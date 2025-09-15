@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import logo from '../assets/LogoLivro.png'
 import { request } from "../utils/requests";
 import { GoogleLogin } from "@react-oauth/google";
 import LoginLayout from "../components/LoginLayout/LoginLayout";
@@ -61,7 +62,7 @@ export default function Login() {
   return (
     <LoginLayout>
         <div className="form-container">
-          <h2>Login</h2>
+          <img src={logo} alt="Logo" className="login-logo" />
           <form onSubmit={onSubmit}>
               <div className="form-group">
                 <input 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { request, requestFormData } from '../utils/requests';
+import logo from '../assets/LogoLivro.png'
 import LoginLayout from '../components/LoginLayout/LoginLayout';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,7 +38,7 @@ export default function CadastroUsuario() {
   return (
     <LoginLayout>
       <div className="form-container">
-        <h2>Cadastro</h2>
+        <img src={logo} alt="Logo" className="login-logo" />
         <form onSubmit={cadastrarUsuario}>
           <div className="form-group">
             <label htmlFor="nome">Nome</label>

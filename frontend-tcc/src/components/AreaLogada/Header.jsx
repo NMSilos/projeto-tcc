@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./AreaLogada.css";
+import logo from '../../assets/LogoLivro.png'
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
@@ -49,7 +50,6 @@ export default function Header() {
     <header className="header">
       <div className="header-container">
         <div className="esquerda">
-          <h1 className="logo">AppTCC</h1>
         </div>
         <div className="centro">
           <form className="form-pesquisa" onSubmit={pesquisarLivros}>
