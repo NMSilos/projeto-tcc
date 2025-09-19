@@ -13,6 +13,9 @@ public class Usuario extends Admin {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Leitura> leituras = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Sugestao> sugestoes = new ArrayList<>();
+
     public Usuario() {}
 
     public Usuario(String nome, String apelido, String email, String senha, String imagem, String contentType) {

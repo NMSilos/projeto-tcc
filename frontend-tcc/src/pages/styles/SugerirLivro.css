@@ -1,0 +1,29 @@
+.header-form {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;            
+  margin-bottom: 20px;           
+}
+
+.form-titulo {
+  margin: 0; 
+  font-size: 1.5rem;
+}
+
+.btn-voltar {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-voltar:hover {
+  background-color: #5a6268;
+}

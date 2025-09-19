@@ -60,7 +60,12 @@ export default function PerfilUsuario() {
             <p>Total Leituras: {leituras.length}</p>
           </div>
           <div className="perfil-editar">
-            <Link to={`/perfil/${username}/editar`}><button>Editar Perfil</button></Link>
+            <Link to={`/perfil/${username}/editar`}>
+              <button>Editar Perfil</button>
+            </Link>
+            <Link to={`/perfil/${username}/sugerir-livro`}>
+              <button className="btn-sugerir">Sugerir Livro</button>
+            </Link>
           </div>
         </div>
       </div>
