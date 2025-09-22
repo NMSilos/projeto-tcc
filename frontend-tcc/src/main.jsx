@@ -38,6 +38,7 @@ createRoot(document.getElementById('root')).render(
             <Route index element={<ViewAdmin />} />
             <Route path='/admin/livros' element={<AdminLivros />}/>
             <Route path='/admin/livros/novo' element={<CadastroLivro />}/>
+            <Route path='/admin/sugestoes' element={<AdminLivros />}/>
           </Route>
         </Routes>
       </BrowserRouter>
