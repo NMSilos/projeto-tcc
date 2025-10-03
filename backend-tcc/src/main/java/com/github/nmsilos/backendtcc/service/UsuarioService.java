@@ -41,6 +41,9 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private TokenManager tokenManager;
+
     private final Path folderPath = Paths.get("uploads");
 
     @Transactional
@@ -52,22 +55,22 @@ public class UsuarioService {
     @Transactional
     public TokenDTO login(LoginDTO dados) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.getUsername(), dados.getPassword());
-        try{
+        try {
             var authentication = manager.authenticate(authenticationToken);
+
             if (authentication.getPrincipal() instanceof Usuario) {
-                Admin usuario = (Usuario) authentication.getPrincipal();
-                String token = new TokenManager().generateToken(usuario);
-                TokenDTO dto = new TokenDTO(usuario.getId(), token);
-                return dto;
+                Usuario usuario = (Usuario) authentication.getPrincipal();
+                String token = tokenManager.generateToken(usuario);
+                return new TokenDTO(usuario.getId(), token);
+
             } else if (authentication.getPrincipal() instanceof Admin) {
                 Admin usuario = (Admin) authentication.getPrincipal();
-                String token = new TokenManager().generateToken(usuario);
-                TokenDTO dto = new TokenDTO(usuario.getId(), token);
-                return dto;
+                String token = tokenManager.generateToken(usuario);
+                return new TokenDTO(usuario.getId(), token);
             }
+
             return null;
-        }
-        catch (AuthenticationException e) {
+        } catch (AuthenticationException e) {
             e.printStackTrace();
             throw new UsuarioInvalidoException("Erro ao efetuar login: Usuário ou senha incorretos");
         }
@@ -78,6 +81,7 @@ public class UsuarioService {
         try {
             String idToken = request.getCredential();
             GoogleIdToken.Payload payload = GoogleTokenVerifier.verifyToken(idToken);
+
             if (payload != null) {
                 Usuario usuario = repository.findByEmail(payload.getEmail());
                 if (usuario == null) {
@@ -89,33 +93,28 @@ public class UsuarioService {
                     repository.save(new Usuario(nome, username, email, senha, imagem, null));
                     usuario = repository.findByEmail(email);
                 }
-                String token = new TokenManager().generateToken(usuario);
-                TokenDTO dto = new TokenDTO(usuario.getId(), token);
-                return dto;
+                String token = tokenManager.generateToken(usuario);
+                return new TokenDTO(usuario.getId(), token);
             } else {
                 throw new TokenInvalidoException("Erro ao efetuar login: Token inválido");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new ErroServidorException("Erro ao verificar token: " + e.getMessage());
         }
     }
 
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long idUsuario) {
-        Usuario usuario = repository.findById(idUsuario).orElseThrow(
-                        () -> new EntityNotFoundException("Usuário não encontrado")
-        );
-        return usuario;
+        return repository.findById(idUsuario)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
     }
 
     public Usuario buscarPorUsername(String username) {
         Usuario usuario = repository.findByUsername(username);
         if (usuario == null) {
             throw new EntityNotFoundException(String.format("Usuário '%s' não encontrado", username));
-        } else {
-            return usuario;
         }
+        return usuario;
     }
 
     @Transactional
@@ -134,11 +133,11 @@ public class UsuarioService {
             } else {
                 novoUsuario.setPassword(usuarioAtual.getPassword());
             }
-            String token = new TokenManager().generateToken(usuarioAtual);
+
+            String token = tokenManager.generateToken(usuarioAtual);
             return new TokenDTO(usuarioAtual.getId(), token);
-        }
-        catch (NullPointerException e) {
-            //trocar por entitynotfound
+
+        } catch (NullPointerException e) {
             throw new NullPointerException("Erro ao atualizar usuário");
         }
     }
@@ -151,8 +150,7 @@ public class UsuarioService {
             } else {
                 throw new SecurityException("Usuário não autorizado a deletar esta conta.");
             }
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new IllegalArgumentException("Erro ao encerrar conta");
         }
     }
@@ -164,6 +162,7 @@ public class UsuarioService {
     public String salvarImagem(MultipartFile image) throws IOException {
         String uuid = UUID.randomUUID().toString();
         String extensao = "";
+
         if (image.getOriginalFilename().contains(".")) {
             int aux = image.getOriginalFilename().lastIndexOf(".");
             extensao = image.getOriginalFilename().substring(aux);
@@ -178,5 +177,4 @@ public class UsuarioService {
         Files.copy(image.getInputStream(), folderPath.resolve(nomeImage));
         return nomeImage;
     }
-
 }

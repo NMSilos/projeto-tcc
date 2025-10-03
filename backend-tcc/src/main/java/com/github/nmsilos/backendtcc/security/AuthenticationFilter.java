@@ -1,4 +1,6 @@
 package com.github.nmsilos.backendtcc.security;
+
+import com.github.nmsilos.backendtcc.repository.AdminRepository;
 import com.github.nmsilos.backendtcc.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,27 +17,43 @@ import java.io.IOException;
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Autowired
-    private UsuarioRepository repository;
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TokenManager tokenManager;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String auth_header = request.getHeader("Authorization");
-        if(auth_header != null && auth_header.startsWith("Bearer ")) {
-            String token = auth_header.substring(7);
-            String username = new TokenManager().getSubject(token);
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        String authHeader = request.getHeader("Authorization");
 
-            //System.out.println(apelido);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            String username = tokenManager.getSubject(token);
 
-            var usuario = repository.findByUsername(username);
-            //System.out.println("Aqui3");
+            if (username != null) {
+                var usuario = adminRepository.findByUsername(username);
+                if (usuario == null) {
+                    usuario = usuarioRepository.findByUsername(username);
+                }
 
-            var authentication =
-                    new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (usuario != null) {
+                    var authentication =
+                            new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    System.out.println("Usuário não encontrado para username do token: " + username);
+                }
+            } else {
+                System.out.println("Token inválido ou expirado.");
+            }
         }
+
         filterChain.doFilter(request, response);
     }
 }
-
