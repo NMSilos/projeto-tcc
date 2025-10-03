@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class SugestaoService {
 
@@ -15,5 +17,20 @@ public class SugestaoService {
     @Transactional
     public Sugestao cadastrar(Sugestao sugestao) {
         return repository.save(sugestao);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Sugestao> buscarTodos() {
+        return repository.findAll();
+    }
+
+    @Transactional
+    public Void deletar(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            return null;
+        }
+        return null;
     }
 }

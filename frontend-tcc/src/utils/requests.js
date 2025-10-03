@@ -9,25 +9,25 @@ export async function requestLogado(url, dados, method) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-    } 
+    }
   }
-  if(method !== "GET") {
+  if (method !== "GET") {
     config.body = JSON.stringify(dados);
   }
 
   const response = await fetch(finalUrl, config);
-  
+
   if (!response.ok) {
     const dados = await response.json();
     throw new Error(dados.mensagem);
-  } 
+  }
 
   const contentType = response.headers.get("content-type");
   if (contentType && contentType.includes("application/json")) {
     const dados = await response.json();
     return dados;
   }
-  
+
 }
 
 export async function request(url, dados, method) {
@@ -51,20 +51,33 @@ export async function request(url, dados, method) {
 
 export async function requestFormData(url, dados, method) {
   const finalUrl = baseUrl + url;
-  if(!dados.imagem) {
+  const token = localStorage.getItem("token");
+  if (!dados.imagem) {
     dados.imagem = null;
   }
 
   const formData = new FormData();
-  for(const index in dados) {
+  for (const index in dados) {
     formData.append(index, dados[index]);
   }
-  
 
-  const response = await fetch(finalUrl, {
-    method: method,
-    body: formData,
-  });
+  const response = "";
+
+  if (token != null) {
+    response = await fetch(finalUrl, {
+      method: method,
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    });
+  } else {
+    response = await fetch(finalUrl, {
+      method: method,
+      body: formData,
+    });
+  }
+
   if (response.ok) {
     const dados = await response.json();
     return dados;
@@ -75,6 +88,24 @@ export async function requestFormData(url, dados, method) {
 }
 
 export async function buscaLivros(url, method) {
+  const finalUrl = baseUrl + url;
+
+  const response = await fetch(finalUrl, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    const dados = await response.json();
+    return dados;
+  } else {
+    const dados = await response.json();
+    throw new Error(dados.mensage);
+  }
+}
+
+export async function buscaSugestoes(url, method) {
   const finalUrl = baseUrl + url;
 
   const response = await fetch(finalUrl, {

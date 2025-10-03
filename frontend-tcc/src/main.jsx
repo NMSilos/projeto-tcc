@@ -17,6 +17,7 @@ import CadastroLivro from './pages/CadastroLivro'
 import LeiturasUsuario from './pages/LeiturasUsuario'
 import EditarLeitura from './pages/EditarLeitura'
 import SugerirLivro from './pages/SugerirLivro'
+import AdminSugestoes from './pages/AdminSugestoes'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -38,7 +39,7 @@ createRoot(document.getElementById('root')).render(
             <Route index element={<ViewAdmin />} />
             <Route path='/admin/livros' element={<AdminLivros />}/>
             <Route path='/admin/livros/novo' element={<CadastroLivro />}/>
-            <Route path='/admin/sugestoes' element={<AdminLivros />}/>
+            <Route path='/admin/sugestoes' element={<AdminSugestoes />}/>
           </Route>
         </Routes>
       </BrowserRouter>
