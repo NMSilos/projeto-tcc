@@ -46,4 +46,9 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErroPadrao(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 
+    @ExceptionHandler(NumeroPaginasInvalidoException.class)
+    public ResponseEntity<MensagemErroPadrao> numeroPaginasInvalidoException(NumeroPaginasInvalidoException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErroPadrao(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
+
 }

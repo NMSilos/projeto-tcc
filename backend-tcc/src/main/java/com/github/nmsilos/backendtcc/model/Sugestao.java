@@ -16,6 +16,7 @@ public class Sugestao {
 
     private String editora;
 
+    @Column(length = 1000)
     private String descricao;
 
     @ManyToOne

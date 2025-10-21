@@ -43,7 +43,6 @@ export default function EditarLeitura() {
 
   async function handleSalvar(e) {
     e.preventDefault();
-    console.log(leitura.id);
     const dados = {
       id: leitura.id,
       data_inicio: leitura.data_inicio,
@@ -61,7 +60,7 @@ export default function EditarLeitura() {
       toast.success("Leitura atualizada");
     }
     catch(e) {
-      toast.error("Erro ao salvar leitura, tente mais tarde");
+      toast.error(e.message);
     }
    
   }

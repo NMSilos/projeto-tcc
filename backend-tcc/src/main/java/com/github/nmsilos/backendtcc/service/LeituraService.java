@@ -5,6 +5,7 @@ import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.EditarLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
 import com.github.nmsilos.backendtcc.enums.StatusLeitura;
+import com.github.nmsilos.backendtcc.exception.custom.NumeroPaginasInvalidoException;
 import com.github.nmsilos.backendtcc.exception.custom.UsuarioInvalidoException;
 import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
@@ -110,16 +111,19 @@ public class LeituraService {
             } else {
                 novaLeitura.setData_inicio(leitura.getData_inicio());
             }
-            novaLeitura.setPagina_atual(leitura.getPagina_atual());
         }
         else if (novaLeitura.getStatus().equals(StatusLeitura.PRETENDO_LER)) {
             novaLeitura.setData_inicio(null);
             novaLeitura.setData_termino(null);
-            novaLeitura.setPagina_atual(leitura.getPagina_atual());
         }
         else if (novaLeitura.getStatus().equals(StatusLeitura.ABANDONADO)) {
             novaLeitura.setData_termino(null);
-            novaLeitura.setPagina_atual(leitura.getPagina_atual());
+        }
+
+        if (!novaLeitura.getStatus().equals(StatusLeitura.LIDO)) {
+            if(verificarNumeroPaginas(leitura.getPagina_atual(), novaLeitura.getLivro().getPaginas())) {
+                novaLeitura.setPagina_atual(leitura.getPagina_atual());
+            }
         }
 
         if(novaLeitura.getComentario() == null) {
@@ -139,4 +143,14 @@ public class LeituraService {
 
         repository.save(novaLeitura);
     }
+
+
+    public boolean verificarNumeroPaginas(int paginaAtual, int numPaginas) {
+        if(numPaginas < paginaAtual) {
+            throw new NumeroPaginasInvalidoException("Página atual inválida");
+        } else {
+            return true;
+        }
+    }
+
 }

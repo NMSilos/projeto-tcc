@@ -54,8 +54,8 @@ public class UsuarioService {
 
     @Transactional
     public TokenDTO login(LoginDTO dados) {
-        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.getUsername(), dados.getPassword());
         try {
+            var authenticationToken = new UsernamePasswordAuthenticationToken(dados.getUsername(), dados.getPassword());
             var authentication = manager.authenticate(authenticationToken);
 
             if (authentication.getPrincipal() instanceof Usuario) {
@@ -70,8 +70,8 @@ public class UsuarioService {
             }
 
             return null;
+
         } catch (AuthenticationException e) {
-            e.printStackTrace();
             throw new UsuarioInvalidoException("Erro ao efetuar login: Usuário ou senha incorretos");
         }
     }
