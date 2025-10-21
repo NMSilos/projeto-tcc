@@ -25,21 +25,21 @@ export default function UltimasLeituras({ leitura }) {
       <div className="leitura-conteudo">
         <div className="leitura-img">
           <img src={capa} alt="" />
-          <p>{livro.titulo}</p>
           <div className="stars">
             {
               estrelas.map(item => {
                 if(comentario == null) {
-                  return <Star key={item} size={12} color="#b3b3b3" />;
+                  return <Star key={item} size={20} color="#b3b3b3" />;
                 } else if(item <= comentario.nota) {
-                  return <Star key={item} size={12} fill="gold" />;
+                  return <Star key={item} size={20} fill="gold" />;
                 }
-                return <Star key={item} size={12} color="#b3b3b3" />;
+                return <Star key={item} size={20} color="#b3b3b3" />;
               })
             }
           </div>
         </div>
         <div className="leitura-review">
+          <h3>{livro.titulo}</h3>
           <h3>Review:</h3>
           <p>{comentario ? comentario.texto : "Nenhum comentário atribuído"}</p>
         </div>

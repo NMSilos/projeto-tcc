@@ -10,7 +10,7 @@ public class Comentario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true, length = 1000)
+    @Column(nullable = true, length = 3000)
     private String texto;
 
     private int nota;

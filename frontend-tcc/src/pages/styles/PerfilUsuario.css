@@ -158,11 +158,11 @@
   object-fit: cover; 
 }
 
-.leitura-img p {
+/*.leitura-img p {
   margin-top: 5px;
   font-weight: bold;
   font-size: 14px;
-}
+}*/
 
 .stars {
   color: #f1c40f;
