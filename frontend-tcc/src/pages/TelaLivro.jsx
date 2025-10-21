@@ -43,7 +43,6 @@ export default function TelaLivro() {
 
     async function carregarLivro() {
         const livro = await requestLogado(`api/livros/buscar-isbn/${isbn}`, {}, "GET");
-        console.log(livro);
         setLivroAtual(livro);
         setLeituras(livro.leituras);
         setCapaLivro(livro.imagem);
@@ -171,7 +170,7 @@ export default function TelaLivro() {
                                 />
                                 <span>
                                     {leitura.comentario ? (
-                                        estrelas.map(item => item <= leitura.comentario.nota ? <Star size={12} fill="gold" /> : <Star size={12} color="#b3b3b3" />)
+                                        estrelas.map(item => item <= leitura.comentario.nota ? <Star size={12} fill="gold" key={item}/> : <Star size={12} color="#b3b3b3" key={item}/>)
                                     ) : ""}
                                 </span>
                             </div>

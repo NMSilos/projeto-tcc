@@ -5,6 +5,7 @@ import { request } from "../utils/requests";
 import { GoogleLogin } from "@react-oauth/google";
 import LoginLayout from "../components/LoginLayout/LoginLayout";
 import { jwtDecode } from "jwt-decode";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -40,7 +41,7 @@ export default function Login() {
         navigate(`/perfil/${username}`)
       }
     } catch (error) {
-      alert(error.mensagem);
+      toast.error(error.message);
     }
   }
 
@@ -61,6 +62,7 @@ export default function Login() {
 
   return (
     <LoginLayout>
+      <ToastContainer />
         <div className="form-container">
           <img src={logo} alt="Logo" className="login-logo" />
           <form onSubmit={onSubmit}>

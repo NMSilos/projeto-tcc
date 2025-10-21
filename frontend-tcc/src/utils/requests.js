@@ -45,7 +45,7 @@ export async function request(url, dados, method) {
     return dados;
   } else {
     const dados = await response.json();
-    throw new Error(dados.mensage);
+    throw new Error(dados.mensagem);
   }
 }
 
