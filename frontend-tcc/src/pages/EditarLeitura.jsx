@@ -13,6 +13,8 @@ export default function EditarLeitura() {
   const [nota, setNota] = useState(0);
   const [texto, setTexto] = useState("");
   const [status, setStatus] = useState("lendo");
+  const [dataInicio, setDataInicio] = useState();
+  const [dataTermino, setDataTermino] = useState();
 
   useEffect(() => {
     async function carregarLeitura() {
@@ -31,6 +33,8 @@ export default function EditarLeitura() {
           setTexto(data.comentario.texto || "");
         }
         setStatus(normalizarStatus(data.status));
+        setDataInicio(data.data_inicio);
+        setDataTermino(data.data_termino);
 
       } catch (err) {
         console.error("Erro ao carregar leitura:", err);
@@ -55,14 +59,14 @@ export default function EditarLeitura() {
       }
     }
 
-    try{
+    try {
       await requestLogado("api/leituras/editar", dados, "PUT");
       toast.success("Leitura atualizada");
     }
-    catch(e) {
+    catch (e) {
       toast.error(e.message);
     }
-   
+
   }
 
   return (
@@ -97,6 +101,41 @@ export default function EditarLeitura() {
           <h1>{leitura.livro.titulo}</h1>
           <p className="leitura-autor">{leitura.livro.autor}</p>
 
+          <div className="progresso-container">
+            <div className="barra-progresso">
+              <div
+                className="barra-preenchida"
+                style={{
+                  width: `${(paginaAtual / leitura.livro.paginas) * 100}%`,
+                }}
+              ></div>
+            </div>
+            <span className="progresso-texto">
+              {paginaAtual} / {leitura.livro.paginas} páginas
+            </span>
+          </div>
+
+          <div className="datas-container">
+            <div className="campo-data">
+              <label>Data de Início</label>
+              <input
+                type="date"
+                value={dataInicio}
+                onChange={(e) => setDataInicio(e.target.value)}
+              />
+            </div>
+
+            <div className="campo-data">
+              <label>Data de Término</label>
+              <input
+                type="date"
+                value={dataTermino}
+                onChange={(e) => setDataTermino(e.target.value)}
+                disabled={status != "lidos" && status != "abandonado" ? true : false}
+              />
+            </div>
+          </div>
+
           <form className="form-leitura" onSubmit={handleSalvar}>
             <div className="form-linha">
               <label>
@@ -127,6 +166,7 @@ export default function EditarLeitura() {
               <textarea
                 value={texto}
                 onChange={(e) => setTexto(e.target.value)}
+                disabled={status != "lidos" && status != "abandonado" ? true : false}
               ></textarea>
             </label>
 

@@ -66,7 +66,7 @@ export default function AdminLivros() {
                     </td>
                     <td>{livro.titulo}</td>
                     <td>{livro.autor}</td>
-                    <td>{livro.ano}</td>
+                    <td>{livro.ano_publicacao}</td>
                     <td>
                       <Link to={`/admin/livros/editar/${livro.id}`}>
                         <button className="btn-acao editar">

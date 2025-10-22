@@ -1,5 +1,6 @@
 package com.github.nmsilos.backendtcc.dto.leituras;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 import com.github.nmsilos.backendtcc.model.Comentario;
 
@@ -8,8 +9,13 @@ import java.util.Date;
 public class EditarLeituraDTO {
 
     private Long id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date data_inicio;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date data_termino;
+
     private int pagina_atual;
     private StatusLeitura status;
     private Comentario comentario;

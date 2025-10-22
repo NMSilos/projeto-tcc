@@ -40,6 +40,73 @@
   cursor: pointer;
 }
 
+.progresso-container {
+  display: flex;
+  align-items: center; 
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+  min-height: 20px;
+}
+
+.barra-progresso {
+  flex: 1;
+  height: 20px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.barra-preenchida {
+  height: 100%;
+  background-color: #a144f4;
+  transition: width 0.3s ease;
+}
+
+.progresso-texto {
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.datas-container {
+  display: flex;
+  gap: 20px;              /* espaçamento entre os campos */
+  margin-top: 10px;
+}
+
+.campo-data {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                /* faz os dois inputs ocuparem o mesmo tamanho */
+}
+
+.campo-data label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.campo-data input[type="date"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo-data input[type="date"]:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+}
+
 .leitura-form {
   flex: 1;
   display: flex;
