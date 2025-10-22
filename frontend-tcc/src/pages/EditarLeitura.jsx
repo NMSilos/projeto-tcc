@@ -13,8 +13,8 @@ export default function EditarLeitura() {
   const [nota, setNota] = useState(0);
   const [texto, setTexto] = useState("");
   const [status, setStatus] = useState("lendo");
-  const [dataInicio, setDataInicio] = useState();
-  const [dataTermino, setDataTermino] = useState();
+  const [dataInicio, setDataInicio] = useState("");
+  const [dataTermino, setDataTermino] = useState("");
 
   useEffect(() => {
     async function carregarLeitura() {
@@ -33,8 +33,8 @@ export default function EditarLeitura() {
           setTexto(data.comentario.texto || "");
         }
         setStatus(normalizarStatus(data.status));
-        setDataInicio(data.data_inicio);
-        setDataTermino(data.data_termino);
+        setDataInicio(data.data_inicio || "");
+        setDataTermino(data.data_termino || "");
 
       } catch (err) {
         console.error("Erro ao carregar leitura:", err);
@@ -49,8 +49,8 @@ export default function EditarLeitura() {
     e.preventDefault();
     const dados = {
       id: leitura.id,
-      data_inicio: leitura.data_inicio,
-      data_termino: leitura.data_termino,
+      data_inicio: dataInicio,
+      data_termino: dataTermino,
       pagina_atual: paginaAtual,
       status: formarEnumStatus(status),
       comentario: {
@@ -122,6 +122,7 @@ export default function EditarLeitura() {
                 type="date"
                 value={dataInicio}
                 onChange={(e) => setDataInicio(e.target.value)}
+                disabled={status == "pretendo" ? true : false}
               />
             </div>
 

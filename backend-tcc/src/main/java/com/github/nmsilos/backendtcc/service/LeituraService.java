@@ -104,6 +104,7 @@ public class LeituraService {
                 novaLeitura.setData_termino(leitura.getData_termino());
             }
             novaLeitura.setPagina_atual(novaLeitura.getLivro().getPaginas());
+            novaLeitura.setData_inicio(leitura.getData_inicio());
         }
         else if (leitura.getStatus().equals(StatusLeitura.LENDO)) {
             if(leitura.getData_inicio() == null) {
@@ -117,7 +118,7 @@ public class LeituraService {
             novaLeitura.setData_termino(null);
         }
         else if (novaLeitura.getStatus().equals(StatusLeitura.ABANDONADO)) {
-            novaLeitura.setData_termino(null);
+            novaLeitura.setData_termino(leitura.getData_termino());
         }
 
         if (!novaLeitura.getStatus().equals(StatusLeitura.LIDO)) {
