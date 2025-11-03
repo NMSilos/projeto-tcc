@@ -1,6 +1,8 @@
 package com.github.nmsilos.backendtcc.mapper.leituras;
 
+import com.github.nmsilos.backendtcc.dto.anotacoes.RespostaAnotacaoDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
+import com.github.nmsilos.backendtcc.mapper.anotacoes.RespostaAnotacaoMapper;
 import com.github.nmsilos.backendtcc.mapper.comentarios.RespostaComentarioMapper;
 import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroNoListMapper;
 import com.github.nmsilos.backendtcc.model.Leitura;
@@ -14,7 +16,8 @@ public class RespostaLeituraMapper {
                 leitura.getPagina_atual(),
                 leitura.getStatus(),
                 RespostaLivroNoListMapper.toNoListDTO(leitura.getLivro()),
-                leitura.getComentario() != null ? RespostaComentarioMapper.toDto(leitura.getComentario()) : null
+                leitura.getComentario() != null ? RespostaComentarioMapper.toDto(leitura.getComentario()) : null,
+                leitura.getAnotacoes().stream().map(RespostaAnotacaoMapper::toDto).toList()
         );
     }
 }

@@ -3,7 +3,9 @@ package com.github.nmsilos.backendtcc.model;
 import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "leituras")
@@ -37,6 +39,9 @@ public class Leitura {
             fetch = FetchType.EAGER
     )
     private Comentario comentario;
+
+    @OneToMany(mappedBy = "leitura", fetch = FetchType.EAGER)
+    private List<Anotacao> anotacoes = new ArrayList<>();
 
     public Leitura() {}
 
@@ -110,4 +115,9 @@ public class Leitura {
     public void setUsuario(Admin usuario) {
         this.usuario = usuario;
     }
+
+    public List<Anotacao> getAnotacoes() {
+        return anotacoes;
+    }
+
 }

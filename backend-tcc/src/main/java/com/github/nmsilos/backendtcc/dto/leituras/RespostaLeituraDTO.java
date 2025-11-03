@@ -1,11 +1,13 @@
 package com.github.nmsilos.backendtcc.dto.leituras;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.github.nmsilos.backendtcc.dto.anotacoes.RespostaAnotacaoDTO;
 import com.github.nmsilos.backendtcc.dto.comentarios.RespostaComentarioDTO;
 import com.github.nmsilos.backendtcc.dto.livros.RespostaLivroNoListDTO;
 import com.github.nmsilos.backendtcc.enums.StatusLeitura;
 
 import java.util.Date;
+import java.util.List;
 
 public class RespostaLeituraDTO {
 
@@ -21,8 +23,16 @@ public class RespostaLeituraDTO {
     private StatusLeitura status;
     private RespostaLivroNoListDTO livro;
     private RespostaComentarioDTO comentario;
+    private List<RespostaAnotacaoDTO> anotacoes;
 
-    public RespostaLeituraDTO(Long id, Date data_inicio, Date data_termino, int pagina_atual, StatusLeitura status, RespostaLivroNoListDTO livro, RespostaComentarioDTO comentario) {
+    public RespostaLeituraDTO(Long id, Date data_inicio,
+                              Date data_termino,
+                              int pagina_atual,
+                              StatusLeitura status,
+                              RespostaLivroNoListDTO livro,
+                              RespostaComentarioDTO comentario,
+                              List<RespostaAnotacaoDTO> anotacoes
+    ) {
         this.id = id;
         this.data_inicio = data_inicio;
         this.data_termino = data_termino;
@@ -30,6 +40,7 @@ public class RespostaLeituraDTO {
         this.status = status;
         this.livro = livro;
         this.comentario = comentario;
+        this.anotacoes = anotacoes;
     }
 
     public Long getId() {
@@ -87,4 +98,9 @@ public class RespostaLeituraDTO {
     public void setComentario(RespostaComentarioDTO comentario) {
         this.comentario = comentario;
     }
+
+    public List<RespostaAnotacaoDTO> getAnotacoes() {
+        return anotacoes;
+    }
+
 }

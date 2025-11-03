@@ -1,13 +1,15 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { requestLogado, baseUrl } from "../utils/requests";
-import { Star } from "lucide-react";
+import { MessageSquareText, Star } from "lucide-react";
 import "./styles/EditarLeitura.css";
 import { formarEnumStatus, normalizarStatus } from "../utils/functions";
 import { toast, ToastContainer } from "react-toastify";
+import ModalAnotacao from "../components/AnotacaoModal/ModalAnotacao";
 
 export default function EditarLeitura() {
   const { id } = useParams();
+
   const [leitura, setLeitura] = useState(null);
   const [paginaAtual, setPaginaAtual] = useState(0);
   const [nota, setNota] = useState(0);
@@ -15,6 +17,9 @@ export default function EditarLeitura() {
   const [status, setStatus] = useState("lendo");
   const [dataInicio, setDataInicio] = useState("");
   const [dataTermino, setDataTermino] = useState("");
+
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarAnotacoes, setMostrarAnotacoes] = useState(false);
 
   useEffect(() => {
     async function carregarLeitura() {
@@ -69,6 +74,10 @@ export default function EditarLeitura() {
 
   }
 
+  function salvarAnotacao(texto) {
+    console.log("Anotação salva:", texto);
+  }
+
   return (
     <div className="tela-leitura-container">
       <div className="leitura-topo">
@@ -106,18 +115,22 @@ export default function EditarLeitura() {
               <div
                 className="barra-preenchida"
                 style={{
-                  width: `${(paginaAtual / leitura.livro.paginas) * 100}%`,
+                  width: `${paginaAtual
+                    ? Math.min((paginaAtual / leitura.livro.paginas) * 100, 100)
+                    : 0
+                    }%`,
                 }}
               ></div>
+
             </div>
             <span className="progresso-texto">
-              {paginaAtual} / {leitura.livro.paginas} páginas
+              {paginaAtual === "" ? 0 : paginaAtual} / {leitura.livro.paginas}
             </span>
           </div>
 
           <div className="datas-container">
             <div className="campo-data">
-              <label>Data de Início</label>
+              <label>Início:</label>
               <input
                 type="date"
                 value={dataInicio}
@@ -127,7 +140,7 @@ export default function EditarLeitura() {
             </div>
 
             <div className="campo-data">
-              <label>Data de Término</label>
+              <label>Término:</label>
               <input
                 type="date"
                 value={dataTermino}
@@ -144,8 +157,28 @@ export default function EditarLeitura() {
                 <input
                   type="number"
                   value={paginaAtual}
-                  onChange={(e) => setPaginaAtual(e.target.value)}
+                  onChange={(e) => {
+                    const valor = e.target.value;
+
+                    if (valor === "") {
+                      setPaginaAtual("");
+                      return;
+                    }
+
+                    const numero = Number(valor);
+                    const totalPaginas = leitura.livro.paginas;
+
+                    if (numero >= totalPaginas) {
+                      setPaginaAtual(totalPaginas);
+                    } else if (numero >= 0) {
+                      setPaginaAtual(numero);
+                    }
+                  }}
+                  onBlur={() => {
+                    if (paginaAtual === "") setPaginaAtual(0);
+                  }}
                 />
+
               </label>
 
               <label>
@@ -171,12 +204,71 @@ export default function EditarLeitura() {
               ></textarea>
             </label>
 
-            <button type="submit" className="btn-salvar">
-              Salvar
-            </button>
+            <div className="botoes-container">
+              <button type="submit" className="btn-salvar">
+                Salvar
+              </button>
+              <button
+                type="button"
+                className="btn-anotacao"
+                onClick={() => setMostrarAnotacoes(!mostrarAnotacoes)}
+              >
+                <MessageSquareText size={18} /> {mostrarAnotacoes ? "Fechar Anotações" : "Ver Anotações"}
+              </button>
+            </div>
           </form>
+
         </div>
       </div>
+
+      {mostrarAnotacoes && leitura.anotacoes && (
+        <div className="secao-anotacoes">
+          <div className="anotacoes-header">
+            <h2>Anotações</h2>
+            <button
+              className="btn-adicionar-anotacao"
+              onClick={() => setMostrarModal(true)}
+            >
+              + Adicionar anotação
+            </button>
+          </div>
+
+          {leitura.anotacoes.length > 0 ? (
+            <ul>
+              {leitura.anotacoes.map((anot, i) => (
+                <li key={i}>
+                  <p>{anot.texto}</p>
+                  {anot.data && (
+                    <span>{new Date(anot.data).toLocaleDateString("pt-BR")}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Nenhuma anotação encontrada.</p>
+          )}
+
+          {mostrarModal && (
+            <ModalAnotacao
+              idLeitura={id}
+              onClose={() => setMostrarModal(false)}
+              onSalvar={(texto) => {
+                if (!texto.trim()) return;
+                const novaAnotacao = {
+                  texto,
+                  data: new Date().toISOString(),
+                };
+                setLeitura({
+                  ...leitura,
+                  anotacoes: [...(leitura.anotacoes || []), novaAnotacao],
+                });
+                setMostrarModal(false);
+              }}
+            />
+          )}
+        </div>
+      )}
+
       <ToastContainer />
     </div>
   );
