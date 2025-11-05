@@ -21,7 +21,7 @@ public class AnotacaoController {
 
     @Transactional
     @PostMapping("/anotar")
-    public ResponseEntity<RespostaAnotacaoDTO> criarAnotacao(@RequestBody CadastroAnotacaoDTO dto) {
+    public ResponseEntity<RespostaAnotacaoDTO> anotar(@RequestBody CadastroAnotacaoDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(dto));
     }
 

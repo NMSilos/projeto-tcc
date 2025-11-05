@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class CadastroAnotacaoDTO {
 
-    private Long id;
+    private String titulo;
 
     @Column(length = 3000)
     private String descricao;
@@ -17,21 +17,13 @@ public class CadastroAnotacaoDTO {
     private Date data;
     private Leitura leitura;
 
-    public CadastroAnotacaoDTO(Long id, String descricao, int capitulo, int pagina, Date data, Leitura leitura) {
-        this.id = id;
+    public CadastroAnotacaoDTO(String titulo, String descricao, int capitulo, int pagina, Date data, Leitura leitura) {
+        this.titulo = titulo;
         this.descricao = descricao;
         this.capitulo = capitulo;
         this.pagina = pagina;
         this.data = data;
         this.leitura = leitura;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getDescricao() {
@@ -72,5 +64,13 @@ public class CadastroAnotacaoDTO {
 
     public void setLeitura(Leitura leitura) {
         this.leitura = leitura;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }

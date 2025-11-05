@@ -9,11 +9,12 @@ public class CadastroAnotacaoMapper {
 
     public static Anotacao toModel(CadastroAnotacaoDTO dto) {
         return new Anotacao(
-                dto.getId(),
+                dto.getTitulo(),
                 dto.getDescricao(),
                 dto.getCapitulo(),
                 dto.getPagina(),
-                new Date()
+                new Date(),
+                dto.getLeitura()
         );
     }
 

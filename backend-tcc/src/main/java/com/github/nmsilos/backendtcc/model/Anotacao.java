@@ -12,6 +12,8 @@ public class Anotacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String titulo;
+
     @Column(length = 3000)
     private String descricao;
     private int capitulo;
@@ -25,12 +27,22 @@ public class Anotacao {
     public Anotacao() {
     }
 
-    public Anotacao(Long id, String descricao, int capitulo, int pagina, Date data) {
+    public Anotacao(Long id, String titulo, String descricao, int capitulo, int pagina, Date data) {
         this.id = id;
+        this.titulo = titulo;
         this.descricao = descricao;
         this.capitulo = capitulo;
         this.pagina = pagina;
         this.data = data;
+    }
+
+    public Anotacao(String titulo, String descricao, int capitulo, int pagina, Date data, Leitura leitura) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.capitulo = capitulo;
+        this.pagina = pagina;
+        this.data = data;
+        this.leitura = leitura;
     }
 
     public Long getId() {
@@ -79,5 +91,13 @@ public class Anotacao {
 
     public void setLeitura(Leitura leitura) {
         this.leitura = leitura;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }

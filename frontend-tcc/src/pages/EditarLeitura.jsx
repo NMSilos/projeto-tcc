@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { requestLogado, baseUrl } from "../utils/requests";
-import { MessageSquareText, Star } from "lucide-react";
+import { MessageSquareText, Pencil, Star } from "lucide-react";
 import "./styles/EditarLeitura.css";
 import { formarEnumStatus, normalizarStatus } from "../utils/functions";
 import { toast, ToastContainer } from "react-toastify";
@@ -229,20 +229,28 @@ export default function EditarLeitura() {
               className="btn-adicionar-anotacao"
               onClick={() => setMostrarModal(true)}
             >
-              + Adicionar anotação
+              <Pencil size={12} /> Anotar
             </button>
           </div>
 
           {leitura.anotacoes.length > 0 ? (
             <ul>
               {leitura.anotacoes.map((anot, i) => (
-                <li key={i}>
-                  <p>{anot.texto}</p>
+                <li key={i} className="card-anotacao">
                   {anot.data && (
-                    <span>{new Date(anot.data).toLocaleDateString("pt-BR")}</span>
+                    <div className="anotacao-data">
+                      {new Date(anot.data).toLocaleDateString("pt-BR")}
+                    </div>
                   )}
+                  <div className="anotacao-conteudo">
+                    <h3 className="anotacao-titulo">{anot.titulo || "Sem título"}</h3>
+                    <p className="anotacao-info">
+                      Cap. {anot.capitulo || "-"} &nbsp;|&nbsp; Pág. {anot.pagina || "-"}
+                    </p>
+                  </div>
                 </li>
               ))}
+
             </ul>
           ) : (
             <p>Nenhuma anotação encontrada.</p>

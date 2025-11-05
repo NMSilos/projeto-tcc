@@ -1,6 +1,5 @@
 package com.github.nmsilos.backendtcc.dto.anotacoes;
 
-import com.github.nmsilos.backendtcc.model.Leitura;
 import jakarta.persistence.Column;
 
 import java.util.Date;
@@ -8,6 +7,7 @@ import java.util.Date;
 public class RespostaAnotacaoDTO {
 
     private Long id;
+    private String titulo;
 
     @Column(length = 3000)
     private String descricao;
@@ -16,8 +16,9 @@ public class RespostaAnotacaoDTO {
     private int pagina;
     private Date data;
 
-    public RespostaAnotacaoDTO(Long id, String descricao, int capitulo, int pagina, Date data) {
+    public RespostaAnotacaoDTO(Long id, String titulo, String descricao, int capitulo, int pagina, Date data) {
         this.id = id;
+        this.titulo = titulo;
         this.descricao = descricao;
         this.capitulo = capitulo;
         this.pagina = pagina;
@@ -30,6 +31,14 @@ public class RespostaAnotacaoDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescricao() {

@@ -45,6 +45,7 @@ public class ConfigSecurity {
                             .requestMatchers(HttpMethod.GET,"/api/usuarios/userImage/**").permitAll()
                             .requestMatchers(HttpMethod.GET,"/api/sugestoes/buscar/all").permitAll()
                             .requestMatchers(HttpMethod.GET,"/api/sugestoes/deletar").hasAuthority("ADMIN")
+                            .requestMatchers(HttpMethod.POST,"/api/anotacoes/anotar").hasAuthority("USUARIO")
                             //.requestMatchers(HttpMethod.POST,"/admin/cadastrar").permitAll()
                             .anyRequest().authenticated();
                 })

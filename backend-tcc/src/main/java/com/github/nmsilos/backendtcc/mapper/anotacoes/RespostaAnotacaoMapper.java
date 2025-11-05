@@ -8,6 +8,7 @@ public class RespostaAnotacaoMapper {
     public static RespostaAnotacaoDTO toDto(Anotacao anotacao) {
         return new RespostaAnotacaoDTO(
                 anotacao.getId(),
+                anotacao.getTitulo(),
                 anotacao.getDescricao(),
                 anotacao.getCapitulo(),
                 anotacao.getPagina(),

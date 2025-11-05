@@ -17,30 +17,66 @@
   background-color: #fff;
   border-radius: 12px;
   padding: 24px;
-  width: 400px;
+  width: 420px;
   max-width: 90%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   animation: slideUp 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .modal-conteudo h2 {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-size: 20px;
   color: #333;
   text-align: center;
 }
 
-.modal-textarea {
-  width: 100%;
-  height: 120px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  resize: none;
-  outline: none;
-  font-size: 14px;
+/* 🔹 Linhas de campos lado a lado */
+.linha-campos {
+  display: flex;
+  gap: 12px;
 }
 
+.campo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔹 Labels e inputs */
+.modal-conteudo label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.modal-conteudo input,
+.modal-textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-conteudo input:focus,
+.modal-textarea:focus {
+  border-color: #a144f4;
+  box-shadow: 0 0 4px rgba(161, 68, 244, 0.3);
+}
+
+/* 🔹 Textarea */
+.modal-textarea {
+  height: 120px;
+  resize: none;
+}
+
+/* 🔹 Botões */
 .modal-botoes {
   display: flex;
   justify-content: flex-end;
@@ -80,6 +116,7 @@
   transform: translateY(-2px);
 }
 
+/* 🔹 Animações */
 @keyframes slideUp {
   from {
     transform: translateY(15px);
