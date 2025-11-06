@@ -3,13 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
 import './styles/AdminLivros.css';
 import './styles/CadastroLivro.css';
-import { requestFormData } from "../utils/requests";
+import { requestFormData, requestLogado } from "../utils/requests";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function CadastroLivro() {
 
   const location = useLocation();
   const novoLivro = location.state?.novoLivro;
+  const idSugestao = location.state?.idSugestao;
 
   const [titulo, setTitulo] = useState(novoLivro?.titulo || "");
   const [autor, setAutor] = useState(novoLivro?.autor || "");
@@ -35,6 +36,9 @@ export default function CadastroLivro() {
     };
     requestFormData("api/livros/cadastrar", dados, "POST");
     toast.success("Cadastrado com sucesso!");
+    if(idSugestao != null) {
+      requestLogado(`api/sugestoes/deletar/${idSugestao}`, {}, "DELETE");
+    }
     setTimeout(() => {
       navigate('/admin/livros');
     }, 1500)

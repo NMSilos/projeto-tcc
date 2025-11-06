@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import { PlusCircle, Edit, Trash2, Book } from "lucide-react";
-import './styles/AdminLivros.css'
+import { Trash2, Book } from "lucide-react";
+import './styles/AdminSugestoes.css'
 import { useEffect, useState } from "react";
-import { baseUrl, buscaSugestoes, requestLogado } from "../utils/requests";
-import CadastroLivro from "./CadastroLivro";
+import { buscaSugestoes, requestLogado } from "../utils/requests";
 
 export default function AdminSugestoes() {
 
@@ -11,6 +10,7 @@ export default function AdminSugestoes() {
 
   async function carregarDados() {
     const sugestoesBuscadas = await buscaSugestoes(`api/sugestoes/buscar/all`, "GET");
+    console.log(sugestoesBuscadas)
     setSugestoes(sugestoesBuscadas)
   }
 
@@ -36,7 +36,7 @@ export default function AdminSugestoes() {
                 <th>Título</th>
                 <th>Autor</th>
                 <th>Editora</th>
-                <th>Descrição</th>
+                <th>Status</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -46,9 +46,19 @@ export default function AdminSugestoes() {
                   <td>{sugestao.titulo}</td>
                   <td>{sugestao.autor}</td>
                   <td>{sugestao.editora}</td>
-                  <td>{sugestao.descricao}</td>
                   <td>
-                    <Link to={"/admin/livros/novo"} state={{ novoLivro: sugestao }}>
+                    <span
+                      className={
+                        sugestao.status === "ACEITA" ? "status-badge status-aceita" :
+                          sugestao.status === "PENDENTE" ? "status-badge status-pendente" :
+                            "status-badge status-recusada"
+                      }
+                    >
+                      {sugestao.status}
+                    </span>
+                  </td>
+                  <td>
+                    <Link to={"/admin/livros/novo"} state={{ novoLivro: sugestao, idSugestao: sugestao.id }}>
                       <button className="btn-acao editar">
                         <Book size={18} /> Criar Livro
                       </button>

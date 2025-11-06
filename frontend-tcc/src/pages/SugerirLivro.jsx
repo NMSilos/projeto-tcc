@@ -32,6 +32,7 @@ export default function SugerirLivro() {
         const response = await requestLogado(`api/sugestoes/cadastrar`, dados, "POST");
         if(response) {
             toast.success("Sugestão enviada com sucesso!");
+            console.log(response);
             setTitulo("");
             setAutor("");
             setEditora("");
@@ -85,7 +86,6 @@ export default function SugerirLivro() {
                             name="editora"
                             value={editora}
                             onChange={(e) => setEditora(e.target.value)}
-                            required
                         />
                     </div>
                 </div>

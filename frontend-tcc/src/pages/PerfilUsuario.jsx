@@ -56,7 +56,6 @@ export default function PerfilUsuario() {
           <div className="perfil-detalhes">
             <p><strong>{nome}</strong></p>
             <p>{username}</p>
-            <p>Criado em: 05/09/2024</p>
             <p>Total Leituras: {leituras.length}</p>
           </div>
           <div className="perfil-editar">

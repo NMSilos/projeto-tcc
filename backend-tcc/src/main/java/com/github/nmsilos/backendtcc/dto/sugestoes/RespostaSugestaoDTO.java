@@ -1,40 +1,27 @@
-package com.github.nmsilos.backendtcc.model;
+package com.github.nmsilos.backendtcc.dto.sugestoes;
 
 import com.github.nmsilos.backendtcc.enums.StatusSugestao;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "sugestoes")
-public class Sugestao {
+public class RespostaSugestaoDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String titulo;
-
     private String autor;
-
     private String editora;
 
     @Column(length = 1000)
     private String descricao;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private StatusSugestao status;
 
-    public Sugestao() {}
-
-    public Sugestao(String titulo, String autor, String editora, String descricao) {
+    public RespostaSugestaoDTO(Long id, String titulo, String autor, String editora, String descricao, StatusSugestao status) {
+        this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;
         this.descricao = descricao;
+        this.status = status;
     }
 
     public Long getId() {
@@ -75,14 +62,6 @@ public class Sugestao {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public StatusSugestao getStatus() {

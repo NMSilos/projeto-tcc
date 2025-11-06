@@ -1,0 +1,151 @@
+.admin-tabela-container {
+  padding: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-tabela-topo {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-principal {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+.btn-principal:hover {
+  background-color: #3e38c7;
+  transform: translateY(-2px);
+}
+
+.admin-tabela {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  height: 520px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.admin-tabela::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.admin-tabela::-webkit-scrollbar-thumb {
+  background: #c9c9c9;
+  border-radius: 6px;
+}
+
+.admin-tabela table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  min-width: 850px;
+  background: #fff;
+}
+
+.admin-tabela thead th {
+  background: #454545;
+  padding: 14px 16px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid #d1d5db;
+  color: #FFFFFF;
+}
+
+.admin-tabela tbody tr {
+  transition: background 0.2s ease;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-tabela tbody tr:hover {
+  background: #fafafa;
+}
+
+.admin-tabela td {
+  padding: 12px 16px;
+  border-right: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.admin-tabela td:last-child,
+.admin-tabela thead th:last-child {
+  border-right: none;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-aceita {
+  background: #d4f8d4;
+  color: #2c7a2c;
+}
+
+.status-pendente {
+  background: #fff3cd;
+  color: #b48600;
+}
+
+.status-recusada {
+  background: #ffd7d7;
+  color: #b91c1c;
+}
+
+.btn-acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.btn-acao.editar {
+  background: #4f46e5;
+  color: white;
+}
+
+.btn-acao.editar:hover {
+  background: #3e38c7;
+}
+
+.btn-acao.deletar {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-acao.deletar:hover {
+  background: #b42a36;
+}
+
+.sem-livros {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  padding: 20px;
+}

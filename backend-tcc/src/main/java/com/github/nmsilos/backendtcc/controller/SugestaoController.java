@@ -1,5 +1,6 @@
 package com.github.nmsilos.backendtcc.controller;
 
+import com.github.nmsilos.backendtcc.dto.sugestoes.RespostaSugestaoDTO;
 import com.github.nmsilos.backendtcc.model.Admin;
 import com.github.nmsilos.backendtcc.model.Sugestao;
 import com.github.nmsilos.backendtcc.model.Usuario;
@@ -25,8 +26,8 @@ public class SugestaoController {
     }
 
     @GetMapping("/buscar/all")
-    ResponseEntity<List<Sugestao>> buscarTodos(@AuthenticationPrincipal Admin usuario) {
-        List<Sugestao> sugestoes = service.buscarTodos();
+    ResponseEntity<List<RespostaSugestaoDTO>> buscarTodos(@AuthenticationPrincipal Admin usuario) {
+        List<RespostaSugestaoDTO> sugestoes = service.buscarTodos();
         return ResponseEntity.status(HttpStatus.OK).body(sugestoes);
     }
 

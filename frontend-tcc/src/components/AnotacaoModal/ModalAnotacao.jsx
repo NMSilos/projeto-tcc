@@ -3,7 +3,7 @@ import "./ModalAnotacao.css";
 import { useState } from "react";
 import { requestLogado } from "../../utils/requests";
 
-export default function ModalAnotacao({ idLeitura, onClose, onSalvar }) {
+export default function ModalAnotacao({ idLeitura, onClose }) {
 
   const [descricao, setDescricao] = useState("");
   const [titulo, setTitulo] = useState("");
@@ -24,9 +24,9 @@ export default function ModalAnotacao({ idLeitura, onClose, onSalvar }) {
     }
 
     const response = await requestLogado(`api/anotacoes/anotar`, dados, "POST");
-    if(response){
+    /*if(response){
       console.log(response);
-    } 
+    }*/
 
   }
 
