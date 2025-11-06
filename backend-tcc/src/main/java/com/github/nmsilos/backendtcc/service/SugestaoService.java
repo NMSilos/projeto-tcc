@@ -39,4 +39,12 @@ public class SugestaoService {
         }
         return null;
     }
+
+    @Transactional
+    public Void alterarStatus(Long id) {
+        repository.findById(id).ifPresent(sugestao -> {
+            sugestao.setStatus(StatusSugestao.ACEITA);
+        });
+        return null;
+    }
 }

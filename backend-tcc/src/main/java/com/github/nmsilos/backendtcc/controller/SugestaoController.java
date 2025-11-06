@@ -31,6 +31,11 @@ public class SugestaoController {
         return ResponseEntity.status(HttpStatus.OK).body(sugestoes);
     }
 
+    @PutMapping("/status/{id}")
+    ResponseEntity<Void> alterarStatus(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.alterarStatus(id));
+    }
+
     @DeleteMapping("/deletar/{id}")
     ResponseEntity<Void> deletar(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.deletar(id));

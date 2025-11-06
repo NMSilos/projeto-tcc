@@ -1,16 +1,32 @@
-.form-titulo {
-  margin-bottom: 20px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #5727a3;
+.painel-form {
+  padding: 30px;
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 0 10px rgba(100, 0, 200, 0.12);
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
+/* Título do formulário */
+.form-titulo {
+  font-size: 26px;
+  font-weight: bold;
+  color: #5727a3;
+  margin: 0;
+}
+
+/* Estrutura do Form */
 .form-livro {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
+/* Grupo de input */
 .form-grupo {
   display: flex;
   flex-direction: column;
@@ -19,34 +35,70 @@
 
 .form-grupo label {
   font-weight: 600;
+  font-size: 14px;
   color: #333;
 }
 
-.form-grupo input, textarea {
-  padding: 12px 14px;
+/* Inputs, textarea, etc. */
+.form-grupo input,
+.form-grupo textarea,
+.form-grupo select {
+  padding: 11px 14px;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 15px;
-  transition: border 0.2s ease;
+  font-family: inherit;
+  background: #fff;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.form-grupo input:focus {
+/* Foco */
+.form-grupo input:focus,
+.form-grupo textarea:focus,
+.form-grupo select:focus {
   border-color: #a144f4;
+  box-shadow: 0 0 6px rgba(161, 68, 244, 0.35);
   outline: none;
-  box-shadow: 0 0 6px rgba(161, 68, 244, 0.3);
 }
 
-.form-grupo textarea:focus {
-  border-color: #a144f4;
-  outline: none;
-  box-shadow: 0 0 6px rgba(161, 68, 244, 0.3);
+/* Textarea */
+.form-grupo textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
+/* Linha com inputs lado a lado */
 .form-linha {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
 .form-linha .form-grupo {
   flex: 1;
+  min-width: 160px;
+}
+
+/* Botão principal */
+.btn-principal {
+  width: 100%;
+  align-self: flex-start;
+  background-color: #a144f4;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+}
+
+.btn-principal:hover {
+  background-color: #7c2fd0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.30);
 }

@@ -30,7 +30,7 @@ export default function SugerirLivro() {
         }
 
         const response = await requestLogado(`api/sugestoes/cadastrar`, dados, "POST");
-        if(response) {
+        if (response) {
             toast.success("Sugestão enviada com sucesso!");
             console.log(response);
             setTitulo("");
@@ -47,66 +47,69 @@ export default function SugerirLivro() {
     }
 
     return (
-        <div className="admin-tabela">
-            <div className="header-form">
-                <h2 className="form-titulo">Nova Sugestão de Livro</h2>
-                <button onClick={voltar} className="btn-voltar">
-                    <Undo2 /> Voltar
-                </button>
-            </div>
+        <div className="sugerir-container">
+            <div className="sugerir-card">
 
-            <form onSubmit={enviarSugestao} className="form-livro">
-                <div className="form-grupo">
-                    <label>Título</label>
-                    <input
-                        type="text"
-                        name="titulo"
-                        value={titulo}
-                        onChange={(e) => setTitulo(e.target.value)}
-                        required
-                    />
+                <div className="header-form">
+                    <h2 className="form-titulo">Nova Sugestão de Livro</h2>
+                    <button onClick={voltar} className="btn-voltar">
+                        <Undo2 /> Voltar
+                    </button>
                 </div>
 
-                <div className="form-linha">
+                <form onSubmit={enviarSugestao} className="form-livro">
                     <div className="form-grupo">
-                        <label>Autor</label>
+                        <label>Título</label>
                         <input
                             type="text"
-                            name="autor"
-                            value={autor}
-                            onChange={(e) => setAutor(e.target.value)}
+                            name="titulo"
+                            value={titulo}
+                            onChange={(e) => setTitulo(e.target.value)}
                             required
                         />
                     </div>
 
-                    <div className="form-grupo">
-                        <label>Editora</label>
-                        <input
-                            type="text"
-                            name="editora"
-                            value={editora}
-                            onChange={(e) => setEditora(e.target.value)}
-                        />
+                    <div className="form-linha">
+                        <div className="form-grupo">
+                            <label>Autor</label>
+                            <input
+                                type="text"
+                                name="autor"
+                                value={autor}
+                                onChange={(e) => setAutor(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-grupo">
+                            <label>Editora</label>
+                            <input
+                                type="text"
+                                name="editora"
+                                value={editora}
+                                onChange={(e) => setEditora(e.target.value)}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <div className="form-grupo">
-                    <label>Descrição</label>
-                    <textarea
-                        name="descricao"
-                        value={descricao}
-                        onChange={(e) => setDescricao(e.target.value)}
-                        rows="4"
-                        cols="50"
-                    >
-                    </textarea>
-                </div>
+                    <div className="form-grupo">
+                        <label>Descrição</label>
+                        <textarea
+                            name="descricao"
+                            value={descricao}
+                            onChange={(e) => setDescricao(e.target.value)}
+                            rows="4"
+                            cols="50"
+                        >
+                        </textarea>
+                    </div>
 
-                <button type="submit" className="btn-principal">
-                    <PlusCircle size={20} /> Salvar Livro
-                </button>
-            </form>
-            <ToastContainer />
+                    <button type="submit" className="btn-principal">
+                        <PlusCircle size={20} /> Salvar Livro
+                    </button>
+                </form>
+                <ToastContainer />
+            </div>
         </div>
     );
 }

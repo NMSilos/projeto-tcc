@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
-import './styles/AdminLivros.css';
 import './styles/CadastroLivro.css';
 import { requestFormData, requestLogado } from "../utils/requests";
 import { toast, ToastContainer } from "react-toastify";
@@ -37,7 +36,7 @@ export default function CadastroLivro() {
     requestFormData("api/livros/cadastrar", dados, "POST");
     toast.success("Cadastrado com sucesso!");
     if(idSugestao != null) {
-      requestLogado(`api/sugestoes/deletar/${idSugestao}`, {}, "DELETE");
+      requestLogado(`api/sugestoes/status/${idSugestao}`, {}, "PUT");
     }
     setTimeout(() => {
       navigate('/admin/livros');
@@ -45,7 +44,7 @@ export default function CadastroLivro() {
   };
 
   return (
-    <div className="admin-tabela">
+    <div className="painel-form">
       <h2 className="form-titulo">Novo Livro</h2>
 
       <form onSubmit={cadastrarLivro} className="form-livro">
