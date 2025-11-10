@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,12 @@ public class SugestaoController {
     ResponseEntity<List<RespostaSugestaoDTO>> buscarTodos(@AuthenticationPrincipal Admin usuario) {
         List<RespostaSugestaoDTO> sugestoes = service.buscarTodos();
         return ResponseEntity.status(HttpStatus.OK).body(sugestoes);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/buscar-por-usuario/{id}")
+    public ResponseEntity<List<RespostaSugestaoDTO>> buscarSugestoesPorUsuario(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.buscarSugestoesPorUsuario(id));
     }
 
     @PutMapping("/status/{id}")

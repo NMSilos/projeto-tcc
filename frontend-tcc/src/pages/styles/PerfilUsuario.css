@@ -17,6 +17,7 @@
 .perfil-info {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 30px;
   background: #fff;
   padding: 20px;
@@ -37,7 +38,8 @@
 .perfil-detalhes {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  justify-content: flex-start;
+  text-align: left;
 }
 
 .perfil-detalhes p {
@@ -52,7 +54,7 @@
 .perfil-editar {
   margin-left: auto;
   display: flex;
-  flex-direction: column; /* deixa botões um embaixo do outro */
+  flex-direction: column; 
   gap: 10px;
   align-items: flex-end;
 }
@@ -66,7 +68,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  min-width: 160px;   /* 🔥 garante que todos os botões fiquem iguais */
+  min-width: 160px;  
   text-align: center;
 }
 
@@ -76,7 +78,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* botão "Sugerir Livro" diferenciado */
 .btn-sugerir {
   background-color: #28a745;
 }
@@ -157,12 +158,6 @@
   border-radius: 6px;
   object-fit: cover; 
 }
-
-/*.leitura-img p {
-  margin-top: 5px;
-  font-weight: bold;
-  font-size: 14px;
-}*/
 
 .stars {
   color: #f1c40f;

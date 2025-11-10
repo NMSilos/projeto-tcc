@@ -36,4 +36,11 @@ public class Usuario extends Admin {
         this.leituras = leituras;
     }
 
+    public List<Sugestao> getSugestoes() {
+        return sugestoes;
+    }
+
+    public void setSugestoes(List<Sugestao> sugestoes) {
+        this.sugestoes = sugestoes;
+    }
 }

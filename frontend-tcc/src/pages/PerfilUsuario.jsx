@@ -1,11 +1,12 @@
-import React from 'react';
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import "./styles/PerfilUsuario.css";
+import "../utils/Badges.css";
 import { baseUrl, requestLogado } from '../utils/requests';
 import { Link, useNavigate, useParams } from 'react-router';
 import UltimasLeituras from '../components/UltimasLeituras';
 import defaultUser from '../assets/default-user.jpg';
+import { buscarBadge } from "../utils/badges.jsx";
 import { Bookmark, BookOpen, BookText, Trash2 } from 'lucide-react';
 
 export default function PerfilUsuario() {
@@ -14,6 +15,9 @@ export default function PerfilUsuario() {
   const [imagem, setImagem] = useState();
   const [leituras, setLeituras] = useState([]);
   const [ultimasLeituras, setUltimasLeituras] = useState([]);
+  const [sugestoes, setSugestoes] = useState([]);
+  const [badge, setBadge] = useState();
+
   const { user } = useParams();
   const navigate = useNavigate();
 
@@ -36,6 +40,13 @@ export default function PerfilUsuario() {
     }
   }
 
+  async function carregarSugestoes() {
+    const token = localStorage.getItem('token');
+    const dados = jwtDecode(token);
+    const response = await requestLogado(`api/sugestoes/buscar-por-usuario/${dados.id}`, {}, "GET");
+    setSugestoes(response);
+    setBadge(response ? buscarBadge(response) : null);
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -44,6 +55,7 @@ export default function PerfilUsuario() {
       setNome(dados.nome);
       setUsername(dados.sub);
       carregarImagem(dados);
+      carregarSugestoes();
     }
     carregarDados();
   }, [user]);
@@ -53,11 +65,26 @@ export default function PerfilUsuario() {
       <div className="perfil-topo">
         <div className="perfil-info">
           <img src={imagem} alt="Avatar" />
+
           <div className="perfil-detalhes">
-            <p><strong>{nome}</strong></p>
-            <p>{username}</p>
-            <p>Total Leituras: {leituras.length}</p>
+            <p className="nome"><strong>{nome}</strong></p>
+            <p className="username">{username}</p>
+            <p className="total-leituras">Total Leituras: {leituras.length}</p>
           </div>
+
+          <div className="perfil-badge">
+            {badge ? (
+              <div className={`badge-conquista ${badge.variant}`}>
+                {badge.icon}
+                <span className="badge-label">{badge.label}</span>
+              </div>
+            ) : (
+              <div className="sem-conquista">
+                <small>Contribua sugerindo um livro! 📚</small>
+              </div>
+            )}
+          </div>
+          
           <div className="perfil-editar">
             <Link to={`/perfil/${username}/editar`}>
               <button>Editar Perfil</button>

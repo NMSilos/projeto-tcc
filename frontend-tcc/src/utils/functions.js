@@ -106,3 +106,14 @@ export function formarEnumStatus(apiStatus) {
       return "";
   }
 }
+
+
+export function contadorSugestoes(lista) {
+  let aceitas = 0;
+  lista.forEach((i) => {
+    if(i.status === "ACEITA") {
+      aceitas++;
+    }
+  });
+  return aceitas;
+}

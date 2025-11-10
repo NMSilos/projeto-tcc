@@ -30,6 +30,10 @@ export async function requestLogado(url, dados, method) {
 
 }
 
+
+
+
+
 export async function request(url, dados, method) {
   const finalUrl = baseUrl + url;
 
@@ -48,6 +52,10 @@ export async function request(url, dados, method) {
     throw new Error(dados.mensagem);
   }
 }
+
+
+
+
 
 export async function requestFormData(url, dados, method) {
   const finalUrl = baseUrl + url;
@@ -87,6 +95,10 @@ export async function requestFormData(url, dados, method) {
   }
 }
 
+
+
+
+
 export async function buscaLivros(url, method) {
   const finalUrl = baseUrl + url;
 
@@ -104,6 +116,10 @@ export async function buscaLivros(url, method) {
     throw new Error(dados.mensage);
   }
 }
+
+
+
+
 
 export async function buscaSugestoes(url, method) {
   const finalUrl = baseUrl + url;
