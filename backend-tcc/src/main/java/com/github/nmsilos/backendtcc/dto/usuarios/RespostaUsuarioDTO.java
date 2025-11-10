@@ -11,18 +11,21 @@ public class RespostaUsuarioDTO {
     private String username;
     private String email;
     private List<RespostaLeituraDTO> leituras;
+    private int streaks;
 
-    public RespostaUsuarioDTO(String nome, String username, String email) {
+    public RespostaUsuarioDTO(String nome, String username, String email, int streaks) {
         this.nome = nome;
         this.username = username;
         this.email = email;
+        this.streaks = streaks;
     }
 
-    public RespostaUsuarioDTO(String nome, String username, String email, List<RespostaLeituraDTO> leituras) {
+    public RespostaUsuarioDTO(String nome, String username, String email, List<RespostaLeituraDTO> leituras, int streaks) {
         this.nome = nome;
         this.username = username;
         this.email = email;
         this.leituras = leituras;
+        this.streaks = streaks;
     }
 
     public String getNome() {
@@ -57,4 +60,11 @@ public class RespostaUsuarioDTO {
         this.leituras = leituras;
     }
 
+    public int getStreaks() {
+        return streaks;
+    }
+
+    public void setStreaks(int streaks) {
+        this.streaks = streaks;
+    }
 }

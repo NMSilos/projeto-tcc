@@ -6,8 +6,9 @@ import { baseUrl, requestLogado } from '../utils/requests';
 import { Link, useNavigate, useParams } from 'react-router';
 import UltimasLeituras from '../components/UltimasLeituras';
 import defaultUser from '../assets/default-user.jpg';
-import { buscarBadge } from "../utils/badges.jsx";
+import { buscarBadge } from "../utils/Badges.jsx";
 import { Bookmark, BookOpen, BookText, Trash2 } from 'lucide-react';
+import { buscarStreakBadge } from "../utils/StreakBadge.jsx";
 
 export default function PerfilUsuario() {
   const [nome, setNome] = useState();
@@ -16,6 +17,8 @@ export default function PerfilUsuario() {
   const [leituras, setLeituras] = useState([]);
   const [ultimasLeituras, setUltimasLeituras] = useState([]);
   const [sugestoes, setSugestoes] = useState([]);
+  const [streaks, setStreaks] = useState();
+  const [streakBadge, setStreakBadge] = useState(null);
   const [badge, setBadge] = useState();
 
   const { user } = useParams();
@@ -25,6 +28,7 @@ export default function PerfilUsuario() {
     const usuario = await requestLogado(`api/usuarios/buscar/username/${user}`, {}, "GET");
     setLeituras(usuario.leituras)
     setUltimasLeituras(usuario.leituras.slice().reverse().slice(0, 1))
+    setStreaks(usuario.streaks)
   }
 
 
@@ -60,6 +64,13 @@ export default function PerfilUsuario() {
     carregarDados();
   }, [user]);
 
+  useEffect(() => {
+    if (streaks !== undefined && streaks !== null) {
+      setStreakBadge(buscarStreakBadge(streaks));
+    }
+  }, [streaks]);
+
+
   return (
     <div className="perfil-container">
       <div className="perfil-topo">
@@ -73,18 +84,26 @@ export default function PerfilUsuario() {
           </div>
 
           <div className="perfil-badge">
-            {badge ? (
-              <div className={`badge-conquista ${badge.variant}`}>
-                {badge.icon}
-                <span className="badge-label">{badge.label}</span>
-              </div>
-            ) : (
-              <div className="sem-conquista">
+
+            <div className={`badge-conquista ${badge ? badge.variant : 'sem'}`}>
+              {badge ? (
+                <>
+                  {badge.icon}
+                  <span className="badge-label">{badge.label}</span>
+                </>
+              ) : (
                 <small>Contribua sugerindo um livro! 📚</small>
+              )}
+            </div>
+
+            {streakBadge && (
+              <div className={`badge-conquista ${streakBadge.variant}`}>
+                {streakBadge.icon}
+                <span className="badge-label">{streakBadge.label}</span>
               </div>
             )}
           </div>
-          
+
           <div className="perfil-editar">
             <Link to={`/perfil/${username}/editar`}>
               <button>Editar Perfil</button>

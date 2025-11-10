@@ -18,7 +18,8 @@ public class RespostaUsuarioMapper {
                 usuario.getNome(),
                 usuario.getUsername(),
                 usuario.getEmail(),
-                leituras
+                leituras,
+                usuario.getStreaks()
         );
     }
 }

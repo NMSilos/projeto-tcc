@@ -13,6 +13,7 @@ import com.github.nmsilos.backendtcc.security.Cripter;
 import com.github.nmsilos.backendtcc.security.TokenManager;
 import com.github.nmsilos.backendtcc.utils.GeradorSenhaAleatoria;
 import com.github.nmsilos.backendtcc.security.GoogleTokenVerifier;
+import com.github.nmsilos.backendtcc.utils.LeituraUtils;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,10 @@ public class UsuarioService {
             if (authentication.getPrincipal() instanceof Usuario) {
                 Usuario usuario = (Usuario) authentication.getPrincipal();
                 String token = tokenManager.generateToken(usuario);
+                boolean maisDeUmDia = LeituraUtils.verificarMaisDeUmDia(usuario.getUltima_leitura());
+                if (maisDeUmDia) {
+                    usuario.setStreaks(0);
+                }
                 return new TokenDTO(usuario.getId(), token);
 
             } else if (authentication.getPrincipal() instanceof Admin) {

@@ -1,6 +1,5 @@
 package com.github.nmsilos.backendtcc.service;
 
-import com.github.nmsilos.backendtcc.dto.comentarios.CadastroComentarioDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.CadastroLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.EditarLeituraDTO;
 import com.github.nmsilos.backendtcc.dto.leituras.RespostaLeituraDTO;
@@ -11,6 +10,7 @@ import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
 import com.github.nmsilos.backendtcc.model.*;
 import com.github.nmsilos.backendtcc.repository.LeituraRepository;
+import com.github.nmsilos.backendtcc.repository.UsuarioRepository;
 import com.github.nmsilos.backendtcc.utils.LeituraUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class LeituraService {
@@ -35,6 +34,8 @@ public class LeituraService {
 
     @Autowired
     private ComentarioService comentarioService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Transactional
     public RespostaLeituraDTO criarLeitura(Usuario usuarioLogado, CadastroLeituraDTO leitura) {
@@ -50,10 +51,14 @@ public class LeituraService {
             if(novaLeitura.getStatus().equals(StatusLeitura.LIDO)) {
                 novaLeitura.setPagina_atual(novaLeitura.getLivro().getPaginas());
                 System.out.println(novaLeitura.getPagina_atual());
-            } else if(novaLeitura.getStatus().equals(StatusLeitura.LENDO)) {
-                boolean data_atualizada = LeituraUtils.verificarDataAtual(usuario.getUltima_leitura());
-                if(!data_atualizada) {
+            }
+
+            if(novaLeitura.getStatus().equals(StatusLeitura.LIDO) || novaLeitura.getStatus().equals(StatusLeitura.LENDO)) {
+                boolean data_atualizada = LeituraUtils.verificarDataStreak(usuario.getUltima_leitura());
+
+                if (!data_atualizada) {
                     usuario.setUltima_leitura(new Date());
+                    usuario.setStreaks(usuario.getStreaks() + 1);
                 }
             }
 
@@ -148,6 +153,14 @@ public class LeituraService {
             novaLeitura.getComentario().setNota(leitura.getComentario().getNota());
 
             comentarioService.comentar(novaLeitura.getComentario());
+        }
+
+        if (!novaLeitura.getStatus().equals(StatusLeitura.PRETENDO_LER)) {
+            Usuario usuario = usuarioRepository.getReferenceById(novaLeitura.getUsuario().getId());
+            if (!LeituraUtils.verificarDataStreak(usuario.getUltima_leitura())) {
+                usuario.setUltima_leitura(new Date());
+                usuario.setStreaks(usuario.getStreaks() + 1);
+            }
         }
 
         repository.save(novaLeitura);

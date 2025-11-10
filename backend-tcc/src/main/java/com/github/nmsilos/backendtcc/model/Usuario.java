@@ -21,16 +21,20 @@ public class Usuario extends Admin {
     @Column(nullable = true)
     private Date ultima_leitura;
 
+    private int streaks;
+
     public Usuario() {}
 
     public Usuario(String nome, String apelido, String email, String senha, String imagem, String contentType) {
         super(nome, apelido, email, senha);
         this.imagem = imagem;
         this.contentType = contentType;
+        this.streaks = 0;
     }
 
     public Usuario(Long id, String nome, String apelido, String email, String senha) {
         super(id, nome, apelido, email, senha);
+        this.streaks = 0;
     }
 
     public List<Leitura> getLeituras() {
@@ -57,4 +61,11 @@ public class Usuario extends Admin {
         this.ultima_leitura = ultima_leitura;
     }
 
+    public int getStreaks() {
+        return streaks;
+    }
+
+    public void setStreaks(int streaks) {
+        this.streaks = streaks;
+    }
 }
