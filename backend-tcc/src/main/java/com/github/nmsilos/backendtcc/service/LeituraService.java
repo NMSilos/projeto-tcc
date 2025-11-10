@@ -11,6 +11,7 @@ import com.github.nmsilos.backendtcc.mapper.leituras.CadastroLeituraMapper;
 import com.github.nmsilos.backendtcc.mapper.leituras.RespostaLeituraMapper;
 import com.github.nmsilos.backendtcc.model.*;
 import com.github.nmsilos.backendtcc.repository.LeituraRepository;
+import com.github.nmsilos.backendtcc.utils.LeituraUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,14 +46,21 @@ public class LeituraService {
 
             novaLeitura.setUsuario(usuarioLogado);
             novaLeitura.setLivro(livro);
+
             if(novaLeitura.getStatus().equals(StatusLeitura.LIDO)) {
                 novaLeitura.setPagina_atual(novaLeitura.getLivro().getPaginas());
                 System.out.println(novaLeitura.getPagina_atual());
+            } else if(novaLeitura.getStatus().equals(StatusLeitura.LENDO)) {
+                boolean data_atualizada = LeituraUtils.verificarDataAtual(usuario.getUltima_leitura());
+                if(!data_atualizada) {
+                    usuario.setUltima_leitura(new Date());
+                }
             }
 
             usuario.getLeituras().add(novaLeitura);
 
             repository.save(novaLeitura);
+            System.out.println(usuario.getUltima_leitura());
             repository.flush();
             
             return RespostaLeituraMapper.toDto(novaLeitura);

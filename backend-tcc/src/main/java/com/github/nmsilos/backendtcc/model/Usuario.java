@@ -1,10 +1,12 @@
 package com.github.nmsilos.backendtcc.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,6 +17,9 @@ public class Usuario extends Admin {
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Sugestao> sugestoes = new ArrayList<>();
+
+    @Column(nullable = true)
+    private Date ultima_leitura;
 
     public Usuario() {}
 
@@ -43,4 +48,13 @@ public class Usuario extends Admin {
     public void setSugestoes(List<Sugestao> sugestoes) {
         this.sugestoes = sugestoes;
     }
+
+    public Date getUltima_leitura() {
+        return ultima_leitura;
+    }
+
+    public void setUltima_leitura(Date ultima_leitura) {
+        this.ultima_leitura = ultima_leitura;
+    }
+
 }

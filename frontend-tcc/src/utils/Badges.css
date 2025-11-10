@@ -60,14 +60,13 @@
   align-items: center;
   padding: 6px 10px;      
   border-radius: 8px;      
-  background: #e0e0e0;        /* cinza claro */
-  color: #6b6b6b;             /* texto mais escuro */
+  background: #e0e0e0;        
+  color: #6b6b6b;             
   font-weight: bold;
   font-size: 12px;     
   line-height: 1;
   margin-left: 6px;
 
-  /* sombra suave igual à badge-conquista */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  border: 1px solid #c0c0c0; /* borda neutra */
+  border: 1px solid #c0c0c0;
 }
