@@ -2,7 +2,6 @@ package com.github.nmsilos.backendtcc.controller;
 
 import com.github.nmsilos.backendtcc.dto.usuarios.*;
 import com.github.nmsilos.backendtcc.exception.custom.ErroServidorException;
-import com.github.nmsilos.backendtcc.mapper.usuarios.CadastroUsuarioMapper;
 import com.github.nmsilos.backendtcc.mapper.usuarios.RespostaUsuarioMapper;
 import com.github.nmsilos.backendtcc.model.Usuario;
 import com.github.nmsilos.backendtcc.security.Cripter;
@@ -86,9 +85,25 @@ public class UsuarioController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<TokenDTO> modificarUsuario(@AuthenticationPrincipal Usuario usuario, @RequestBody ModificarUsuarioDTO novoUsuario) {
-        TokenDTO dto = service.modificar(usuario, CadastroUsuarioMapper.toModel(novoUsuario));
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<TokenDTO> modificarUsuario(@AuthenticationPrincipal Usuario usuario,
+                                                     @ModelAttribute ModificarUsuarioDTO novoUsuario,
+                                                     @RequestParam(value = "imagem", required = false) MultipartFile imagem) {
+
+        try {
+            if (imagem != null && !imagem.isEmpty()) {
+                String nomeImage = service.salvarImagem(imagem);
+                String typeImage = imagem.getContentType();
+                novoUsuario.setNomeImage(nomeImage);
+                novoUsuario.setTypeImage(typeImage);
+            }
+
+            TokenDTO dto = service.modificar(usuario, novoUsuario);
+            System.out.println("passa aqui");
+            return ResponseEntity.ok().body(dto);
+        }
+        catch (Exception e) {
+            throw new ErroServidorException("Erro ao salvar usuário. Tente mais tarde");
+        }
     }
 
     @DeleteMapping("/encerrar-conta")

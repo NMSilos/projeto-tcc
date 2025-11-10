@@ -123,7 +123,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public TokenDTO modificar(Usuario usuario, Usuario novoUsuario) {
+    public TokenDTO modificar(Usuario usuario, ModificarUsuarioDTO novoUsuario) {
         Usuario usuarioAtual = buscarPorId(usuario.getId());
         try {
             if (novoUsuario.getNome() != null) {
@@ -135,9 +135,14 @@ public class UsuarioService {
 
             if (novoUsuario.getPassword() != null && !novoUsuario.getPassword().isEmpty()) {
                 usuarioAtual.setPassword(Cripter.criptografar(novoUsuario.getPassword()));
-            } else {
-                novoUsuario.setPassword(usuarioAtual.getPassword());
             }
+
+            if (novoUsuario.getNomeImage() != null && novoUsuario.getTypeImage() != null) {
+                usuarioAtual.setImagem(novoUsuario.getNomeImage());
+                usuarioAtual.setContentType(novoUsuario.getTypeImage());
+            }
+
+            repository.save(usuarioAtual);
 
             String token = tokenManager.generateToken(usuarioAtual);
             return new TokenDTO(usuarioAtual.getId(), token);

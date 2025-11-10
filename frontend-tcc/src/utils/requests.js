@@ -69,7 +69,7 @@ export async function requestFormData(url, dados, method) {
     formData.append(index, dados[index]);
   }
 
-  const response = "";
+  let response = "";
 
   if (token != null) {
     response = await fetch(finalUrl, {
