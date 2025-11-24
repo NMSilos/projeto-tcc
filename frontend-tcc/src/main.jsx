@@ -36,8 +36,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/livros/:isbn" element={<TelaLivro />}/>
           </Route>
           <Route path="/admin" element={<VerificarAdmin><AreaLogada /></VerificarAdmin>} >
-            <Route index element={<ViewAdmin />} />
-            <Route path='/admin/livros' element={<AdminLivros />}/>
+            <Route index path='/admin' element={<AdminLivros />}/>
             <Route path='/admin/livros/novo' element={<CadastroLivro />}/>
             <Route path='/admin/sugestoes' element={<AdminSugestoes />}/>
           </Route>

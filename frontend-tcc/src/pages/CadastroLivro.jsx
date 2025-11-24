@@ -39,7 +39,7 @@ export default function CadastroLivro() {
       requestLogado(`api/sugestoes/status/${idSugestao}`, {}, "PUT");
     }
     setTimeout(() => {
-      navigate('/admin/livros');
+      navigate('/admin');
     }, 1500)
   };
 

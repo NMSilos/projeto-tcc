@@ -3,7 +3,7 @@ import "./ModalAnotacao.css";
 import { useState } from "react";
 import { requestLogado } from "../../utils/requests";
 
-export default function ModalAnotacao({ idLeitura, onClose }) {
+export default function ModalAnotacao({ idLeitura, onClose, onSalvar }) {
 
   const [descricao, setDescricao] = useState("");
   const [titulo, setTitulo] = useState("");
@@ -13,26 +13,26 @@ export default function ModalAnotacao({ idLeitura, onClose }) {
 
   async function salvarAnotacao() {
     const dados = {
-      leitura: {
-        id: idLeitura
-      },
+      leitura: { id: idLeitura },
       titulo,
       descricao,
       capitulo,
       pagina,
       data
+    };
+
+    try {
+      await requestLogado(`api/anotacoes/anotar`, dados, "POST");
+      onSalvar && onSalvar();   // agora funciona
+    } catch (error) {
+      console.error("Erro ao salvar anotação:", error);
     }
-
-    const response = await requestLogado(`api/anotacoes/anotar`, dados, "POST");
-    /*if(response){
-      console.log(response);
-    }*/
-
   }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-conteudo" onClick={(e) => e.stopPropagation()}>
+        
         <h2>Adicionar Anotação</h2>
 
         <div className="linha-campos">
@@ -77,10 +77,18 @@ export default function ModalAnotacao({ idLeitura, onClose }) {
           <button className="btn-cancelar" onClick={onClose}>
             Cancelar
           </button>
-          <button className="btn-salvar" onClick={salvarAnotacao}>
+
+          <button
+            className="btn-salvar"
+            onClick={(e) => {
+              e.stopPropagation();
+              salvarAnotacao();
+            }}
+          >
             Salvar
           </button>
         </div>
+
       </div>
     </div>
   );

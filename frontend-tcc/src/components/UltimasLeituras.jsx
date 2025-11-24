@@ -16,6 +16,7 @@ export default function UltimasLeituras({ leitura }) {
 
   useEffect(() => {
     carregarCapa();
+    console.log(leitura)
   }, [livro]);
 
   if(!livro) return null;

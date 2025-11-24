@@ -21,30 +21,31 @@ export default function EditarLeitura() {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [mostrarAnotacoes, setMostrarAnotacoes] = useState(false);
 
-  useEffect(() => {
-    async function carregarLeitura() {
-      try {
-        const data = await requestLogado(
-          `api/leituras/buscar-leitura/${id}`,
-          {},
-          "GET"
-        );
-        console.log(data);
+  async function carregarLeitura() {
+    try {
+      const data = await requestLogado(
+        `api/leituras/buscar-leitura/${id}`,
+        {},
+        "GET"
+      );
+      console.log(data);
 
-        setLeitura(data);
-        setPaginaAtual(data.pagina_atual || 0);
-        if (data.comentario != null) {
-          setNota(data.comentario.nota || 0);
-          setTexto(data.comentario.texto || "");
-        }
-        setStatus(normalizarStatus(data.status));
-        setDataInicio(data.data_inicio || "");
-        setDataTermino(data.data_termino || "");
-
-      } catch (err) {
-        console.error("Erro ao carregar leitura:", err);
+      setLeitura(data);
+      setPaginaAtual(data.pagina_atual || 0);
+      if (data.comentario != null) {
+        setNota(data.comentario.nota || 0);
+        setTexto(data.comentario.texto || "");
       }
+      setStatus(normalizarStatus(data.status));
+      setDataInicio(data.data_inicio || "");
+      setDataTermino(data.data_termino || "");
+
+    } catch (err) {
+      console.error("Erro ao carregar leitura:", err);
     }
+  }
+
+  useEffect(() => {
     carregarLeitura();
   }, [id]);
 
@@ -260,17 +261,9 @@ export default function EditarLeitura() {
             <ModalAnotacao
               idLeitura={id}
               onClose={() => setMostrarModal(false)}
-              onSalvar={(texto) => {
-                if (!texto.trim()) return;
-                const novaAnotacao = {
-                  texto,
-                  data: new Date().toISOString(),
-                };
-                setLeitura({
-                  ...leitura,
-                  anotacoes: [...(leitura.anotacoes || []), novaAnotacao],
-                });
-                setMostrarModal(false);
+              onSalvar={async () => {
+                await carregarLeitura();  // agora funciona!
+                setMostrarModal(false);   // agora fecha!
               }}
             />
           )}
