@@ -37,7 +37,7 @@ export default function PerfilUsuario() {
       setImagem(defaultUser);
     } else {
       if (data.imagem.slice(0, 5) == "https") {
-        setImagem(data.imagem);
+        setImagem(`${data.imagem}`);
       } else {
         setImagem(`${baseUrl}api/usuarios/userImage/${data.imagem}`);
       }

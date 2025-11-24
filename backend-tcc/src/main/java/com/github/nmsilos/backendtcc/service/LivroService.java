@@ -11,6 +11,8 @@ import com.github.nmsilos.backendtcc.mapper.livros.RespostaLivroNoListMapper;
 import com.github.nmsilos.backendtcc.model.Comentario;
 import com.github.nmsilos.backendtcc.model.Livro;
 import com.github.nmsilos.backendtcc.model.Usuario;
+import com.github.nmsilos.backendtcc.repository.ComentarioRepository;
+import com.github.nmsilos.backendtcc.repository.LeituraRepository;
 import com.github.nmsilos.backendtcc.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,12 @@ public class LivroService {
 
     @Autowired
     private LivroRepository repository;
+
+    @Autowired
+    private LeituraRepository leituraRepository;
+
+    @Autowired
+    private ComentarioRepository comentarioRepository;
 
     private final Path folderPath = Paths.get("bookcovers");
 
@@ -96,5 +104,11 @@ public class LivroService {
 
     public Livro buscarPorImagem(String imagem) {
         return repository.findByImagem(imagem);
+    }
+
+    @Transactional
+    public void remover(Long id) {
+        Livro livro = repository.findById(id).orElseThrow();
+        repository.deleteById(id);
     }
 }

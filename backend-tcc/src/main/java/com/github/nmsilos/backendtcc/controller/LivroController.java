@@ -39,14 +39,6 @@ public class LivroController {
 
     private final Path folderPath = Paths.get("bookcovers");
 
-    /*
-    @PostMapping("/cadastrar")
-    public ResponseEntity<Livro> cadastrar(@RequestBody CadastroLivroDTO livro) {
-        Livro novo = CadastroLivroMapper.toModel(livro);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(novo));
-    }
-     */
-
     @PostMapping("/cadastrar")
     public ResponseEntity<Livro> cadastrar(
             @RequestParam ("titulo") String titulo,
@@ -106,6 +98,12 @@ public class LivroController {
         Path imagemPath = Paths.get(folderPath.toString(), imagem);
         byte[] imagemBytes = Files.readAllBytes(imagemPath);
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(livro.getContentType())).body(imagemBytes);
+    }
+
+    @DeleteMapping("/remover/{id}")
+    public ResponseEntity<Void> remover(@PathVariable Long id) {
+        service.remover(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

@@ -37,10 +37,10 @@ public class Livro {
 
     private double avaliacao;
 
-    @OneToMany(mappedBy = "livro")
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comentario> comentarios = new ArrayList<>();
 
-    @OneToMany(mappedBy = "livro")
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Leitura> leituras = new ArrayList<>();
 
     protected String imagem;

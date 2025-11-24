@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { PlusCircle, Edit, Trash2 } from "lucide-react";
 import './styles/AdminLivros.css'
 import { useEffect, useState } from "react";
-import { baseUrl, buscaLivros } from "../utils/requests";
+import { baseUrl, buscaLivros, requestLogado } from "../utils/requests";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function AdminLivros() {
 
@@ -11,6 +12,16 @@ export default function AdminLivros() {
   async function carregarDados() {
     const livrosBuscados = await buscaLivros(`api/livros/buscar/all`, "GET");
     setLivros(livrosBuscados)
+  }
+
+  async function deletar(id) {
+    try {
+      await requestLogado(`api/livros/remover/${id}`, {}, "DELETE");
+      toast.success("Livro removido com sucesso!");
+      carregarDados();
+    } catch (error) {
+      toast.error("Erro ao remover livro");
+    }
   }
 
   useEffect(() => {
@@ -75,7 +86,7 @@ export default function AdminLivros() {
                       </Link>
                       <button
                         className="btn-acao deletar"
-                        onClick={() => handleDelete(livro.id)}
+                        onClick={() => deletar(livro.id)}
                       >
                         <Trash2 size={18} /> Remover
                       </button>
@@ -89,6 +100,7 @@ export default function AdminLivros() {
           <p className="sem-livros">Nenhum livro cadastrado.</p>
         )}
       </div>
+      <ToastContainer />
     </div>
 
   );

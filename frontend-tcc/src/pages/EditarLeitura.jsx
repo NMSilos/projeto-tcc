@@ -262,8 +262,8 @@ export default function EditarLeitura() {
               idLeitura={id}
               onClose={() => setMostrarModal(false)}
               onSalvar={async () => {
-                await carregarLeitura();  // agora funciona!
-                setMostrarModal(false);   // agora fecha!
+                await carregarLeitura();  
+                setMostrarModal(false);   
               }}
             />
           )}

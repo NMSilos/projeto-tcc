@@ -35,12 +35,12 @@ public class Leitura {
     private Admin usuario;
 
     @OneToOne(mappedBy = "leitura",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
     )
     private Comentario comentario;
 
-    @OneToMany(mappedBy = "leitura", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "leitura", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Anotacao> anotacoes = new ArrayList<>();
 
     public Leitura() {}

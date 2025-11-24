@@ -23,7 +23,7 @@ export default function ModalAnotacao({ idLeitura, onClose, onSalvar }) {
 
     try {
       await requestLogado(`api/anotacoes/anotar`, dados, "POST");
-      onSalvar && onSalvar();   // agora funciona
+      onSalvar && onSalvar();
     } catch (error) {
       console.error("Erro ao salvar anotação:", error);
     }
