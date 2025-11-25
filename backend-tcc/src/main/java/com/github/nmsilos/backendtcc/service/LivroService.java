@@ -111,4 +111,18 @@ public class LivroService {
         Livro livro = repository.findById(id).orElseThrow();
         repository.deleteById(id);
     }
+
+    @Transactional
+    public void editarLivro(Long id, Livro livroEditado) {
+        Livro atual = repository.findById(id).orElseThrow();
+        atual.setTitulo(livroEditado.getTitulo());
+        atual.setAutor(livroEditado.getAutor());
+        atual.setEditora(livroEditado.getEditora());
+        atual.setAno_publicacao(livroEditado.getAno_publicacao());
+        atual.setPaginas(livroEditado.getPaginas());
+        atual.setIsbn(livroEditado.getIsbn());
+        atual.setDescricao(livroEditado.getDescricao());
+        atual.setImagem(livroEditado.getImagem());
+        atual.setContentType(livroEditado.getContentType());
+    }
 }

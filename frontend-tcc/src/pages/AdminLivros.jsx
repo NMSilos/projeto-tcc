@@ -79,7 +79,10 @@ export default function AdminLivros() {
                     <td>{livro.autor}</td>
                     <td>{livro.ano_publicacao}</td>
                     <td>
-                      <Link to={`/admin/livros/editar/${livro.id}`}>
+                      <Link
+                        to="/admin/livros/novo"
+                        state={{ livroEdit: livro }}
+                      >
                         <button className="btn-acao editar">
                           <Edit size={18} /> Editar
                         </button>

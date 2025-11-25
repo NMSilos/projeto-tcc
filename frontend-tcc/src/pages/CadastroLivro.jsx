@@ -10,15 +10,17 @@ export default function CadastroLivro() {
   const location = useLocation();
   const novoLivro = location.state?.novoLivro;
   const idSugestao = location.state?.idSugestao;
+  const livroEdit = location.state?.livroEdit;
 
-  const [titulo, setTitulo] = useState(novoLivro?.titulo || "");
-  const [autor, setAutor] = useState(novoLivro?.autor || "");
-  const [editora, setEditora] = useState(novoLivro?.editora || "");
-  const [ano_publicacao, setAnoPublicacao] = useState();
-  const [paginas, setPaginas] = useState();
-  const [isbn, setIsbn] = useState();
-  const [descricao, setDescricao] = useState(novoLivro?.descricao || "");
-  const [imagem, setImagem] = useState();
+  const [titulo, setTitulo] = useState(livroEdit?.titulo || novoLivro?.titulo || "");
+  const [autor, setAutor] = useState(livroEdit?.autor || novoLivro?.autor || "");
+  const [editora, setEditora] = useState(livroEdit?.editora || novoLivro?.editora || "");
+  const [ano_publicacao, setAnoPublicacao] = useState(livroEdit?.ano_publicacao || "");
+  const [paginas, setPaginas] = useState(livroEdit?.paginas || "");
+  const [isbn, setIsbn] = useState(livroEdit?.isbn || "");
+  const [descricao, setDescricao] = useState(livroEdit?.descricao || novoLivro?.descricao || "");
+  const [imagem, setImagem] = useState(null);
+
   const navigate = useNavigate();
 
   const cadastrarLivro = (e) => {
@@ -33,19 +35,37 @@ export default function CadastroLivro() {
       descricao,
       imagem,
     };
-    requestFormData("api/livros/cadastrar", dados, "POST");
-    toast.success("Cadastrado com sucesso!");
-    if(idSugestao != null) {
-      requestLogado(`api/sugestoes/status/${idSugestao}`, {}, "PUT");
+
+    try {
+      if (livroEdit) {
+        requestFormData(`api/livros/editar/${livroEdit.id}`, dados, "PUT");
+        toast.success("Livro editado com sucesso!");
+      } else {
+
+        requestFormData("api/livros/cadastrar", dados, "POST");
+        toast.success("Cadastrado com sucesso!");
+
+        if (idSugestao != null) {
+          requestLogado(`api/sugestoes/status/${idSugestao}`, {}, "PUT");
+        }
+      }
+
+      setTimeout(() => {
+        navigate('/admin');
+      }, 1500)
+
     }
-    setTimeout(() => {
-      navigate('/admin');
-    }, 1500)
+    catch (error) {
+      console.log(error)
+      toast.error("Erro ao salvar livro");
+    }
   };
 
   return (
     <div className="painel-form">
-      <h2 className="form-titulo">Novo Livro</h2>
+      <h2 className="form-titulo">
+        {livroEdit ? "Editar Livro" : "Novo Livro"}
+      </h2>
 
       <form onSubmit={cadastrarLivro} className="form-livro">
         <div className="form-grupo">

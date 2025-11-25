@@ -59,7 +59,6 @@ public class LivroController {
             }
             Year ano = Year.of(ano_publicacao);
             Livro livro = new Livro(titulo, autor, isbn, editora, ano, paginas, descricao, 0, nomeImage, typeImage);
-            //RespostaLivroDTO resposta = service.cadastrar(livro);
             return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(livro));
         }
         catch (Exception e) {
@@ -106,5 +105,35 @@ public class LivroController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Livro> editarLivro(
+            @PathVariable Long id,
+            @RequestParam ("titulo") String titulo,
+            @RequestParam ("autor") String autor,
+            @RequestParam ("editora") String editora,
+            @RequestParam ("ano_publicacao") int ano_publicacao,
+            @RequestParam ("paginas") int paginas,
+            @RequestParam ("isbn") String isbn,
+            @RequestParam ("descricao") String descricao,
+            @RequestParam (value = "imagem", required = false) MultipartFile image)
+    {
+        try {
+            String nomeImage = null;
+            String typeImage = null;
+            if (image != null) {
+                nomeImage = service.salvarImagem(image);
+                typeImage = image.getContentType();
+            }
+            Year ano = Year.of(ano_publicacao);
+            Livro livro = new Livro(titulo, autor, isbn, editora, ano, paginas, descricao, 0, nomeImage, typeImage);
+
+            service.editarLivro(id, livro);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new ErroServidorException("Erro ao salvar usuário. Tente mais tarde");
+        }
+    }
 
 }
