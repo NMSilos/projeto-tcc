@@ -3,6 +3,7 @@ import "./styles/EditarUsuario.css";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
 import { requestFormData } from "../utils/requests";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function EditarUsuario() {
 
@@ -52,8 +53,12 @@ export default function EditarUsuario() {
 
         const response = await requestFormData("api/usuarios/modificar", formData, "PUT");
         localStorage.setItem("token", response.token);
-        alert("Usuário atualizado!");
-        navigate(`/perfil/${novoUsername}`);
+        toast.success("Usuário atualizado!");
+
+        setTimeout(() => {
+            navigate(`/perfil/${novoUsername}`);
+        }, 1500)
+
     };
 
     return (
@@ -105,6 +110,7 @@ export default function EditarUsuario() {
                     <button type="submit" className="submit-btn">Atualizar</button>
                 </form>
             </div>
+            <ToastContainer />
         </div>
     );
 }
