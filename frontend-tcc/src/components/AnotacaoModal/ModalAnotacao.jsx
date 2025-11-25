@@ -1,9 +1,9 @@
 import { data } from "react-router";
 import "./ModalAnotacao.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { requestLogado } from "../../utils/requests";
 
-export default function ModalAnotacao({ idLeitura, onClose, onSalvar }) {
+export default function ModalAnotacao({ idLeitura, anotacao, onClose, onSalvar }) {
 
   const [descricao, setDescricao] = useState("");
   const [titulo, setTitulo] = useState("");
@@ -22,17 +22,32 @@ export default function ModalAnotacao({ idLeitura, onClose, onSalvar }) {
     };
 
     try {
-      await requestLogado(`api/anotacoes/anotar`, dados, "POST");
+      if (anotacao) {
+        await requestLogado(`api/anotacoes/editar/${anotacao.id}`, dados, "PUT");
+      } else {
+        await requestLogado(`api/anotacoes/anotar`, dados, "POST");
+      }
       onSalvar && onSalvar();
     } catch (error) {
       console.error("Erro ao salvar anotação:", error);
     }
   }
 
+  useEffect(() => {
+    if (anotacao) {
+      setTitulo(anotacao.titulo || "");
+      setDescricao(anotacao.descricao || "");
+      setCapitulo(anotacao.capitulo || "");
+      setPagina(anotacao.pagina || "");
+      setData(anotacao.data || "");
+    }
+  }, [anotacao]);
+
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-conteudo" onClick={(e) => e.stopPropagation()}>
-        
+
         <h2>Adicionar Anotação</h2>
 
         <div className="linha-campos">

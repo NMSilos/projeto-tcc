@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { requestLogado, baseUrl } from "../utils/requests";
-import { MessageSquareText, Pencil, Star } from "lucide-react";
+import { MessageSquareText, Pencil, Star, Trash2 } from "lucide-react";
 import "./styles/EditarLeitura.css";
 import { formarEnumStatus, normalizarStatus } from "../utils/functions";
 import { toast, ToastContainer } from "react-toastify";
@@ -20,6 +20,8 @@ export default function EditarLeitura() {
 
   const [mostrarModal, setMostrarModal] = useState(false);
   const [mostrarAnotacoes, setMostrarAnotacoes] = useState(false);
+  const [editarAnot, setEditarAnot] = useState(null);
+
 
   async function carregarLeitura() {
     try {
@@ -28,7 +30,6 @@ export default function EditarLeitura() {
         {},
         "GET"
       );
-      console.log(data);
 
       setLeitura(data);
       setPaginaAtual(data.pagina_atual || 0);
@@ -75,8 +76,15 @@ export default function EditarLeitura() {
 
   }
 
-  function salvarAnotacao(texto) {
-    console.log("Anotação salva:", texto);
+  async function deletarAnotacao(id) {
+    try {
+      await requestLogado(`api/anotacoes/deletar/${id}`, {}, "DELETE");
+      toast.success("Anotação esxcluída com sucesso!");
+      carregarLeitura();
+    }
+    catch (error) {
+      toast.error("Erro ao excluir anotação");
+    }
   }
 
   return (
@@ -238,20 +246,41 @@ export default function EditarLeitura() {
             <ul>
               {leitura.anotacoes.map((anot, i) => (
                 <li key={i} className="card-anotacao">
-                  {anot.data && (
-                    <div className="anotacao-data">
+
+                  <div className="anotacao-topo">
+                    <span className="anotacao-data">
                       {new Date(anot.data).toLocaleDateString("pt-BR")}
+                    </span>
+
+                    <div className="anotacao-acoes">
+                      <button
+                        className="btn-anotacao-editar"
+                        onClick={() => {
+                          setEditarAnot(anot);
+                          setMostrarModal(true);
+                        }}
+                      >
+                        <Pencil size={14} />
+                      </button>
+
+                      <button
+                        className="btn-anotacao-excluir"
+                        onClick={() => deletarAnotacao(anot.id)}
+                      >
+                        <Trash2 size={14} />
+                      </button>
                     </div>
-                  )}
+                  </div>
+
                   <div className="anotacao-conteudo">
                     <h3 className="anotacao-titulo">{anot.titulo || "Sem título"}</h3>
                     <p className="anotacao-info">
                       Cap. {anot.capitulo || "-"} &nbsp;|&nbsp; Pág. {anot.pagina || "-"}
                     </p>
                   </div>
+
                 </li>
               ))}
-
             </ul>
           ) : (
             <p>Nenhuma anotação encontrada.</p>
@@ -260,10 +289,15 @@ export default function EditarLeitura() {
           {mostrarModal && (
             <ModalAnotacao
               idLeitura={id}
-              onClose={() => setMostrarModal(false)}
+              anotacao={editarAnot}
+              onClose={() => {
+                setMostrarModal(false);
+                setEditarAnot(null);
+              }}
               onSalvar={async () => {
-                await carregarLeitura();  
-                setMostrarModal(false);   
+                await carregarLeitura();
+                setMostrarModal(false);
+                setEditarAnot(null);
               }}
             />
           )}

@@ -277,6 +277,8 @@
 
 .card-anotacao {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-direction: column;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -299,10 +301,19 @@
 .anotacao-data {
   font-size: 0.8rem;
   color: #888;
+}
+
+.anotacao-acoes {
+  display: flex;
+  gap: 6px;
+}
+
+.anotacao-topo {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 6px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 3px;
-  text-align: right;
 }
 
 .anotacao-titulo {
@@ -338,4 +349,21 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.btn-anotacao-editar,
+.btn-anotacao-excluir {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: 0.2s;
+}
+
+.btn-anotacao-editar:hover {
+  color: #007bff;
+}
+
+.btn-anotacao-excluir:hover {
+  color: #ff4444;
 }
